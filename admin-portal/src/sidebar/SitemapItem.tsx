@@ -1,8 +1,9 @@
-import { List, ListItem, ListItemIcon, ListItemText, Collapse } from "@mui/material";
+import { List, ListItem, ListItemIcon, ListItemText, Collapse, ListItemButton } from "@mui/material";
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { useEffect, useState } from "react";
-import { SitemapElement } from "./types";  // Adjust the import path as necessary
+// import { useNavigate } from 'react-router-dom';
+import { SitemapElement } from "./types"; 
 
 interface SitemapItemProps {
     item: SitemapElement;
@@ -16,6 +17,7 @@ const SitemapItem: React.FC<SitemapItemProps> = ({
     isDrawerOpen 
 }) => {
     const [open, setOpen] = useState(false);
+    // const navigate = useNavigate();
 
     useEffect(() => {
         if (!isDrawerOpen) {
@@ -27,17 +29,17 @@ const SitemapItem: React.FC<SitemapItemProps> = ({
         if (item.type === 'sitemap' && isDrawerOpen) {
             setOpen(!open);
         } else if (item.type === 'page') {
-            // Handle navigation to the page if needed, e.g., using React Router
+            // navigate(item.path);
         }
     };
 
     return (
         <>
-            <ListItem onClick={handleClick}>
+            <ListItemButton onClick={handleClick}>
                 {item.icon && <ListItemIcon sx={{ marginLeft: 0.5 }}>{item.icon}</ListItemIcon>}
-                <ListItemText primary={item.label} sx={{ marginLeft: 2 * level}}/>
+                <ListItemText primary={item.label} sx={{ marginLeft: 2 * level }}/>
                 {item.type === 'sitemap' ? (open? <ExpandLess /> : <ExpandMore />) : null}
-            </ListItem>
+            </ListItemButton>
             {item.type === 'sitemap' && item.children && (
                 <Collapse in={open} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>

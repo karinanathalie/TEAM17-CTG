@@ -5,11 +5,12 @@ import { useState } from "react";
 import MuiDrawer from '@mui/material/Drawer';
 import { SITEMAP } from "./config";
 import SitemapItem from "./SitemapItem";
-import { BROWN } from "../helpers/colors";
+import { BROWN, LIGHT_BROWN } from "../helpers/colors";
 import Divider from '@mui/material/Divider';
 import Logo from '../Logo';
+import ThemeSwitch from "./ThemeSwitch";
 
-const DRAWER_WIDTH = 280;
+const DRAWER_WIDTH = 270;
 
 const openedMixin = (theme : Theme): CSSObject => ({
     width: DRAWER_WIDTH,
@@ -62,8 +63,8 @@ const Sidebar: React.FC = () => {
     const [open, setOpen] = useState(false);
 
     return (
-        <Box>
-            <Drawer variant='permanent' open={open}>
+        <Drawer variant='permanent' open={open}>
+            <Box>
             <DrawerHeader>
                 <IconButton
                     onClick={() => setOpen(!open)}
@@ -83,9 +84,10 @@ const Sidebar: React.FC = () => {
                 ))}
             </List>
             <Divider />
+            <ThemeSwitch />
+            </Box>
+        </Drawer>
 
-            </Drawer>
-        </Box>
     )
 }
 
