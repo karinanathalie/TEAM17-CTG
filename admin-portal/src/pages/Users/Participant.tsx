@@ -47,12 +47,12 @@ const rows = [
 ];
 
 
-const PrivateEvent: React.FC = () => {
+const Participant: React.FC = () => {
     return (
         <Box style={{ margin: 40,  width: '80%'}}>
 
         <Breadcrumbs>
-            <Typography variant='h5'>Private Event</Typography>
+            <Typography variant='h5' color='secondary'>Participant</Typography>
         </Breadcrumbs>
 
         <Stack style={{ marginTop: 20, width: '98%'}}>
@@ -73,4 +73,4 @@ const PrivateEvent: React.FC = () => {
         </Box>
       );
 }
-export default PrivateEvent;
+export default Participant;

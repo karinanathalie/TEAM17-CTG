@@ -4,6 +4,7 @@ import Sidebar from './sidebar/Sidebar';
 import { Route, Routes } from 'react-router-dom';
 import { Path } from './constants/path';
 import PrivateEvent from './pages/Application/PrivateEvent';
+import Participant from './pages/Users/Participant';
 
 function App() {
   const theme = useTheme();
@@ -25,6 +26,10 @@ function App() {
         <Route 
             path={Path.Operations.Application.PrivateEvent}
             Component={PrivateEvent}
+        />
+          <Route 
+            path={Path.Operations.Users.Participant}
+            Component={Participant}
         />
         </Routes>
       </div>
