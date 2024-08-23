@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core import serializers
-from .models import Event
+from .models import Event, Profile
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 import json
+from django.contrib.auth.models import User
 #need to import user
 
 
@@ -12,19 +13,46 @@ import json
 def say_hello(request):
     return HttpResponse('Hello World')
 
+# User Authentication
+@csrf_exempt
+def register_user(request):
+    try:
+        if request.method == "POST":
+            data = json.loads(request.body)
+            user = User.objects.create_user(data['username'], data['email'], data['password'])
+
+            userProfile = Profile()
+            userProfile.phone = data['phone']
+            userProfile.age = data['age']
+            userProfile.name = data['name']
+            userProfile.gender = data['gender']
+            userProfile.role_type = data['role_type']
+            userProfile.user = user
+            userProfile.save()
+
+            return HttpResponse(status=200)
+    except Exception as e:
+        return HttpResponse(f'Error: {str(e)}', status=500)
+
 # EVENT
 def get_all_events(request):
-    events = Event.objects.all()
-    events_json = serializers.serialize('json', events)
-    return HttpResponse(events_json, content_type="application/json")
+    try:
+        events = Event.objects.all()
+        events_json = serializers.serialize('json', events)
+        return HttpResponse(events_json, content_type="application/json")
+    except Exception as e:
+        return HttpResponse(f'Error: {str(e)}', status=500)
 
 def get_event_details(request, event_id=1):
-    event = Event.objects.filter(id=event_id)
-    event_json = serializers.serialize('json', event)
-    return HttpResponse(event_json, content_type="application/json")
+    try:
+        event = Event.objects.filter(id=event_id)
+        event_json = serializers.serialize('json', event)
+        return HttpResponse(event_json, content_type="application/json")
+    except Exception as e:
+        return HttpResponse(f'Error: {str(e)}', status=500)
 
 def event_registration(request, event_id):
-    try : 
+    try: 
         event = Event.objects.filter(id=event_id)
         data = json.loads(request.body)
         user_id = data.get('user_id')
