@@ -92,12 +92,22 @@ def event_registration(request, event_id):
         return HttpResponse('Invalid JSON', status=400)
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
+    
+def event_registration_confirmation(request, event_id):
+    event = Event.objects.filter(id=event_id)
+    event_json = serializers.serialize('json', event)
+    event_name = event_json.get('event_name')
+    data = json.loads(request.body)
+    user_id = data.get('user_id')
+
+    # Check if the user is in the participants or volunteers list
+    if user_id in event.registered_participants.all() or user_id in event.registered_volunteers.all():
+        return HttpResponse(f'user {user_id} is registered for {event_name}', status=200)
+    else:
+        return HttpResponse(f'user {user_id} is not registered for {event_name}', status=200)
+
 
     
-
-
-
-
 
 @csrf_exempt
 def create_event(request):
