@@ -34,6 +34,20 @@ def register_user(request):
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
 
+@csrf_exempt
+def create_staffuser(request):
+    try:
+        if request.method == "POST":
+            data = json.loads(request.body)
+            user = User.objects.create_user(data['username'], data['email'], data['password'])
+            user.is_superuser = 1
+            user.is_staff = 1
+            user.save()
+
+            return HttpResponse(status=200)
+    except Exception as e:
+        return HttpResponse(f'Error: {str(e)}', status=500)
+
 # EVENT
 def get_all_events(request):
     try:
