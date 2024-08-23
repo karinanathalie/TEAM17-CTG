@@ -11,9 +11,9 @@ sudo docker run -it --rm \
 python:3.8 bash
 ```
 2. enter your password
-3. open content/backend
+3. open content
 ```
-cd content/backend_dev/ctg17
+cd content
 ```
 4. install all the dependencies
 ```
