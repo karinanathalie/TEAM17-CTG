@@ -11,6 +11,7 @@ class Profile(models.Model):
     )
     name = models.CharField(max_length=225)
     age = models.PositiveIntegerField()
+    phone = models.CharField(max_length=20, null=True)
     gender = models.TextField(
         choices=Gender.choices(),
     )
@@ -67,8 +68,8 @@ class Event(models.Model):
     participant_quota = models.IntegerField()
     volunteer_quota = models.IntegerField()
     deadline = models.DateTimeField()
-    registered_participants = models.ManyToManyField(User, related_name="registered_participants", null=True, blank=True)
-    registered_volunteers = models.ManyToManyField(User, related_name="registered_volunteers", null=True, blank=True)
+    registered_participants = models.ManyToManyField(User, related_name="registered_participants", blank=True)
+    registered_volunteers = models.ManyToManyField(User, related_name="registered_volunteers", blank=True)
     staff = models.ManyToManyField(
         'Profile', 
         through='Application', 
