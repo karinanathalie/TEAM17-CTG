@@ -12,7 +12,7 @@ python:3.8 bash
 2. enter your password
 3. open content/backend
 ```
-cd content/backend
+cd content/backend_dev/ctg17
 ```
 4. install all the dependencies
 ```
@@ -20,5 +20,5 @@ pip install django
 ```
 5. start the script
 ```
-python manage.pu runserver 0.0.0.0:8080
+python manage.py runserver 0.0.0.0:8000
 ```
