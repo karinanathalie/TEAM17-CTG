@@ -13,7 +13,7 @@ from django.contrib.auth.models import User
 def say_hello(request):
     return HttpResponse('Hello World')
 
-# User Authentication
+# USER AUTHENTICATION
 @csrf_exempt
 def register_user(request):
     try:
@@ -106,9 +106,6 @@ def event_registration_confirmation(request, event_id):
     else:
         return HttpResponse(f'user {user_id} is not registered for {event_name}', status=200)
 
-
-    
-
 @csrf_exempt
 def create_event(request):
     if request.method == "POST":
@@ -129,3 +126,13 @@ def create_event(request):
 
         return HttpResponse({"Status": "Added"}, content_type="application/json")
     return HttpResponse("Wrong method")
+
+# USER 
+def get_user_details(request, user_id=1):
+    try:
+        userProfile = Profile.objects.get(user=User.objects.get(id=user_id))
+        return HttpResponse(str(userProfile.toJSON()), content_type="application/json")
+    except Profile.DoesNotExist or User.DoesNotExist:
+        return HttpResponse('{"Response": "User/Profile does not exist"}', status=400, content_type="application/json")
+    except Exception as e:
+        return HttpResponse(f'Error: {str(e)}', status=500)

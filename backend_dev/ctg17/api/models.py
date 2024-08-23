@@ -2,7 +2,15 @@ import uuid
 from django.db import models
 from django.contrib.auth.models import User
 from api.constants import Gender, RoleType
+from django.core import serializers
 
+class Badge(models.Model):
+    badge_name = models.CharField(max_length=255)
+    badge_image = models.ImageField(null=True, blank=True)
+
+    def __str__(self):
+        return self.badge_name
+    
 class Profile(models.Model):
     id = models.UUIDField(
         primary_key=True,
@@ -19,9 +27,23 @@ class Profile(models.Model):
         choices=RoleType.choices(),
     )
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    badges = models.ManyToManyField(Badge, related_name="volunteer_badges", blank=True)
 
     def __str__(self):
         return f"{self.name} ({self.user.username})"
+
+    def toJSON(self):
+        data = {
+            'name': self.name,
+            'age': self.age,
+            'phone': self.phone,
+            'gender': self.gender,
+            'role_type': self.role_type,
+            'user_id': self.user.id,
+            'username': self.user.username,
+            'badges': serializers.serialize('json', self.badges.all())
+        }
+        return data
     
 
 class Application(models.Model):
