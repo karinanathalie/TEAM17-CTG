@@ -130,8 +130,9 @@ def create_event(request):
 # USER 
 def get_user_details(request, user_id=1):
     try:
-        userProfile = Profile.objects.get(user=User.objects.get(id=user_id))
-        return HttpResponse(str(userProfile.toJSON()), content_type="application/json")
+        userProfile = Profile.objects.filter(user=User.objects.get(id=user_id))
+        userProfileJSON = serializers.serialize('json', userProfile)
+        return HttpResponse(userProfileJSON, content_type="application/json")
     except Profile.DoesNotExist or User.DoesNotExist:
         return HttpResponse('{"Response": "User/Profile does not exist"}', status=400, content_type="application/json")
     except Exception as e:
