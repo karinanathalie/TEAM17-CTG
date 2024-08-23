@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core import serializers
+
+from .constants import RoleType
 from .models import Event, Profile
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
@@ -134,6 +136,23 @@ def get_user_details(request, user_id=1):
         userProfileJSON = serializers.serialize('json', userProfile)
         return HttpResponse(userProfileJSON, content_type="application/json")
     except Profile.DoesNotExist or User.DoesNotExist:
+        return HttpResponse('{"Response": "User/Profile does not exist"}', status=400, content_type="application/json")
+    except Exception as e:
+        return HttpResponse(f'Error: {str(e)}', status=500)
+
+def get_user_registrations(request, user_id=1):
+    try:
+        user = User.objects.get(id=user_id)
+        profile = Profile.objects.get(user=user)
+
+        if profile.role_type == RoleType.PARTICIPANT:
+            events = Event.objects.filter(registered_participants__id=user.id)
+        else:
+            events = Event.objects.filter(registered_volunteers__id=user.id)
+
+        eventsJSON = serializers.serialize('json', events)
+        return HttpResponse(eventsJSON, content_type="application/json")
+    except User.DoesNotExist or Profile.DoesNotExist:
         return HttpResponse('{"Response": "User/Profile does not exist"}', status=400, content_type="application/json")
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
