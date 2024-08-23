@@ -11,6 +11,16 @@ class Badge(models.Model):
     def __str__(self):
         return self.badge_name
     
+class Training(models.Model):
+    training_name = models.CharField(max_length=255)
+    training_description = models.TextField(null=True, blank=True)
+    training_link = models.CharField(max_length=255)
+    skillset = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return self.training_name
+
+    
 class Profile(models.Model):
     id = models.UUIDField(
         primary_key=True,
@@ -28,6 +38,7 @@ class Profile(models.Model):
     )
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     badges = models.ManyToManyField(Badge, related_name="volunteer_badges", blank=True)
+    trainings = models.ManyToManyField(Training, related_name="completed_trainings", blank=True)
 
     def __str__(self):
         return f"{self.name} ({self.user.username})"
@@ -72,6 +83,7 @@ class Event(models.Model):
     # To enfore validation for event demographics
     target_population = models.CharField(max_length=255, null=True, blank=True)
     skillset = models.TextField(null=True, blank=True)
+    required_training = models.ManyToManyField(Training, related_name="required_training", blank=True)
 
     # Managing registrations
     participant_quota = models.IntegerField()
@@ -88,13 +100,3 @@ class Event(models.Model):
 
     def __str__(self):
         return self.event_name
-
-
-class Training(models.Model):
-    training_name = models.CharField(max_length=255)
-    training_description = models.TextField(null=True, blank=True)
-    training_link = models.CharField(max_length=255)
-    skillset = models.TextField(null=True, blank=True)
-
-    def __str__(self):
-        return self.training_name
