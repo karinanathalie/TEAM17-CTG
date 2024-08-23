@@ -4,6 +4,7 @@ import InsightsIcon from '@mui/icons-material/Insights';
 import EventIcon from '@mui/icons-material/Event';
 import SendIcon from '@mui/icons-material/Send';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
+import { Path } from "../constants/path";
 
 export const SITEMAP: Sitemap = [
     {
@@ -33,9 +34,9 @@ export const SITEMAP: Sitemap = [
         ]
     },
     {
-        key: 'workflow',
+        key: 'operations',
         type: 'sitemap',
-        label: 'Workflow',
+        label: 'Operations',
         icon: <AssignmentIcon />,
         children: [
             {
@@ -47,7 +48,7 @@ export const SITEMAP: Sitemap = [
                         key: 'private-event',
                         type: 'page',
                         label: 'Private Event',
-                        path: '',
+                        path: Path.Operations.Application.PrivateEvent,
                     },
                     {
                         key: 'public-event',
@@ -58,13 +59,13 @@ export const SITEMAP: Sitemap = [
                                 key: 'volunteer-application',
                                 type: 'page',
                                 label: 'Volunteer Application',
-                                path: '',
+                                path: Path.Operations.Application.PublicEvent,
                             },
                             {
                                 key: 'participant-application',
                                 type: 'page',
                                 label: 'Participant Application',
-                                path: '',
+                                path: Path.Operations.Application.PublicEvent,
                             },
                         ]
                     },
@@ -79,25 +80,25 @@ export const SITEMAP: Sitemap = [
                         key: 'participant',
                         type: 'page',
                         label: 'Participant',
-                        path: '',
+                        path: Path.Operations.Users.Participant,
                     },
                     {
                         key: 'group-participant',
                         type: 'page',
                         label: 'Group Participant',
-                        path: '',
+                        path: Path.Operations.Users.GroupParticipant,
                     },
                     {
                         key: 'volunteer',
                         type: 'page',
                         label: 'Volunteer',
-                        path: ''
+                        path: Path.Operations.Users.Volunteer,
                     },
                     {
                         key: 'staff',
                         type: 'page',
                         label: 'Staff',
-                        path: '',
+                        path: Path.Operations.Users.Staff,
                     },
                     
                 ]
@@ -114,13 +115,13 @@ export const SITEMAP: Sitemap = [
                 key: 'event-type',
                 type: 'page',
                 label: 'Event Type',
-                path: '',
+                path: Path.Event.EventType,
             },
             {
                 key: 'event',
                 type: 'page',
                 label: 'Event',
-                path: '',
+                path: Path.Event.Root,
             },
         ]
     },
@@ -134,13 +135,13 @@ export const SITEMAP: Sitemap = [
                 key: 'email',
                 type: 'page',
                 label: 'Email',
-                path: '',
+                path: Path.CRM.Email,
             },
             {
                 key: 'whatsapp',
                 type: 'page',
                 label: 'Whatsapp',
-                path: '',
+                path: Path.CRM.Whatsapp,
             },
         ]
     },
@@ -154,7 +155,7 @@ export const SITEMAP: Sitemap = [
                 key: 'zendesk',
                 type: 'page',
                 label: 'Zendesk',
-                path: '',
+                path: Path.Services.Zendesk,
             },
         ]
     },

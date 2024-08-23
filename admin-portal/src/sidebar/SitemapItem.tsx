@@ -2,7 +2,7 @@ import { List, ListItem, ListItemIcon, ListItemText, Collapse, ListItemButton } 
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { useEffect, useState } from "react";
-// import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { SitemapElement } from "./types"; 
 
 interface SitemapItemProps {
@@ -17,7 +17,6 @@ const SitemapItem: React.FC<SitemapItemProps> = ({
     isDrawerOpen 
 }) => {
     const [open, setOpen] = useState(false);
-    // const navigate = useNavigate();
 
     useEffect(() => {
         if (!isDrawerOpen) {
@@ -28,14 +27,12 @@ const SitemapItem: React.FC<SitemapItemProps> = ({
     const handleClick = () => {
         if (item.type === 'sitemap' && isDrawerOpen) {
             setOpen(!open);
-        } else if (item.type === 'page') {
-            // navigate(item.path);
-        }
+        } 
     };
 
     return (
         <>
-            <ListItemButton onClick={handleClick}>
+            <ListItemButton onClick={handleClick} component={item.type === 'page' ? Link : 'div'} to={item.path}>
                 {item.icon && <ListItemIcon sx={{ marginLeft: 0.5 }}>{item.icon}</ListItemIcon>}
                 <ListItemText primary={item.label} sx={{ marginLeft: 2 * level }}/>
                 {item.type === 'sitemap' ? (open? <ExpandLess /> : <ExpandMore />) : null}
