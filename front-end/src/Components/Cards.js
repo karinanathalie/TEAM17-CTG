@@ -1,5 +1,7 @@
 import React from "react";
 import { ButtonFull, ButtonFull2 } from "./Button";
+import { CiCalendarDate } from "react-icons/ci";
+
 
 export const ScheduleCard = ({ onClick, date, eventName, eventSummary}) => {
     
@@ -35,24 +37,39 @@ export const ScheduleCard = ({ onClick, date, eventName, eventSummary}) => {
   };
 
 
-  export const CarousellCard = ({ onClick, date, location, eventPicture, eventName, eventSummary}) => {
+  export const CarousellCard = ({ onClick, date, location, eventPicture, eventName}) => {
     const SplittedDate = date.split("-");
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const monthIndex = parseInt(SplittedDate[1], 10) - 1;
     const month = months[monthIndex];
     const day = SplittedDate[0];
     const dayname = new Date(date).toLocaleString('en-us', {weekday:'long'});
+    const year = SplittedDate[2];
 
     return(
-        <div className="flex flex-col w-[342px] h-[469px] rounded-[16px] bg-white">
-            <div className="flex w-full h-[249px] rounded-t-[16px] bg-lightgray">
+        <div className="flex flex-col w-[342px] h-[469px] rounded-[16px] p-[24px] bg-white">
+            <div className="flex w-[302px]] h-[249px] rounded-[16px] bg-lightgray">
                 <img
                     src={eventPicture}
                     alt="event"
                     className="w-full h-full object-cover rounded-t-[16px]"
                 />
             </div>
+            <div className="py-[30px]">
+                <div className="">{eventName}</div>
+                <div className="">{dayname}, {day} {month} {year}</div>
+                <div className="">{location}</div>
+            </div>
+            <div className="flex space-x-[10px]">
+                <ButtonFull2>
+                    Other Event
+                </ButtonFull2>
+                <ButtonFull>
+                    Register
+                </ButtonFull>
+            </div>
         </div>
+
     );
 
   };
