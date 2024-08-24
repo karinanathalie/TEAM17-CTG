@@ -72,6 +72,10 @@ const Login = () => {
               <h1 className=" font-bold text-xl text-center">Sign Up</h1>
               <h1 className="font-bold mt-[10%]">Username</h1>
               <Inputlogin type={"text"} name={"Username"}></Inputlogin>
+              <h1 className="font-bold mt-[2%]">Nationality</h1>
+              <Inputlogin type={"text"} name={"Nationality"}></Inputlogin>
+              <h1 className="font-bold mt-[2%]">Gender</h1>
+              <Inputlogin type={"text"} name={"Gender"}></Inputlogin>
               <h1 className="font-bold mt-[2%]">Email</h1>
               <Inputlogin type={"text"} name={"Email"}></Inputlogin>
               <h1 className="font-bold mt-[5%]">Password</h1>
