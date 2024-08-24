@@ -11,7 +11,7 @@ import json
 from django.contrib.auth.models import User
 from django.conf import settings
 from django.core.mail import send_mail
-from drive.script import DriveAPI
+from api.drive.script import DriveAPI
 #need to import user
 
 
@@ -213,7 +213,7 @@ def get_user_registrations(request, user_id=1):
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
     
-def get_user_achievements(request, user_id=1):
+def get_user_badges(request, user_id=1):
     try:
         user = User.objects.get(id=user_id)
         profile = Profile.objects.get(user=user)
