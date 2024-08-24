@@ -85,6 +85,16 @@ class Application(models.Model):
     def __str__(self):
         return f"{self.user_profile.name} applied as {self.role_type} for {self.event.event_name}"
 
+class VolunteerApplication(Application):
+    reason_joining = models.TextField()
+    cv_file = models.FileField(upload_to='cv_files/', null=True, blank=True)
+
+    class Meta:
+        verbose_name = "Volunteer Application"
+        verbose_name_plural = "Volunteer Applications"
+
+    def __str__(self):
+        return f"{self.user_profile.name} applied as Volunteer for {self.event.event_name} - Reason: {self.why_join}"
 
 class Event(models.Model):
     # Basic event details
