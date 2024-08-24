@@ -1,9 +1,10 @@
 import { React, useState } from "react";
 import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
-import { ButtonFullFixed, XButton } from "./Button";
+import { ButtonFullFixed, XButton } from "./Button.js";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import "../index.css";
+import { InputPasswordlogin, Inputlogin } from "./Input.js";
 
 const Login = () => {
   const [openFirst, setOpenFirst] = useState(false);
@@ -32,35 +33,9 @@ const Login = () => {
             <div>
               <h1 className=" font-bold text-xl text-center">Log In</h1>
               <h1 className="font-bold mt-[10%]">Email</h1>
-              <div className="h-full w-[95%]">
-                <input
-                  required
-                  className=" pl-[1%] bg-white  border  rounded-xl text-left text-black w-[100%] h-[30px]"
-                  type="email"
-                  placeholder="email"
-                  //   value={"email"}
-                />
-              </div>
+              <Inputlogin type={"text"} name={"Email"}></Inputlogin>
               <h1 className="font-bold mt-[4%]">Password</h1>
-              <div className="h-full w-[100%]">
-                <input
-                  required
-                  className="pl-[1%] bg-white border  rounded-3xl text-left text-black w-full h-[30px]"
-                  type={passwordShown ? "text" : "password"}
-                  placeholder="password"
-                  //value
-                />
-                <div
-                  onClick={togglePassword}
-                  className="cursor-pointer w-[24px] h-[24px] absolute mt-[-7%] ml-[7%] right-[1%]"
-                >
-                  {passwordShown ? (
-                    <AiFillEyeInvisible className="h-full w-full" />
-                  ) : (
-                    <AiFillEye className="h-full w-full" />
-                  )}
-                </div>
-              </div>
+              <InputPasswordlogin name={"password"}></InputPasswordlogin>
               <button className="w-full mt-[3%] bg-black text-white rounded-2xl">
                 Log In
               </button>
@@ -96,45 +71,11 @@ const Login = () => {
             <div>
               <h1 className=" font-bold text-xl text-center">Sign Up</h1>
               <h1 className="font-bold mt-[10%]">Username</h1>
-              <div className="h-full w-[100%]">
-                <input
-                  required
-                  className=" pl-[1%] bg-white  border  rounded-xl text-left text-black w-full h-[30px]"
-                  type="text"
-                  placeholder="username"
-                  //   value={"email"}
-                />
-              </div>
+              <Inputlogin type={"text"} name={"Username"}></Inputlogin>
               <h1 className="font-bold mt-[2%]">Email</h1>
-              <div className="h-full w-[100%]">
-                <input
-                  required
-                  className=" pl-[1%] bg-white  border  rounded-xl text-left text-black w-full h-[30px]"
-                  type="text"
-                  placeholder="email"
-                  //   value={"email"}
-                />
-              </div>
+              <Inputlogin type={"text"} name={"Email"}></Inputlogin>
               <h1 className="font-bold mt-[5%]">Password</h1>
-              <div className="h-full w-[100%]">
-                <input
-                  required
-                  className="pl-[1%] bg-white border  rounded-xl text-left text-black w-full h-[30px]"
-                  type={passwordShown ? "text" : "password"}
-                  placeholder="password"
-                  //value
-                />
-                <div
-                  onClick={togglePassword}
-                  className="cursor-pointer w-[24px] h-[24px] absolute mt-[-7%] ml-[7%] right-[1%]"
-                >
-                  {passwordShown ? (
-                    <AiFillEyeInvisible className="h-full w-full" />
-                  ) : (
-                    <AiFillEye className="h-full w-full" />
-                  )}
-                </div>
-              </div>
+              <InputPasswordlogin name={"password"}></InputPasswordlogin>
               <button className="w-[100%] mt-[3%] bg-black text-white rounded-2xl">
                 Sign Up
               </button>
