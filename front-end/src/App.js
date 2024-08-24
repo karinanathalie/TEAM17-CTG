@@ -6,7 +6,7 @@ import { Home, Person, School, EmojiEvents } from '@mui/icons-material';
 import HomeView from './Pages/Home.js';
 import SideBar from './Components/SideBar.js';
 import styled from 'styled-components';
-import { ButtonFull } from './Components/Button.js';
+import { ButtonFull, ButtonFull2 } from './Components/Button.js';
 
 const Container = styled.div``
 
@@ -26,7 +26,7 @@ function App() {
       </SideBar>
     </Router> */}
         
-        <ButtonFull>Click me</ButtonFull>
+        <ButtonFull2>Click me</ButtonFull2>
         
     </Container>
   );

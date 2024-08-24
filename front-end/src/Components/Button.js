@@ -2,7 +2,7 @@ import React from "react";
 
 export const ButtonFull = ({ onClick, children }) => {
   return (
-    <div className="flex justify-center w-[146px] h-[36px] rounded-[8px] bg-buttonblack hover:bg-buttonblackhover hover:drop-shadow-lg">
+    <div className="flex justify-center w-[146px] h-[36px] rounded-[8px] bg-buttonblack hover:bg-buttonblackhover hover:drop-shadow-lg active:drop-shadow-none">
       <button
         className="w-full h-full text-buttonyellow text-[15px] font-poppins font-semibold hover:cursor-pointer"
         onClick={onClick}
@@ -12,6 +12,21 @@ export const ButtonFull = ({ onClick, children }) => {
     </div>
   );
 };
+
+
+export const ButtonFull2 = ({ onClick, children }) => {
+  return (
+    <div className="flex justify-center w-[146px] h-[36px] rounded-[8px] bg-gray hover:bg-lightgray hover:drop-shadow-lg active:drop-shadow-none">
+      <button
+        className="w-full h-full text-buttonyellow text-[15px] font-poppins font-semibold hover:cursor-pointer"
+        onClick={onClick}
+      >
+        {children}
+      </button>
+    </div>
+  );
+};
+
 
 export const ButtonFullFixed = ({ onClick, children }) => {
   return (
