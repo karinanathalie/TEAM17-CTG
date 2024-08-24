@@ -368,7 +368,6 @@ def send_mass_email(request):
                     print(profile.user.email)
                     recipient_list.append(profile.user.email)
             else:
-                # email_addresses = email_addresses_list.split(",")
                 if email_addresses_list and len(email_addresses_list):
                     recipient_list = email_addresses_list
             
