@@ -14,7 +14,7 @@ const Container = styled.div``
 function App() {
   return (
     <Container>
-    {/* <Router>
+      {/* <Router>
       <SideBar>
         <Switch>
           <Route exact path="/" component={HomeView} />

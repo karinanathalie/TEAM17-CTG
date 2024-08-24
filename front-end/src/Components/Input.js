@@ -3,9 +3,7 @@ import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 
 export const InputForm = ({ children, type, name, onChange }) => {
   return (
-    <div
-      className={`bg-greybg w-full font-poppins rounded-[8px] w-full flex`}
-    >
+    <div className={`bg-greybg w-full font-poppins rounded-[8px] w-full flex`}>
       {children && <p className="p-4">{children}</p>}
       <input
         type={type}
@@ -34,8 +32,22 @@ export const InputSearch = React.forwardRef(
         />
       </div>
     );
-  },
+  }
 );
+export const Inputlogin = React.forwardRef(({ type, name }) => {
+  return (
+    <div className={`h-full w-[95%]`}>
+      <input
+        type={type}
+        placeholder={name}
+        className="pl-[1%] bg-white  border  rounded-xl text-left text-black w-[100%] h-[30px]"
+        // onChange={onChange}
+        // value={value}
+      />
+    </div>
+  );
+});
+
 export const InputPassword = ({ children, name, onChange }) => {
   const [ShowStatus, setStatus] = useState(false);
   const handleClick = (e) => {
@@ -59,6 +71,37 @@ export const InputPassword = ({ children, name, onChange }) => {
         onChange={onChange}
       ></input>
       <button onClick={handleClick}>{icon}</button>
+    </div>
+  );
+};
+
+export const InputPasswordlogin = ({ name }) => {
+  const [ShowStatus, setStatus] = useState(false);
+  const handleClick = (e) => {
+    e.preventDefault();
+    setStatus(!ShowStatus);
+  };
+
+  const icon = ShowStatus ? (
+    <AiFillEye className="h-full w-full" />
+  ) : (
+    <AiFillEyeInvisible className="h-full w-full" />
+  );
+
+  return (
+    <div className="h-full w-[100%]">
+      <input
+        type={ShowStatus ? "text" : "password"}
+        placeholder={name}
+        className="pl-[1%] bg-white border  rounded-xl text-left text-black w-full h-[30px]"
+        // onChange={onChange}
+      ></input>
+      <button
+        onClick={handleClick}
+        className="cursor-pointer w-[24px] h-[24px] absolute mt-[-7%] ml-[7%] right-[1%]"
+      >
+        {icon}
+      </button>
     </div>
   );
 };

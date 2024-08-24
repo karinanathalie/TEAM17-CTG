@@ -58,6 +58,7 @@ module.exports = {
       buttonblack: "#25221B",
       buttonblackhover: "#3b362b",
       buttonyellow: "#FFFF99",
+      darkgray: "#1E201E",
     },
   },
   plugins: [],
