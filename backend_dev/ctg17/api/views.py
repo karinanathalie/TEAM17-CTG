@@ -269,3 +269,6 @@ def get_all_participant_application(request):
         return HttpResponse(application_json, content_type="application/json")
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
+    
+def create_volunteer_application(request):
+    return ''
