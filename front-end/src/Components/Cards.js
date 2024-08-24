@@ -45,7 +45,13 @@ export const ScheduleCard = ({ onClick, date, eventName, eventSummary}) => {
 
     return(
         <div className="flex flex-col w-[342px] h-[469px] rounded-[16px] bg-white">
-
+            <div className="flex w-full h-[249px] rounded-t-[16px] bg-lightgray">
+                <img
+                    src={eventPicture}
+                    alt="event"
+                    className="w-full h-full object-cover rounded-t-[16px]"
+                />
+            </div>
         </div>
     );
 
