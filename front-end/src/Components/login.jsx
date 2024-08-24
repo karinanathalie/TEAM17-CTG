@@ -13,6 +13,65 @@ const Login = () => {
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
   };
+  
+  function handleSignUp(e){
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+    console.log(data);
+
+    e.preventDefault();
+    // making a request to the endpoint
+    fetch('some/api/endpoint', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        // enabling change in the cookies
+        'credentials': 'include'
+      },
+      body: JSON.stringify(data)
+    }).then(async (res) => {
+      if (res.status == 200) {
+          window.location.href = '/'; // redirect to the home page
+      } else {
+          // if the fetch is unsuccessful, display an error message
+          alert(await res.json().then(data => data.message));
+      }
+    })
+  }
+
+  function handleLogin(e){
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+    console.log(data);
+
+    e.preventDefault();
+    // making a request to the endpoint
+    fetch('some/api/endpoint', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        // enabling change in the cookies
+        'credentials': 'include'
+      },
+      body: JSON.stringify(data)
+    }).then(async (res) => {
+      if (res.status == 200) {
+          window.location.href = '/'; // redirect to the home page
+      } else {
+          // if the fetch is unsuccessful, display an error message
+          alert(await res.json().then(data => data.message));
+      }
+    })
+  }
+
+  function handleGoogleLogin(){
+    // will be implemented later on
+  }
+
+  function handleFacebookLogin(){
+    // will be implemented later on
+  }
+
   return (
     <div>
       <div>
@@ -29,7 +88,7 @@ const Login = () => {
             closeButton: "fill-white",
           }}
         >
-          <form className="h-full w-full relative  ">
+          <form className="h-full w-full relative" onSubmit={handleLogin}>
             <div>
               <h1 className=" font-bold text-xl text-center">Log In</h1>
               <h1 className="font-bold mt-[10%]">Email</h1>
@@ -40,10 +99,10 @@ const Login = () => {
                 Log In
               </button>
               <h1 className=" text-center font-semibold mt-[3%] text-sm">Or</h1>
-              <button className="border mt-[2%] w-full">
+              <button type='button' className="border mt-[2%] w-full" onClick={handleGoogleLogin}>
                 <span>Log in with Google</span>
               </button>
-              <button className="border mt-[1%] w-full">
+              <button type='button' className="border mt-[1%] w-full" onClick={handleFacebookLogin}>
                 Log in with Facebook
               </button>
               <div className="flex justify-center gap-2 mt-[10%]">
@@ -67,20 +126,20 @@ const Login = () => {
             closeButton: "fill-black",
           }}
         >
-          <form className="h-full w-full relative  ">
+          <form className="h-full w-full relative" onSubmit={handleSignUp}>
             <div>
-              <h1 className=" font-bold text-xl text-center">Sign Up</h1>
+              <h1 className="font-bold text-xl text-center">Sign Up</h1>
               <h1 className="font-bold mt-[10%]">Username</h1>
-              <Inputlogin type={"text"} name={"Username"}></Inputlogin>
+              <Inputlogin type={"text"} name={"username"}></Inputlogin>
               <h1 className="font-bold mt-[2%]">Nationality</h1>
-              <Inputlogin type={"text"} name={"Nationality"}></Inputlogin>
+              <Inputlogin type={"text"} name={"nationality"}></Inputlogin>
               <h1 className="font-bold mt-[2%]">Gender</h1>
-              <Inputlogin type={"text"} name={"Gender"}></Inputlogin>
+              <Inputlogin type={"text"} name={"gender"}></Inputlogin>
               <h1 className="font-bold mt-[2%]">Email</h1>
-              <Inputlogin type={"text"} name={"Email"}></Inputlogin>
+              <Inputlogin type={"text"} name={"email"}></Inputlogin>
               <h1 className="font-bold mt-[5%]">Password</h1>
               <InputPasswordlogin name={"password"}></InputPasswordlogin>
-              <button className="w-[100%] mt-[3%] bg-black text-white rounded-2xl">
+              <button className="w-[100%] mt-[3%] bg-black text-white rounded-2xl" >
                 Sign Up
               </button>
             </div>

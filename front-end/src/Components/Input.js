@@ -58,16 +58,16 @@ export const InputSearch = React.forwardRef(
     );
   }
 );
-
-export const Inputlogin = React.forwardRef(({ type, name }) => {
+export const Inputlogin = React.forwardRef(({ type, name, onChange, value }) => {
   return (
     <div className={`h-full w-[95%]`}>
       <input
+        name={name}
         type={type}
         placeholder={name}
         className="pl-[1%] bg-white  border  rounded-xl text-left text-black w-[100%] h-[30px]"
-        // onChange={onChange}
-        // value={value}
+        onChange={onChange}
+        value={value}
       />
     </div>
   );
@@ -100,7 +100,7 @@ export const InputPassword = ({ children, name, onChange }) => {
   );
 };
 
-export const InputPasswordlogin = ({ name }) => {
+export const InputPasswordlogin = ({ name}) => {
   const [ShowStatus, setStatus] = useState(false);
   const handleClick = (e) => {
     e.preventDefault();
@@ -117,6 +117,7 @@ export const InputPasswordlogin = ({ name }) => {
     <div className="h-full w-[100%]">
       <input
         type={ShowStatus ? "text" : "password"}
+        name={name}
         placeholder={name}
         className="pl-[1%] bg-white border  rounded-xl text-left text-black w-full h-[30px]"
         // onChange={onChange}
