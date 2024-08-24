@@ -14,6 +14,7 @@ import styled from "styled-components";
 import { BackButton, VolunteerParticipantToggle } from "./Components/Button.js";
 import { ScheduleCard, CarousellCard } from "./Components/Cards.js";
 import { RegistrationCard } from "./Components/RegistrationCard.js";
+import  Upcoming  from "./Pages/Upcoming.js"
 
 const Container = styled.div``;
 
@@ -32,7 +33,10 @@ function App() {
       </SideBar>
     </Router>  */}
 
-      <VolunteerParticipantToggle />
+      {/* <VolunteerParticipantToggle /> */}
+      {/* <RegistrationCard /> */}
+      <Upcoming> </Upcoming>
+      
     </Container>
   );
 }

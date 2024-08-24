@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import { data } from "../Components/data.js";
 import Events from "../Components/Events.js";
-import { InputSearchu } from "../Components/Input.js";
+// import { InputSearchu } from "../Components/Input.js";
 import Select from "react-dropdown-select";
 
 const Upcoming = () => {
@@ -38,15 +38,16 @@ const Upcoming = () => {
     },
   ];
   const [datas, setDatas] = useState(data);
-  const filterType = (type) => {
-    setDatas(
-      data.filter((item) => {
-        return item.Type === type;
-      })
-    );
-  };
+    const filterType = (type) => {
+    const filteredData = data.filter((item) => {
+      return item.Type === type[0].label;
+    });
+    setDatas(filteredData);
+    console.log(filteredData);
+};
 
   const filterGroup = (group) => {
+    console.log("group enter", group);
     setDatas(
       data.filter((item) => {
         return item.label === group;
@@ -56,7 +57,7 @@ const Upcoming = () => {
   return (
     <div>
       <div className="flex justify-end mt-[3%]">
-        <InputSearchu type={"text"} name={"search"}></InputSearchu>
+        {/* <InputSearchu type={"text"} name={"search"}></InputSearchu> */}
         <button className="mr-[12%] w-[310px] bg-black text-white rounded-3xl px-4">
           View my registrations
         </button>
@@ -67,7 +68,7 @@ const Upcoming = () => {
         </h1>
         <Select
           options={optionsGroup}
-          onChange={(values) => filterGroup(values)}
+          onChange={(values) => filterGroup(values.label)}
         ></Select>
         <Select
           options={optionsType}

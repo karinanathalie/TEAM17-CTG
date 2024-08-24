@@ -15,6 +15,30 @@ export const InputForm = ({ children, type, name, onChange }) => {
   );
 };
 
+export const TextArea = ({ children, type, name, onChange }) => {
+  return (
+    <div className="bg-grayinput w-full h-full rounded-[6px] flex text-white text-[12px] mb-[16px]">
+      {children && <p className="p-3 mx-2">{children}</p>}
+      <textarea rows="6" className="bg-grayinput h-full text-white w-full rounded-[6px] p-4 placeholder-lightgray"> </textarea>
+    </div>
+  );
+};
+
+export const FileUpload = ({onChange}) => {
+  return (
+    <div>
+       <input
+        type="file"
+        id="pdf-upload"
+        name="pdf-upload"
+        accept=".pdf"
+        onChange={onChange}
+        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      />
+    </div>
+  )
+}
+
 export const InputSearch = React.forwardRef(
   ({ children, type, name, onChange, value }, ref) => {
     return (
@@ -34,6 +58,7 @@ export const InputSearch = React.forwardRef(
     );
   }
 );
+
 export const Inputlogin = React.forwardRef(({ type, name }) => {
   return (
     <div className={`h-full w-[95%]`}>
