@@ -18,7 +18,7 @@ export default function SideBar({ children }) {
 
     return (
       <div className='flex flex-row h-full w-full rounded-full'>
-        <div className='bg-grey rounded-r-2xl h-full'>
+        <div className='bg-darkgray rounded-r-2xl h-full'>
             <div className=" mx-[30px] mt-[40px] sidebar w-[250px] text-white">
             <div className='my-[5px] mb-[20px]'>
                 <img src='http://placehold.it/250x80'></img>
@@ -26,7 +26,7 @@ export default function SideBar({ children }) {
             <nav>
                 <ul>
                 <li className='mb-[15px] font-[700]'>
-                    <div className={active_link != 'home' ? 'bg-grey text-white py-[10px] rounded-2xl' : 'bg-white text-black py-[10px] rounded-2xl'}>
+                    <div className={active_link != 'home' ? 'bg-darkgray text-white py-[10px] rounded-2xl' : 'bg-white text-black py-[10px] rounded-2xl'}>
                         <HomeOutlinedIcon />
                         <Link to="/home" className="ml-[15px]" onClick={() => {set_active_link('home')}}>
                         Home
@@ -34,7 +34,7 @@ export default function SideBar({ children }) {
                     </div>
                 </li>
                 <li className='mb-[15px] font-[700]'>
-                    <div className={active_link != 'events' ? 'bg-grey text-white py-[10px] rounded-2xl' : 'bg-white text-black py-[10px] rounded-2xl'}>
+                    <div className={active_link != 'events' ? 'bg-darkgray text-white py-[10px] rounded-2xl' : 'bg-white text-black py-[10px] rounded-2xl'}>
                         <BarChartOutlinedIcon />
                         <Link to="/events" className="ml-[15px]" onClick={ () => {set_active_link('events')}}>
                         Events
@@ -42,7 +42,7 @@ export default function SideBar({ children }) {
                     </div>
                 </li>
                 <li className='mb-[15px] font-[700]'>
-                    <div className={active_link != 'about' ? 'bg-grey text-white py-[10px] rounded-2xl' : 'bg-white text-black py-[10px] rounded-2xl'}>
+                    <div className={active_link != 'about' ? 'bg-darkgray text-white py-[10px] rounded-2xl' : 'bg-white text-black py-[10px] rounded-2xl'}>
                         <InfoOutlinedIcon />
                         <Link to="/about" className="ml-[15px]" onClick={ () => {set_active_link('about')}}>
                         About
@@ -50,7 +50,7 @@ export default function SideBar({ children }) {
                     </div>
                 </li>
                 <li className='mb-[15px] font-[700]'>
-                    <div className={active_link != 'user' ? 'bg-grey text-white py-[10px] rounded-2xl' : 'bg-white text-black py-[10px] rounded-2xl'}>
+                    <div className={active_link != 'user' ? 'bg-darkgray text-white py-[10px] rounded-2xl' : 'bg-white text-black py-[10px] rounded-2xl'}>
                         <PermIdentityOutlinedIcon />
                         <Link to="/user" className="ml-[15px]" onClick={ () => {set_active_link('user')}}>
                         User
