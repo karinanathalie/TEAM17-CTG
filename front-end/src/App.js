@@ -14,7 +14,7 @@ const Container = styled.div``
 function App() {
   return (
     <Container>
-      {/* <Router>
+      <Router>
       <SideBar>
         <Switch>
           <Route exact path="/" component={HomeView} />
@@ -24,9 +24,9 @@ function App() {
           <Route path="/volunteering" component={HomeView} />
         </Switch>
       </SideBar>
-    </Router> */}
+    </Router>
         
-        <ScheduleCard date="12-07-2003" eventName="Hello World" eventSummary="hello" />
+        {/* <ScheduleCard date="12-07-2003" eventName="Hello World" eventSummary="hello" /> */}
     </Container>
   );
 }
