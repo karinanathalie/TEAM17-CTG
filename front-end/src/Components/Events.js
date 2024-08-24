@@ -10,7 +10,7 @@ const Events = ({ item }) => {
           className="w-full h-[197px] rounded-t-3xl"
         />
         <div className="flex mt-[5%] gap-2">
-          <div className="w-[100px] items-center bg-yellow">
+          <div className="w-[100px] items-center ">
             <h1 className="text-center text-[12px] text-[#923417]">
               {item.month}
             </h1>

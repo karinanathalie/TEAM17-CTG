@@ -1,10 +1,18 @@
 import { React, useState } from "react";
 import { data } from "../Components/data.js";
 import Events from "../Components/Events.js";
-// import { InputSearchu } from "../Components/Input.js";
+import { InputSearchu } from "../Components/Input.js";
 import Select from "react-dropdown-select";
+import { CiSearch } from "react-icons/ci";
 
 const Upcoming = () => {
+  const styles = {
+    fontSize: 14,
+    border: "none",
+    color: "black",
+    borderRadius: "10px",
+    fontcolor: "black",
+  };
   const optionsGroup = [
     {
       value: 1,
@@ -38,45 +46,51 @@ const Upcoming = () => {
     },
   ];
   const [datas, setDatas] = useState(data);
-    const filterType = (type) => {
+  const filterType = (type) => {
     const filteredData = data.filter((item) => {
       return item.Type === type[0].label;
     });
     setDatas(filteredData);
-    console.log(filteredData);
-};
+  };
 
   const filterGroup = (group) => {
-    console.log("group enter", group);
-    setDatas(
-      data.filter((item) => {
-        return item.label === group;
-      })
-    );
+    const filteredGroup = data.filter((item) => {
+      return item.label === group[0].label;
+    });
+    setDatas(filteredGroup);
   };
   return (
     <div>
       <div className="flex justify-end mt-[3%]">
-        {/* <InputSearchu type={"text"} name={"search"}></InputSearchu> */}
-        <button className="mr-[12%] w-[310px] bg-black text-white rounded-3xl px-4">
+        <InputSearchu type={"text"} name={"Search Event..."}></InputSearchu>
+
+        <button className="mr-[12%] mt-[1%] h-[40px] w-[310px] bg-black text-white rounded-xl px-4">
           View my registrations
         </button>
       </div>
-      <div>
+      <div className="flex ">
         <h1 className="font-poppins font-semibold text-3xl mt-[3%] ml-[12%]">
           Upcoming Events
         </h1>
-        <Select
-          options={optionsGroup}
-          onChange={(values) => filterGroup(values.label)}
-        ></Select>
-        <Select
-          options={optionsType}
-          onChange={(values) => filterType(values)}
-        ></Select>
+        <div className="mt-[3%] gap-3 ml-[40%] flex w-[300px]">
+          <Select
+            options={optionsGroup}
+            onChange={(values) => filterGroup(values)}
+            placeholder="Target Group"
+            className="bg-[#F2F2F2] placeholder-black rounded-2xl mr-[2%] w-[300px] font-poppins   text-black"
+            style={styles}
+          ></Select>
+          <Select
+            options={optionsType}
+            onChange={(values) => filterType(values)}
+            placeholder="Event Type"
+            className="bg-[#F2F2F2]  w-[300px]   text-black"
+            style={styles}
+          ></Select>
+        </div>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-6 py-6 w-[80%]">
-        {data.map((item, index) => (
+        {datas.map((item, index) => (
           <Events item={item} key={index}></Events>
         ))}
       </div>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
+import { CiSearch } from "react-icons/ci";
 
 export const InputForm = ({ children, type, name, onChange }) => {
   return (
@@ -19,15 +20,20 @@ export const TextArea = ({ children, type, name, onChange }) => {
   return (
     <div className="bg-grayinput w-full h-full rounded-[6px] flex text-white text-[12px] mb-[16px]">
       {children && <p className="p-3 mx-2">{children}</p>}
-      <textarea rows="6" className="bg-grayinput h-full text-white w-full rounded-[6px] p-4 placeholder-lightgray"> </textarea>
+      <textarea
+        rows="6"
+        className="bg-grayinput h-full text-white w-full rounded-[6px] p-4 placeholder-lightgray"
+      >
+        {" "}
+      </textarea>
     </div>
   );
 };
 
-export const FileUpload = ({onChange}) => {
+export const FileUpload = ({ onChange }) => {
   return (
     <div>
-       <input
+      <input
         type="file"
         id="pdf-upload"
         name="pdf-upload"
@@ -36,8 +42,8 @@ export const FileUpload = ({onChange}) => {
         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
       />
     </div>
-  )
-}
+  );
+};
 
 export const InputSearch = React.forwardRef(
   ({ children, type, name, onChange, value }, ref) => {
@@ -50,6 +56,27 @@ export const InputSearch = React.forwardRef(
           type={type}
           placeholder={name}
           className="p-2 pl-1 bg-greybg w-full text-base sg:text-[16px]"
+          onChange={onChange}
+          value={value}
+          ref={ref}
+        />
+      </div>
+    );
+  }
+);
+export const InputSearchu = React.forwardRef(
+  ({ children, type, name, onChange, value }, ref) => {
+    return (
+      <div className={` w-[350px] font-poppins font-white rounded-[8px] flex`}>
+        <div className="ml-[-400px] mt-[6%] z-10">
+          {" "}
+          <CiSearch className="pl-[-400px]" />
+        </div>
+
+        <input
+          type={type}
+          placeholder={name}
+          className="text-[#6A6A6A] z-0 placeholder-[#6A6A6A] ml-[-70px] rounded-lg h-[58px] bg-[#C4C4C4] w-[400px] text-center text-base "
           onChange={onChange}
           value={value}
           ref={ref}
