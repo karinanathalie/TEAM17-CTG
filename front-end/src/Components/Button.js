@@ -43,24 +43,30 @@ export const ButtonFullFixed = ({ onClick, children }) => {
 
 export const BackButton = ({ onClick }) => {
   return (
-    <button className="w-fit bg-greybg p-4 rounded-full" onClick={onClick}>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth={1.5}
-        stroke="currentColor"
-        className="w-6 h-6"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
-        />
-      </svg>
+    <button className="m-3 flex space-x-[10px] w-[135px] h-[48px] px-[21px] py-[10px] rounded-[8px] bg-buttonblack" onClick={onClick}>
+      <div className=" font-medium text-[20px] text-white">&lt;</div>
+      <div className="font-medium text-[20px] text-white">Back</div>
     </button>
   );
 };
+
+
+export const VolunteerParticipantToggle = ({ onClick }) => {
+  // Using checkbox, if not checked, volunteer. Else, participants.
+  return (
+    <label className="relative flex justify-center items-center w-[289px] h-[50px] rounded-[8px] cursor-pointer peer">
+      <input type="checkbox" className="sr-only peer" onClick={onClick}/>
+      <div className="absolute bg-gray inset-0 peer-checked:bg-blue-600 transition-colors duration-100 rounded-[8px]"></div>
+      <div className="absolute left-[6px] top-[7px] bg-buttonblack border border-gray-300 rounded-[8px] h-[36px] w-[123px] transition-transform duration-200 transform peer-checked:translate-x-[153px] z-0"></div>
+      <span className="flex flex-col justify-center z-10 px-[40px] relative text-blue font-semibold dark:text-gray-300 peer-checked:text-black">Volunteer</span>
+      <span className="flex flex-col justify-center z-10 px-[40px] relative text-black font-semibold dark:text-gray-300 peer-checked:text-blue">Participant</span>
+    </label>
+  );
+};
+
+
+
+
 
 export const ButtonSocial = ({ icon, text }) => {
   return (
