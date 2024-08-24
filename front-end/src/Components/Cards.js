@@ -1,5 +1,5 @@
 import React from "react";
-import { ButtonFull, ButtonFull2 } from "./Button";
+import { ButtonFull, ButtonFull2, ButtonFullRoleBased} from "./Button";
 import { CiCalendarDate , CiLocationOn } from "react-icons/ci";
 
 
@@ -118,7 +118,7 @@ export const EventCard = ({date, location, eventPicture, eventName, eventSummary
                     </div>
                 </div>
                 <div className="flex justify-end pt-[37px]">
-                    <ButtonFull>Details</ButtonFull>
+                    <ButtonFullRoleBased role={role}>Details</ButtonFullRoleBased>
                 </div>
             </div>
            

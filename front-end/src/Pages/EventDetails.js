@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled } from "styled-components";
 import {
   BrowserRouter as Router,
@@ -19,6 +19,11 @@ const EventListWrapper = styled.div``;
 
 
 export default function EventDetails(){
+    const [current_role, setRole] = useState('Participant');
+
+    const handleRoleToggle = () => {
+        setRole(prevRole => prevRole === 'Participant' ? 'Volunteer' : 'Participant');
+    };
 
     const list_of_events = [
         {
@@ -58,12 +63,12 @@ export default function EventDetails(){
             <ContentWrapper className="w-full flex flex-col px-[53px]">
                 <ContentWrapper className="w-full flex justify-between mt-[58px] mb-8">
                     <BackButton />
-                    <VolunteerParticipantToggle />
+                    <VolunteerParticipantToggle onClick={handleRoleToggle}/>
                 </ContentWrapper>
                 <EventListWrapper className="w-full flex flex-col">
                     {list_of_events.map((event) => {
                         return(
-                            <EventCard date={event.event_date} location={event.event_location} eventPicture={event.event_picture} eventName={event.event_name} eventSummary={event.event_summary} role={event.event_role}/>
+                            <EventCard date={event.event_date} location={event.event_location} eventPicture={event.event_picture} eventName={event.event_name} eventSummary={event.event_summary} role={current_role}/>
                         )
                     })}
                 </EventListWrapper>
