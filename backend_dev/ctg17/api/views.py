@@ -11,6 +11,7 @@ import json
 from django.contrib.auth.models import User
 from django.conf import settings
 from django.core.mail import send_mail
+from drive.script import DriveAPI
 #need to import user
 
 
@@ -293,8 +294,46 @@ def get_all_participant_application(request):
         return HttpResponse(f'Error: {str(e)}', status=500)
     
 def create_volunteer_application(request):
-    return ''
+    if request.method == 'POST':
+        try:
+            user_profile_id = request.POST.get('user_profile_id')
+            event_id = request.POST.get('event_id')
+            reason_joining = request.POST.get('reason_joining')
+            cv_file = request.FILES.get('cv_file')
 
+            # Get the user profile and event objects
+            user_profile = get_object_or_404(Profile, id=user_profile_id)
+            event = get_object_or_404(Event, id=event_id)
+
+            # Create the VolunteerApplication object
+            volunteer_application = VolunteerApplication(
+                user_profile=user_profile,
+                event=event,
+                reason_joining=reason_joining,
+                cv_file=cv_file
+            )
+            # Save the application to the database
+            volunteer_application.save()
+            return HttpResponse(status=201)
+        except Exception as e:
+            return HttpResponse(f'Error: {str(e)}', status=500)
+
+def create_application(request):
+    if request.method == 'POST':
+        try:
+            user_profile_id = request.POST.get('user_profile_id')
+            event_id = request.POST.get('event_id')
+            user_profile = get_object_or_404(Profile, id=user_profile_id)
+            event = get_object_or_404(Event, id=event_id)
+
+            application = Application(
+                user_profile=user_profile,
+                event=event,
+            )
+            application.save()
+            return HttpResponse(status=201)
+        except Exception as e:
+            return HttpResponse(f'Error: {str(e)}', status=500)
 
 # Utility
 def send_email(subject, message, recipient_list):
