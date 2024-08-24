@@ -2,9 +2,9 @@ import React from "react";
 
 export const ButtonFull = ({ onClick, children }) => {
   return (
-    <div className="bottom-16 left-3 right-3 flex justify-around bg-red rounded-[16px] items-center mx-auto w-full mb-4">
+    <div className="flex justify-center w-[146px] h-[36px] rounded-[8px] bg-buttonblack hover:bg-buttonblackhover hover:drop-shadow-lg">
       <button
-        className="w-full bg-red rounded-[8px] sg:text-[20px] gf:text-[16px] text-white pt-3 pb-3 text-xl font-poppins font-semibold"
+        className="w-full h-full text-buttonyellow text-[15px] font-poppins font-semibold hover:cursor-pointer"
         onClick={onClick}
       >
         {children}
