@@ -5,33 +5,33 @@ import { useEffect, useState } from "react";
 import { useTheme } from "../../theme";
 import { useNavigate } from 'react-router-dom';
 import { Path } from "../../constants/path";
-import { participantColumns } from "../../gridColDef/participant";
+import { applicationColumns } from "../../gridColDef/application";
 
-interface EventProps {
+interface Props {
     isSidebarOpen: boolean;
 }
 
-const Participant: React.FC<EventProps> = ({ isSidebarOpen }) => {
-    const [participant, setParticipant] = useState<any[]>([]);
+const Whatsapp: React.FC<Props> = ({ isSidebarOpen }) => {
+    const [whatsappTemplate, setWhatsappTemplate] = useState<any[]>([]);
     const containerWidth = isSidebarOpen ? '75%' : '90%';
     const theme = useTheme();
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch('http://0.0.0.0:8000/api/profile/participants')
+        fetch('http://0.0.0.0:8000/api/applications/participants')
           .then((response) => response.json())
           .then((data) => {
               const rows = data.map((item: any) => ({
                   id: item.pk,
                   ...item.fields,  
               }));
-              setParticipant(rows);
+              setWhatsappTemplate(rows);
           })
           .catch((error) => console.error('Error fetching data:', error));
     }, []);
 
     const handleClick = () => {
-        navigate(Path.Event.Create);  
+        navigate(Path.CRM.CreateEmail);  
     };
     
     return (
@@ -45,18 +45,18 @@ const Participant: React.FC<EventProps> = ({ isSidebarOpen }) => {
                 }}
             >
                 <Breadcrumbs>
-                    <Typography variant='h5' color='primary'>Participants</Typography>
+                    <Typography variant='h5' color='primary'>Whatsapp Template</Typography>
                 </Breadcrumbs>
                 <Button variant="outlined" color="primary" onClick={handleClick}>
-                    Create
+                    Send Message
                 </Button>
             </Box>
 
             <Stack style={{ marginTop: 20 }}>
                 <div style={{ height: 680 }}>
                     <DataGrid
-                        rows={participant} 
-                        columns={participantColumns}  
+                        rows={whatsappTemplate} 
+                        columns={applicationColumns}  
                         getRowId={(row) => row.id} 
                         initialState={{
                             pagination: {
@@ -78,4 +78,5 @@ const Participant: React.FC<EventProps> = ({ isSidebarOpen }) => {
     );
 }
 
-export default Participant;
+export default Whatsapp;
+

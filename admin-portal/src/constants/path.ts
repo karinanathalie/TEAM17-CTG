@@ -6,9 +6,8 @@ export const Path = {
     Operations: {
         Root: `/operations`,
         Application: {
-            Root: `/operations/application`,
-            PrivateEvent: `/operations/application/private`,
-            PublicEvent: `/operations/application/public`,
+            Volunteer: `/operations/application/volunteer`,
+            Participant: `/operations/application/participant`,
         },
         Users:  {
             Root: `/operations/users`,
@@ -16,14 +15,17 @@ export const Path = {
             GroupParticipant : `/operations/group-participant`,
             Volunteer: `/operations/volunteer`,
             Staff: `/operations/staff`,
+            StaffCreate: `/operations/staff/create`,
         },
     },
     Event: {
         Root: `/event`,
-        EventType: `/event/type`,
+        Create: `/event/create`,
+        Type: `/event/type`,
     },
     CRM: {
         Email: `/email`,
+        CreateEmail: `/email/create`,
         Whatsapp: `/whatsapp`,
     },
     Services: {

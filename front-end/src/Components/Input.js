@@ -3,12 +3,12 @@ import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 
 export const InputForm = ({ children, type, name, onChange }) => {
   return (
-    <div className={`bg-greybg w-full font-poppins rounded-[8px] w-full flex`}>
-      {children && <p className="p-4">{children}</p>}
+    <div className="bg-grayinput w-full rounded-[6px] flex text-white text-[12px] mb-[16px]">
+      {children && <p className="p-3 mx-2">{children}</p>}
       <input
         type={type}
         placeholder={name}
-        className="p-4 bg-greybg w-full text-base gf:text-[12px] gf:p-2 sg:text-[16px]"
+        className="p-2 bg-grayinput text-white text-[14px] placeholder-lightgray"
         onChange={onChange}
       ></input>
     </div>

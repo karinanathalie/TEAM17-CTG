@@ -52,7 +52,6 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   
 const ThemeSwitch = () => {
     const [themeMode, setThemeMode] = useThemeMode();
-    const theme = useTheme();
 
     const handleToggle = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {

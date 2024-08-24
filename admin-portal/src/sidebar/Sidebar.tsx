@@ -1,11 +1,10 @@
-import { Box, CSSObject, IconButton, List, styled, Theme, Typography, useTheme } from "@mui/material"
+import { Box, CSSObject, IconButton, List, styled, Theme } from "@mui/material"
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useState } from "react";
 import MuiDrawer from '@mui/material/Drawer';
 import { SITEMAP } from "./config";
 import SitemapItem from "./SitemapItem";
-import { BROWN, LIGHT_BROWN } from "../helpers/colors";
 import Divider from '@mui/material/Divider';
 import Logo from '../Logo';
 import ThemeSwitch from "./ThemeSwitch";
@@ -59,20 +58,23 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 
-const Sidebar: React.FC = () => {
-    const [open, setOpen] = useState(false);
+interface SidebarProps {
+    isOpen: boolean;
+    toggleSidebar: () => void;
+}
 
+const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
     return (
-        <Drawer variant='permanent' open={open}>
+        <Drawer variant='permanent' open={isOpen}>
             <Box>
             <DrawerHeader>
                 <IconButton
-                    onClick={() => setOpen(!open)}
+                    onClick={toggleSidebar}
                 >
-                    {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                    {isOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                 </IconButton>
             </DrawerHeader>
-            {open && (
+            {isOpen && (
                     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                         <Logo />
                     </Box>
@@ -80,7 +82,7 @@ const Sidebar: React.FC = () => {
             <Divider />
             <List>
                 {SITEMAP.map((item) => (
-                    <SitemapItem key={item.key} item={item} isDrawerOpen={open}/>
+                    <SitemapItem key={item.key} item={item} isDrawerOpen={isOpen}/>
                 ))}
             </List>
             <Divider />

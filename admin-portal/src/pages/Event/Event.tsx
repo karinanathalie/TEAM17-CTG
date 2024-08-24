@@ -2,32 +2,32 @@ import { Box, Breadcrumbs, Button, Paper, Stack, Typography } from "@mui/materia
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { useEffect, useState } from "react";
+import { eventColumns } from '../../gridColDef/event' 
 import { useTheme } from "../../theme";
 import { useNavigate } from 'react-router-dom';
 import { Path } from "../../constants/path";
-import { participantColumns } from "../../gridColDef/participant";
 
 interface EventProps {
     isSidebarOpen: boolean;
 }
 
-const Participant: React.FC<EventProps> = ({ isSidebarOpen }) => {
-    const [participant, setParticipant] = useState<any[]>([]);
+const Event: React.FC<EventProps> = ({ isSidebarOpen }) => {
+    const [events, setEvents] = useState<any[]>([]);
     const containerWidth = isSidebarOpen ? '75%' : '90%';
     const theme = useTheme();
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch('http://0.0.0.0:8000/api/profile/participants')
+        fetch('http://0.0.0.0:8000/api/events/')
           .then((response) => response.json())
           .then((data) => {
-              const rows = data.map((item: any) => ({
+              const eventRows = data.map((item: any) => ({
                   id: item.pk,
                   ...item.fields,  
               }));
-              setParticipant(rows);
+              setEvents(eventRows);
           })
-          .catch((error) => console.error('Error fetching data:', error));
+          .catch((error) => console.error('Error fetching events:', error));
     }, []);
 
     const handleClick = () => {
@@ -45,7 +45,7 @@ const Participant: React.FC<EventProps> = ({ isSidebarOpen }) => {
                 }}
             >
                 <Breadcrumbs>
-                    <Typography variant='h5' color='primary'>Participants</Typography>
+                    <Typography variant='h5' color='primary'>Event</Typography>
                 </Breadcrumbs>
                 <Button variant="outlined" color="primary" onClick={handleClick}>
                     Create
@@ -55,8 +55,8 @@ const Participant: React.FC<EventProps> = ({ isSidebarOpen }) => {
             <Stack style={{ marginTop: 20 }}>
                 <div style={{ height: 680 }}>
                     <DataGrid
-                        rows={participant} 
-                        columns={participantColumns}  
+                        rows={events} 
+                        columns={eventColumns}  
                         getRowId={(row) => row.id} 
                         initialState={{
                             pagination: {
@@ -78,4 +78,4 @@ const Participant: React.FC<EventProps> = ({ isSidebarOpen }) => {
     );
 }
 
-export default Participant;
+export default Event;
