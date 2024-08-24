@@ -2,8 +2,6 @@ import requests
 import pandas as pd
 import time
 import json
-import socketio
-
 
 #For Pipeline
 import subprocess

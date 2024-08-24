@@ -13,10 +13,11 @@ urlpatterns = [
     path('events/create/', views.create_event, name="create-event"),
     path('event/<int:event_id>/register', views.event_registration, name = "event-registration"),
     path('event/<int:event_id>/register/confirmation', views.event_registration_confirmation, name = "event-registration-confirm"),
+    path('event/<int:event_id>/sendreminder', views.send_event_reminder, name="send-event-reminder"),
     
     path('user/<int:user_id>/', views.get_user_details, name="user-detail"),
     path('user/<int:user_id>/registrations', views.get_user_registrations, name="user-registrations"),
-    path('user/<int:user_id>/achievements', views.get_user_achievements, name="user-achievement"),
+    path('user/<int:user_id>/badges', views.get_user_badges, name="user-achievement"),
 
     path('profile/participants', views.get_all_participant, name="profile-participants-list"),
     path('profile/volunteers', views.get_all_volunteer, name="profile-volunteers-list"),
@@ -24,4 +25,10 @@ urlpatterns = [
 
     path('application/participants', views.get_all_participant_application, name="application-participants-list"),
     path('application/volunteers', views.get_all_volunteer_application, name="profile-volunteers-list"),
+
+    path('application/create/participants', views.create_application, name="create-application"),
+    path('application/create/volunteers', views.create_volunteer_application, name="create-volunteer-application"),
+
+    path('reminder/emailtemplates', views.get_all_email_templates, name="get-all-email-templates"),
+    path('reminder/sendemail', views.send_mass_email, name="send-mass-email")
 ]

@@ -3,7 +3,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from api.constants import Gender, RoleType
 from django.core import serializers
+from django.utils import timezone
 from datetime import datetime
+
 
 class Badge(models.Model):
     badge_name = models.CharField(max_length=255)
@@ -43,8 +45,8 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     badges = models.ManyToManyField(Badge, related_name="volunteer_badges", blank=True)
     trainings = models.ManyToManyField(Training, related_name="completed_trainings", blank=True)
-    streak = models.PositiveIntegerField(default=0)  
-
+    streak = models.PositiveIntegerField(default=0) 
+    date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.name} ({self.user.username})"
@@ -77,9 +79,6 @@ class Application(models.Model):
         related_name='applications',
         null=True, 
         blank=True,
-    )
-    role_type = models.TextField(
-        choices=RoleType.choices()
     )
 
     def __str__(self):
@@ -124,3 +123,16 @@ class Event(models.Model):
 
     def __str__(self):
         return self.event_name
+    
+class EmailTemplate(models.Model):
+    subject = models.CharField(max_length=255)
+    body = models.TextField()
+    receiver_group = models.TextField(
+        choices=RoleType.choices(),
+        blank=True,
+        null=True
+    )
+    recipient_list = models.TextField()
+
+    def __str__(self):
+        return self.subject

@@ -1,12 +1,6 @@
 {
     "badges": [
         {
-            "title": "Kudos Champion",
-            "description": "Awarded for receiving 5 kudos in a single event.",
-            "pre_requisites": "Receive at least 5 kudos (appreciations or acknowledgments) during a single volunteering event.",
-            "image": ""
-        },
-        {
             "title": "Volunteering Streak",
             "description": "Recognized for maintaining a consistent volunteering streak for 3 months.",
             "pre_requisites": "Attend and participate in at least one volunteering event every month for 3 consecutive months.",
@@ -22,12 +16,6 @@
             "title": "Dedicated Volunteer",
             "description": "Acknowledged for your commitment to participating in over 20 volunteer activities.",
             "pre_requisites": "Participate in more than 20 volunteering events.",
-            "image": ""
-        },
-        {
-            "title": "Kudos Master",
-            "description": "Given to those who have received more than 50 kudos during their volunteering experiences.",
-            "pre_requisites": "Receive more than 50 kudos (appreciations or acknowledgments) across all volunteering events.",
             "image": ""
         }
     ]
