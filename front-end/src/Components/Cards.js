@@ -101,7 +101,7 @@ export const EventCard = ({date, location, eventPicture, eventName, eventSummary
                 <img
                     src={eventPicture}
                     alt="event"
-                    className="w-full h-full object-cover rounded-t-[16px]"
+                    className="w-full h-full object-cover rounded-[16px]"
                 />
             </div>
             <div className="flex flex-col pl-[41px]">
