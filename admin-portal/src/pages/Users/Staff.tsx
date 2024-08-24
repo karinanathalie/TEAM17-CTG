@@ -11,27 +11,27 @@ interface EventProps {
     isSidebarOpen: boolean;
 }
 
-const Participant: React.FC<EventProps> = ({ isSidebarOpen }) => {
-    const [participant, setParticipant] = useState<any[]>([]);
+const Staff: React.FC<EventProps> = ({ isSidebarOpen }) => {
+    const [staff, setStaff] = useState<any[]>([]);
     const containerWidth = isSidebarOpen ? '75%' : '90%';
     const theme = useTheme();
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch('http://0.0.0.0:8000/api/profile/participants')
+        fetch('http://0.0.0.0:8000/api/profile/staffs')
           .then((response) => response.json())
           .then((data) => {
               const rows = data.map((item: any) => ({
                   id: item.pk,
                   ...item.fields,  
               }));
-              setParticipant(rows);
+              setStaff(rows);
           })
           .catch((error) => console.error('Error fetching data:', error));
     }, []);
 
     const handleClick = () => {
-        navigate(Path.Event.Create);  
+        navigate(Path.Operations.Users.StaffCreate);  
     };
     
     return (
@@ -45,7 +45,7 @@ const Participant: React.FC<EventProps> = ({ isSidebarOpen }) => {
                 }}
             >
                 <Breadcrumbs>
-                    <Typography variant='h5' color='primary'>Participants</Typography>
+                    <Typography variant='h5' color='primary'>Staffs</Typography>
                 </Breadcrumbs>
                 <Button variant="outlined" color="primary" onClick={handleClick}>
                     Create
@@ -55,7 +55,7 @@ const Participant: React.FC<EventProps> = ({ isSidebarOpen }) => {
             <Stack style={{ marginTop: 20 }}>
                 <div style={{ height: 680 }}>
                     <DataGrid
-                        rows={participant} 
+                        rows={staff} 
                         columns={participantColumns}  
                         getRowId={(row) => row.id} 
                         initialState={{
@@ -78,4 +78,4 @@ const Participant: React.FC<EventProps> = ({ isSidebarOpen }) => {
     );
 }
 
-export default Participant;
+export default Staff;

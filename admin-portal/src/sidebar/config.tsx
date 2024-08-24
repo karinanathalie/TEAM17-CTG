@@ -44,33 +44,20 @@ export const SITEMAP: Sitemap = [
                 type: 'sitemap',
                 label: 'Application',
                 children: [
-                    {
-                        key: 'private-event',
-                        type: 'page',
-                        label: 'Private Event',
-                        path: Path.Operations.Application.PrivateEvent,
-                    },
-                    {
-                        key: 'public-event',
-                        type: 'sitemap',
-                        label: 'Public Event',
-                        children: [
                             {
                                 key: 'volunteer-application',
                                 type: 'page',
                                 label: 'Volunteer Application',
-                                path: Path.Operations.Application.PublicEvent,
+                                path: Path.Operations.Application.Volunteer,
                             },
                             {
                                 key: 'participant-application',
                                 type: 'page',
                                 label: 'Participant Application',
-                                path: Path.Operations.Application.PublicEvent,
+                                path: Path.Operations.Application.Participant,
                             },
                         ]
                     },
-                ]
-            },
             {
                 key: 'users',
                 type: 'sitemap',
@@ -115,7 +102,7 @@ export const SITEMAP: Sitemap = [
                 key: 'event-type',
                 type: 'page',
                 label: 'Event Type',
-                path: Path.Event.EventType,
+                path: Path.Event.Type,
             },
             {
                 key: 'event',

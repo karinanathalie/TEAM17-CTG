@@ -1,5 +1,5 @@
 import { createTheme } from '@mui/material';
-import { BLUE, BROWN, LIGHT_BROWN, YELLOW } from './helpers/colors';
+import { BLUE, BROWN, DARK_GREY, GREEN, GREY, LIGHT_BLUE, LIGHT_BROWN, LIGHT_GREY, WHITE, YELLOW } from './helpers/colors';
 import { useEffect, useMemo, useState } from 'react';
 
 export enum ThemeMode {
@@ -7,15 +7,15 @@ export enum ThemeMode {
     DARK = 'dark',
 }
 
-const DEFAULT_THEME_MODE = ThemeMode.DARK;
+const DEFAULT_THEME_MODE = ThemeMode.LIGHT;
 
 const THEME_MODE_KEY = 'ThemeMode';
 
 const FONTS = [
-    // 'Poppins',
+    'Open Sans',
+    'Poppins',
     'Roboto', 
     'sans-serif',
-    'Open Sans',
 ]
 
 const isDarkTheme = () => {
@@ -62,20 +62,22 @@ export const getThemeFromMode = (themeMode : ThemeMode) =>
                     },
                     background: {
                         paper: '#424242',
+                        // paper: GREY,
                         default: '#303030',
+                        // default: DARK_GREY,
                     },
                 }
                 : {
                     primary: {
-                        main: YELLOW,
-                    },
-                    secondary: {
                         main: BROWN,
                     },
-                    // background: {
-                    //     paper: '#424242',
-                    //     // default: LIGHT_BROWN,
-                    // },
+                    secondary: {
+                        main: LIGHT_GREY,
+                    },
+                    background: {
+                        paper: WHITE,
+                        // default: WHITE,
+                    },
                 }
             )
         },
@@ -85,7 +87,7 @@ export const useTheme = () => {
     const storedTheme = localStorage.getItem(THEME_MODE_KEY) as ThemeMode;
 
     const theme = useMemo(() => {
-        const newTheme = getThemeFromMode(storedTheme);
+        const newTheme = getThemeFromMode(storedTheme? storedTheme : DEFAULT_THEME_MODE);
         return newTheme;
     }, [storedTheme]);
 
