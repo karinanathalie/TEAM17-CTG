@@ -56,7 +56,7 @@ export const ButtonFullFixed = ({ onClick, children }) => {
 
 export const BackButton = ({ onClick }) => {
   return (
-    <button className="m-3 flex space-x-[10px] w-[135px] h-[48px] px-[21px] py-[10px] rounded-[8px] bg-buttonblack" onClick={onClick}>
+    <button className="font-poppins flex space-x-[10px] w-[135px] h-[48px] px-[21px] py-[10px] rounded-[8px] bg-buttonblack" onClick={onClick}>
       <div className=" font-medium text-[20px] text-white">&lt;</div>
       <div className="font-medium text-[20px] text-white">Back</div>
     </button>
@@ -67,7 +67,7 @@ export const BackButton = ({ onClick }) => {
 export const VolunteerParticipantToggle = ({ onClick }) => {
   // Using checkbox, if not checked, volunteer. Else, participants.
   return (
-    <label className="relative flex justify-center items-center w-[289px] h-[50px] rounded-[8px] cursor-pointer peer">
+    <label className="font-poppins relative flex justify-center items-center w-[289px] h-[50px] rounded-[8px] cursor-pointer peer">
       <input type="checkbox" className="sr-only peer" onClick={onClick}/>
       <div className="absolute bg-gray inset-0 peer-checked:bg-blue-600 transition-colors duration-100 rounded-[8px]"></div>
       <div className="absolute left-[6px] top-[7px] bg-buttonblack border border-gray-300 rounded-[8px] h-[36px] w-[123px] transition-transform duration-200 transform peer-checked:translate-x-[153px] z-0"></div>

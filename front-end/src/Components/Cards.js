@@ -87,3 +87,14 @@ export const ScheduleCard = ({ onClick, date, eventName, eventSummary}) => {
     );
 
   };
+
+  export const TrainingCard = ({}) => {
+    return(
+        <div className="mt-8">
+             <div className="text-[30px] font-semibold">
+                Training Progress
+            </div>
+            <img src="http://placehold.it/700x300"></img>
+        </div>
+    )
+  }

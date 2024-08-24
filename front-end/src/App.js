@@ -15,6 +15,7 @@ import { BackButton, VolunteerParticipantToggle } from "./Components/Button.js";
 import { ScheduleCard, CarousellCard } from "./Components/Cards.js";
 import { RegistrationCard } from "./Components/RegistrationCard.js";
 import  Upcoming  from "./Pages/Upcoming.js"
+import IndividualEventDetail from "./Pages/IndividualEventDetail.js";
 
 const Container = styled.div``;
 
@@ -35,7 +36,8 @@ function App() {
 
       {/* <VolunteerParticipantToggle /> */}
       {/* <RegistrationCard /> */}
-      <Upcoming> </Upcoming>
+      {/* <Upcoming> </Upcoming> */}
+      <IndividualEventDetail />
       
     </Container>
   );
