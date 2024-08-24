@@ -9,6 +9,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 import json
 from django.contrib.auth.models import User
+from django.conf import settings
+from django.core.mail import send_mail
 #need to import user
 
 
@@ -162,6 +164,26 @@ def create_event(request):
     }
     return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
 
+def send_event_reminder(request, event_id=1):
+    try:
+        event = Event.objects.get(id=event_id)
+        recipient_list = []
+
+        for user in event.registered_participants.all():
+            recipient_list.append(user.email)
+        for user in event.registered_volunteers.all():
+            recipient_list.append(user.email)
+        
+        if not recipient_list:
+            return HttpResponse('{"Response": "No registered participants/volunteers!"}', status=200, content_type="application/json")
+
+        subject = f"Reminder - {event}"
+        message = f"Hi! This is a friendly reminder for the upcoming event: {event}\nDate: {event.event_date}\nLocation: {event.event_location}\nWe hope to see you there!"
+        send_email(subject, message, recipient_list)
+        return HttpResponse('{"Response": "Email reminders sent!"}', status=200, content_type="application/json")
+    except Exception as e:
+        return HttpResponse(f'Error: {str(e)}', status=500)
+
 # USER 
 def get_user_details(request, user_id=1):
     try:
@@ -272,3 +294,9 @@ def get_all_participant_application(request):
     
 def create_volunteer_application(request):
     return ''
+
+
+# Utility
+def send_email(subject, message, recipient_list):
+    email_from = settings.EMAIL_HOST_USER
+    send_mail(subject, message, email_from, recipient_list)
