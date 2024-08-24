@@ -6,7 +6,7 @@ import { Home, Person, School, EmojiEvents } from '@mui/icons-material';
 import HomeView from './Pages/Home.js';
 import SideBar from './Components/SideBar.js';
 import styled from 'styled-components';
-import { ButtonFull, ButtonFull2 } from './Components/Button.js';
+import { ScheduleCard } from './Components/Cards.js';
 
 const Container = styled.div``
 
@@ -26,8 +26,7 @@ function App() {
       </SideBar>
     </Router> */}
         
-        <ButtonFull2>Click me</ButtonFull2>
-        
+        <ScheduleCard date="12-07-2003" eventName="Hello World" eventSummary="hello" />
     </Container>
   );
 }
