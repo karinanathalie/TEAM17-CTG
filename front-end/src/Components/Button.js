@@ -16,9 +16,9 @@ export const ButtonFull = ({ onClick, children }) => {
 
 export const ButtonFull2 = ({ onClick, children }) => {
   return (
-    <div className="flex justify-center w-[146px] h-[36px] rounded-[8px] bg-mediumgray hover:bg-gray hover:drop-shadow-lg active:drop-shadow-none">
+    <div className="flex justify-center w-[146px] h-[36px] rounded-[8px] bg-gray hover:bg-lightgray hover:drop-shadow-lg active:drop-shadow-none">
       <button
-        className="w-full h-full text-white text-[15px] font-poppins font-semibold hover:cursor-pointer"
+        className="w-full h-full text-black text-[15px] font-poppins font-semibold hover:cursor-pointer"
         onClick={onClick}
       >
         {children}

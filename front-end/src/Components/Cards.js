@@ -1,6 +1,6 @@
 import React from "react";
 import { ButtonFull, ButtonFull2 } from "./Button";
-import { CiCalendarDate } from "react-icons/ci";
+import { CiCalendarDate , CiLocationOn } from "react-icons/ci";
 
 
 export const ScheduleCard = ({ onClick, date, eventName, eventSummary}) => {
@@ -56,9 +56,23 @@ export const ScheduleCard = ({ onClick, date, eventName, eventSummary}) => {
                 />
             </div>
             <div className="py-[30px]">
-                <div className="">{eventName}</div>
-                <div className="">{dayname}, {day} {month} {year}</div>
-                <div className="">{location}</div>
+                <div className="font-semibold text-[16px]">{eventName}</div>
+                <div className="flex space-x-[12px] font-medium text-[15px] text-mediumgray">
+                    <div className="flex flex-col justify-center">
+                        <CiCalendarDate />
+                    </div>
+                    <div>
+                        {dayname}, {day} {month} {year}
+                    </div>
+                </div>
+                <div className="flex space-x-[12px] font-medium text-[15px] text-mediumgray">
+                    <div className="flex flex-col justify-center">  
+                        <CiLocationOn />
+                    </div>
+                    <div>
+                        {location}
+                    </div>
+                </div>
             </div>
             <div className="flex space-x-[10px]">
                 <ButtonFull2>
