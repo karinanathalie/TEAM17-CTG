@@ -235,3 +235,19 @@ def get_all_participant(request):
         return HttpResponse(profile_json, content_type="application/json")
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
+
+def get_all_volunteer(request):
+    try:
+        profiles = Profile.objects.filter(role_type=RoleType.VOLUNTEER.value)
+        profile_json = serializers.serialize('json', profiles)
+        return HttpResponse(profile_json, content_type="application/json")
+    except Exception as e:
+        return HttpResponse(f'Error: {str(e)}', status=500)
+    
+def get_all_staff(request):
+    try:
+        profiles = Profile.objects.filter(role_type=RoleType.STAFF.value)
+        profile_json = serializers.serialize('json', profiles)
+        return HttpResponse(profile_json, content_type="application/json")
+    except Exception as e:
+        return HttpResponse(f'Error: {str(e)}', status=500)

@@ -19,4 +19,6 @@ urlpatterns = [
     path('user/<int:user_id>/achievements', views.get_user_achievements, name="user-achievement"),
 
     path('profile/participants', views.get_all_participant, name="profile-participants-list"),
+    path('profile/volunteers', views.get_all_participant, name="profile-volunteers-list"),
+    path('profile/staffs', views.get_all_participant, name="profile-staffs-list"),
 ]
