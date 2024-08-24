@@ -17,7 +17,7 @@ cd content
 ```
 4. install all the dependencies
 ```
-pip install django Pillow passlib
+pip install django Pillow passlib django-cors-headers
 ```
 5. start the script
 ```

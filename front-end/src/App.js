@@ -4,14 +4,17 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch, NavLink } from 'react-router-dom';
 import { Home, Person, School, EmojiEvents } from '@mui/icons-material';
 import HomeView from './Pages/Home.js';
-import SideBar from './components/SideBar.js';
+import SideBar from './Components/SideBar.js';
 import styled from 'styled-components';
-const Testing = styled.div``
+import { ScheduleCard, CarousellCard } from './Components/Cards.js';
+
+const Container = styled.div``
+
 
 function App() {
   return (
-    <Testing>
-    <Router>
+    <Container>
+      {/* <Router>
       <SideBar>
         <Switch>
           <Route exact path="/" component={HomeView} />
@@ -21,8 +24,10 @@ function App() {
           <Route path="/volunteering" component={HomeView} />
         </Switch>
       </SideBar>
-    </Router>
-    </Testing>
+    </Router> */}
+        
+        <CarousellCard date="12-07-2003" location="Hong Kong" eventPicture="" eventName="Hello World" />
+    </Container>
   );
 }
 

@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{html,js}"],
+  content: ["./src/**/*.{html,js,jsx,ts,tsx}"],
   theme: {
     extend: {
       fontFamily: {
@@ -45,11 +45,20 @@ module.exports = {
     colors: {
       white: "#FFFFFF",
       yellow: "#F9EC1F",
-      brown: "#873A21",
-      lightbrown: "#DDAD42",
-      blue: "#80C9E8",
+      pastelyellow: "#FFFF99",
+      brown: "#DDAD42",
+      lightbrown: "#DDAD41",
+      blue: "#66CBEC",
+      lightblue: "#BBEEFF",
       black: "#000000",
-      offwhite: "#F5F5F5",
+      lightgray: "#F2F2F2",
+      lightgreen:"#DCFFC0",
+      gray: "#C4C4C4",
+      mediumgray: "#6A6A6A",
+      buttonblack: "#25221B",
+      buttonblackhover: "#3b362b",
+      buttonyellow: "#FFFF99",
+      darkgray: "#1E201E",
     },
   },
   plugins: [],

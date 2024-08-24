@@ -38,6 +38,8 @@ class Profile(models.Model):
     role_type = models.TextField(
         choices=RoleType.choices(),
     )
+    nationality = models.CharField(max_length=225)
+    ethnicity = models.CharField(max_length=225)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     badges = models.ManyToManyField(Badge, related_name="volunteer_badges", blank=True)
     trainings = models.ManyToManyField(Training, related_name="completed_trainings", blank=True)
