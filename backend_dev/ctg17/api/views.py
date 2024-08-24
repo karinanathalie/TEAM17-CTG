@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core import serializers
+from django.contrib.auth import login
 from passlib.hash import django_pbkdf2_sha256 as handler
 from .constants import RoleType
 from .models import Event, Profile, ProfileBadge
@@ -48,6 +49,26 @@ def create_staffuser(request):
             user.save()
 
             return HttpResponse(status=200)
+    except Exception as e:
+        return HttpResponse(f'Error: {str(e)}', status=500)
+
+@csrf_exempt
+def login_user(request):
+    try:
+        if request.method == "POST":
+            data = json.loads(request.body)
+            username = data.get('username')
+            password = data.get('password')
+
+            # Authenticate the user
+            user = User.objects.get(username=username)
+            if handler.verify(password, user.password):
+                login(request, user)
+                return HttpResponse('{"message": "Login successful"}', status=200, content_type="application/json")
+            else:
+                return HttpResponse('{"message": "Invalid username or password"}', status=401, content_type="application/json")
+    except User.DoesNotExist:
+        return HttpResponse('{"message": "User does not exist"}', status=404, content_type="application/json")
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
 
@@ -159,7 +180,7 @@ def get_user_registrations(request, user_id=1):
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
     
-def hall_of_fame(request, user_id=1):
+def get_user_achievements(request, user_id=1):
     try:
         user = User.objects.get(id=user_id)
         profile = Profile.objects.get(user=user)
