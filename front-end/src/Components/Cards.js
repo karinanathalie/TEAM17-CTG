@@ -124,4 +124,15 @@ export const EventCard = ({date, location, eventPicture, eventName, eventSummary
            
         </div>
     );
+  };
+
+  export const TrainingCard = ({}) => {
+    return(
+        <div className="mt-8">
+             <div className="text-[30px] font-semibold">
+                Training Progress
+            </div>
+            <img src="http://placehold.it/700x300"></img>
+        </div>
+    )
   }

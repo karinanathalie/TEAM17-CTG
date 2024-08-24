@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
+import { AiFillEyeInvisible, AiFillEye, AiOutlineCloudUpload } from "react-icons/ai";
 
 export const InputForm = ({ children, type, name, onChange }) => {
   return (
@@ -8,7 +8,7 @@ export const InputForm = ({ children, type, name, onChange }) => {
       <input
         type={type}
         placeholder={name}
-        className="p-2 bg-grayinput text-white text-[14px] placeholder-lightgray"
+        className="p-2 bg-grayinput text-white text-[14px] placeholder-lightgray w-full"
         onChange={onChange}
       ></input>
     </div>
@@ -24,20 +24,24 @@ export const TextArea = ({ children, type, name, onChange }) => {
   );
 };
 
-export const FileUpload = ({onChange}) => {
+export const FileUpload = ({ onChange }) => {
   return (
-    <div>
-       <input
+    <div className="w-full mb-4 bg-grayinput rounded-[6px] border-2 border-dashed border-lightgray p-4 flex items-center justify-center cursor-pointer">
+      <label htmlFor="pdf-upload" className="flex flex-col items-center space-y-2">
+        <AiOutlineCloudUpload className="text-lightgray text-4xl" />
+        <span className="text-lightgray text-[12px]">Upload PDF File</span>
+      </label>
+      <input
         type="file"
         id="pdf-upload"
         name="pdf-upload"
         accept=".pdf"
         onChange={onChange}
-        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+        className="hidden"
       />
     </div>
-  )
-}
+  );
+};
 
 export const InputSearch = React.forwardRef(
   ({ children, type, name, onChange, value }, ref) => {
@@ -65,9 +69,9 @@ export const Inputlogin = React.forwardRef(({ type, name, onChange, value }) => 
         name={name}
         type={type}
         placeholder={name}
-        className="pl-[1%] bg-white  border  rounded-xl text-left text-black w-[100%] h-[30px]"
-        onChange={onChange}
-        value={value}
+        className="pl-[1%] bg-white border rounded-xl text-left text-black w-[100%] h-[30px]"
+        // onChange={onChange}
+        // value={value}
       />
     </div>
   );

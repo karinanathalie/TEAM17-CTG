@@ -16,6 +16,7 @@ import { ScheduleCard, CarousellCard, EventCard} from "./Components/Cards.js";
 import { RegistrationCard } from "./Components/RegistrationCard.js";
 import  Upcoming  from "./Pages/Upcoming.js"
 import EventDetails from "./Pages/EventDetails.js";
+import IndividualEventDetail from "./Pages/IndividualEventDetail.js";
 
 const Container = styled.div``;
 
