@@ -227,3 +227,11 @@ def get_user_achievements(request, user_id=1):
         return HttpResponse(f'Error: {str(e)}', status=500)
 
  
+ # PROFILE
+def get_all_participant(request):
+    try:
+        profiles = Profile.objects.filter(role_type=RoleType.PARTICIPANT.value)
+        profile_json = serializers.serialize('json', profiles)
+        return HttpResponse(profile_json, content_type="application/json")
+    except Exception as e:
+        return HttpResponse(f'Error: {str(e)}', status=500)
