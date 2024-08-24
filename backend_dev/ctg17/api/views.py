@@ -149,8 +149,18 @@ def create_event(request):
         newEvent.deadline = eventJSON['deadline']
         newEvent.save()
 
-        return HttpResponse({"Status": "Added"}, content_type="application/json")
-    return HttpResponse("Wrong method")
+        response_data = {
+            "status": "success",
+            "message": "Event added successfully",
+            "event_id": newEvent.id
+        }
+        return HttpResponse(json.dumps(response_data), content_type="application/json")
+    
+    response_data = {
+        "status": "error",
+        "message": 'Wrong Method'
+    }
+    return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
 
 # USER 
 def get_user_details(request, user_id=1):
