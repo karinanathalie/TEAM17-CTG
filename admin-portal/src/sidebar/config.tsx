@@ -107,8 +107,14 @@ export const SITEMAP: Sitemap = [
             {
                 key: 'event',
                 type: 'page',
-                label: 'Event',
+                label: 'List View',
                 path: Path.Event.Root,
+            },
+            {
+                key: 'calendar',
+                type: 'page',
+                label: 'Calendar View',
+                path: Path.Event.Calendar,
             },
         ]
     },
