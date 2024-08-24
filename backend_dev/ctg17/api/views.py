@@ -165,6 +165,7 @@ def create_event(request):
     }
     return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
 
+@csrf_exempt
 def send_event_reminder(request, event_id=1):
     try:
         event = Event.objects.get(id=event_id)
@@ -367,9 +368,9 @@ def send_mass_email(request):
                     print(profile.user.email)
                     recipient_list.append(profile.user.email)
             else:
-                email_addresses = email_addresses_list.split(",")
-                if len(email_addresses):
-                    recipient_list = email_addresses
+                # email_addresses = email_addresses_list.split(",")
+                if email_addresses_list and len(email_addresses_list):
+                    recipient_list = email_addresses_list
             
             if not recipient_list:
                 return HttpResponse('{"Response": "No emails specified/found!"}', status=200, content_type="application/json")
