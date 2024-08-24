@@ -28,4 +28,7 @@ urlpatterns = [
 
     path('application/create/participants', views.create_application, name="create-application"),
     path('application/create/volunteers', views.create_volunteer_application, name="create-volunteer-application"),
+
+    path('reminder/emailtemplates', views.get_all_email_templates, name="get-all-email-templates"),
+    path('reminder/sendemail', views.send_mass_email, name="send-mass-email")
 ]

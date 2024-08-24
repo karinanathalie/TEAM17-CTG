@@ -141,4 +141,4 @@ EMAIL_HOST = 'smtp-mail.outlook.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'karanvs@connect.hku.hk'
-EMAIL_HOST_PASSWORD = 'USE_.ENV_HERE_IG'
+EMAIL_HOST_PASSWORD = '<Use .ENV file here>'
