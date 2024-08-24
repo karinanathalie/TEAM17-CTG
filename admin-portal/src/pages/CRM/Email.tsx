@@ -6,6 +6,7 @@ import { useTheme } from "../../theme";
 import { useNavigate } from 'react-router-dom';
 import { Path } from "../../constants/path";
 import { applicationColumns } from "../../gridColDef/application";
+import { emailColumns } from "../../gridColDef/email";
 
 interface Props {
     isSidebarOpen: boolean;
@@ -18,7 +19,7 @@ const Email: React.FC<Props> = ({ isSidebarOpen }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch('http://0.0.0.0:8000/api/applications/participants')
+        fetch('http://0.0.0.0:8000/api/reminder/emailtemplates')
           .then((response) => response.json())
           .then((data) => {
               const rows = data.map((item: any) => ({
@@ -30,8 +31,12 @@ const Email: React.FC<Props> = ({ isSidebarOpen }) => {
           .catch((error) => console.error('Error fetching data:', error));
     }, []);
 
-    const handleClick = () => {
+    const handleEmailClick = () => {
         navigate(Path.CRM.CreateEmail);  
+    };
+
+    const handleReminderClick = () => {
+        navigate(Path.CRM.ReminderEmail);  
     };
     
     return (
@@ -47,16 +52,21 @@ const Email: React.FC<Props> = ({ isSidebarOpen }) => {
                 <Breadcrumbs>
                     <Typography variant='h5' color='primary'>Email Template</Typography>
                 </Breadcrumbs>
-                <Button variant="outlined" color="primary" onClick={handleClick}>
-                    Send Email
-                </Button>
+                <Box sx={{ display: 'flex', columnGap: 2 }}>
+                    <Button variant="outlined" color="primary" onClick={handleReminderClick}>
+                        Send Event Reminder
+                    </Button>
+                    <Button variant="outlined" color="primary" onClick={handleEmailClick}>
+                        Send Mass Email
+                    </Button>
+                </Box>
             </Box>
 
             <Stack style={{ marginTop: 20 }}>
                 <div style={{ height: 680 }}>
                     <DataGrid
                         rows={emailTemplate} 
-                        columns={applicationColumns}  
+                        columns={emailColumns}  
                         getRowId={(row) => row.id} 
                         initialState={{
                             pagination: {
