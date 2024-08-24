@@ -1,6 +1,6 @@
 import React from "react";
 import { ButtonFull, ButtonFull2 } from "./Button";
-import { CiCalendarDate } from "react-icons/ci";
+// import { CiCalendarDate } from "react-icons/ci";
 
 
 export const ScheduleCard = ({ onClick, date, eventName, eventSummary}) => {
