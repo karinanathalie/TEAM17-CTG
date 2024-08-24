@@ -123,3 +123,16 @@ class Event(models.Model):
 
     def __str__(self):
         return self.event_name
+    
+class EmailTemplate(models.Model):
+    subject = models.CharField(max_length=255)
+    body = models.TextField()
+    receiver_group = models.TextField(
+        choices=RoleType.choices(),
+        blank=True,
+        null=True
+    )
+    recipient_list = models.TextField()
+
+    def __str__(self):
+        return self.subject

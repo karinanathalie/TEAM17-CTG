@@ -12,3 +12,4 @@ venv/
 .autoenv
 .env
 .envrc
+backend_dev/.DS_Store

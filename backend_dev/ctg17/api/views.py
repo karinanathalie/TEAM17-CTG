@@ -4,7 +4,7 @@ from django.core import serializers
 from django.contrib.auth import login
 from passlib.hash import django_pbkdf2_sha256 as handler
 from .constants import RoleType
-from .models import Application, Event, Profile, ProfileBadge
+from .models import Application, Event, Profile, ProfileBadge, EmailTemplate
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 import json
@@ -165,6 +165,7 @@ def create_event(request):
     }
     return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
 
+@csrf_exempt
 def send_event_reminder(request, event_id=1):
     try:
         event = Event.objects.get(id=event_id)
@@ -335,7 +336,61 @@ def create_application(request):
         except Exception as e:
             return HttpResponse(f'Error: {str(e)}', status=500)
 
-# Utility
+# Reminder
+def get_all_email_templates(request):
+    try:
+        emailTemplates = EmailTemplate.objects.all()
+        emailTemplatesJSON = serializers.serialize('json', emailTemplates)
+        return HttpResponse(emailTemplatesJSON, content_type="application/json")
+    except Exception as e:
+        return HttpResponse(f'Error: {str(e)}', status=500)
+
+@csrf_exempt
+def send_mass_email(request):
+    try:
+        if request.method == "POST":
+            data = json.loads(request.body)
+            subject = data['subject']
+            body = data['body']
+            saveAsTemplate = data['save_as_template']
+
+            # Send email to either emails specified in addresses or all users in receiver group
+            email_addresses_list = data['email_addresses']
+            receiver_group = data['group']
+
+            recipient_list = []
+
+            roles = [role[1] for role in RoleType.choices()]
+            if receiver_group in roles:
+                profiles_in_group = Profile.objects.filter(role_type=receiver_group.upper())
+
+                for profile in profiles_in_group:
+                    print(profile.user.email)
+                    recipient_list.append(profile.user.email)
+            else:
+                if email_addresses_list and len(email_addresses_list):
+                    recipient_list = email_addresses_list
+            
+            if not recipient_list:
+                return HttpResponse('{"Response": "No emails specified/found!"}', status=200, content_type="application/json")
+            
+            send_email(subject, body, recipient_list)
+            response = {'Response': f'Email reminders sent to {len(recipient_list)} users!'}
+
+            if saveAsTemplate == 1:
+                emailTemplate = EmailTemplate()
+                emailTemplate.subject = subject
+                emailTemplate.body = body
+                emailTemplate.recipient_list = json.dumps(recipient_list)
+                if receiver_group in roles:
+                    emailTemplate.receiver_group = receiver_group
+                emailTemplate.save()
+                print("Saved email template!")
+
+            return HttpResponse(str(response), status=200, content_type="application/json")
+    except Exception as e:
+        return HttpResponse(f'Error: {str(e)}', status=500)
+
 def send_email(subject, message, recipient_list):
     email_from = settings.EMAIL_HOST_USER
     send_mail(subject, message, email_from, recipient_list)

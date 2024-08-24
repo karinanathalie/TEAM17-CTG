@@ -12,9 +12,11 @@ import HomeView from "./Pages/Home.js";
 import SideBar from "./Components/SideBar.js";
 import styled from "styled-components";
 import { BackButton, VolunteerParticipantToggle } from "./Components/Button.js";
-import { ScheduleCard, CarousellCard } from "./Components/Cards.js";
+import { ScheduleCard, CarousellCard, EventCard} from "./Components/Cards.js";
 import { RegistrationCard } from "./Components/RegistrationCard.js";
 import  Upcoming  from "./Pages/Upcoming.js"
+import EventDetails from "./Pages/EventDetails.js";
+import IndividualEventDetail from "./Pages/IndividualEventDetail.js";
 
 const Container = styled.div``;
 
@@ -35,7 +37,9 @@ function App() {
 
       {/* <VolunteerParticipantToggle /> */}
       {/* <RegistrationCard /> */}
-      <Upcoming> </Upcoming>
+      {/* <Upcoming> </Upcoming> */}
+      {/* <EventCard date="12-07-2003" location="Hong Kong" eventPicture="" eventName="Hello World" eventSummary="Hello World Lorem Ipsum" role="Participant" /> */}
+      <EventDetails />
       
     </Container>
   );

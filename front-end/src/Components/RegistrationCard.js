@@ -1,6 +1,9 @@
 import { Input } from "@mui/material"
 import { InputForm, TextArea } from "./Input"
 import { ButtonFull2, ButtonFull, ButtonYellow } from "./Button"
+import { BsTelephone, BsCalendar2Date } from "react-icons/bs";
+import { IoAccessibilityOutline, IoCalendarOutline } from "react-icons/io5";
+import { GiWorld } from "react-icons/gi";
 import { FileUpload } from "./Input"
 
 
@@ -10,12 +13,13 @@ export const RegistrationCard = () => {
             <div className="font-[500] text-[20px] w-full">
                 Volunteer Registration
                  <div className="w-full mt-4">
-                    <InputForm type="text" name="Phone Number" placeholder="Phone Number" > A </InputForm>
-                    <InputForm type="text" name="Ethinicity" placeholder="Ethnicity" > A </InputForm>
-                    <InputForm type="text" name="Gender" placeholder="Gender" > A </InputForm>
-                    <InputForm type="text" name="Date of Birth" placeholder="Date of Birth" > A </InputForm>
+                    <InputForm type="text" name="Phone Number" placeholder="Phone Number" > <BsTelephone className="w-4 h-4"/> </InputForm>
+                    <InputForm type="text" name="Ethinicity" placeholder="Ethnicity" > <GiWorld className="w-5 h-5" /> </InputForm>
+                    <InputForm type="text" name="Gender" placeholder="Gender" > <IoAccessibilityOutline className="w-5 h-5" /> </InputForm>
+                    <InputForm type="text" name="Date of Birth" placeholder="Date of Birth" > <IoCalendarOutline className="w-5 h-5" /> </InputForm>
                     <div className="mt-4 mb-2 font-[500] text-[16px]"> Reason </div>
                     <TextArea name="reason"></TextArea>
+                    <div className="mt-4 mb-2 font-[500] text-[16px]"> Upload Files </div>
                     <FileUpload />
                 </div>
                 <div className="text-white flex justify-end text-[12px]">

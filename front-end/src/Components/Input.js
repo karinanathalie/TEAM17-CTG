@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
+import {
+  AiFillEyeInvisible,
+  AiFillEye,
+  AiOutlineCloudUpload,
+} from "react-icons/ai";
+import { CiSearch } from "react-icons/ci";
 
 export const InputForm = ({ children, type, name, onChange }) => {
   return (
@@ -8,7 +13,7 @@ export const InputForm = ({ children, type, name, onChange }) => {
       <input
         type={type}
         placeholder={name}
-        className="p-2 bg-grayinput text-white text-[14px] placeholder-lightgray"
+        className="p-2 bg-grayinput text-white text-[14px] placeholder-lightgray w-full"
         onChange={onChange}
       ></input>
     </div>
@@ -19,25 +24,37 @@ export const TextArea = ({ children, type, name, onChange }) => {
   return (
     <div className="bg-grayinput w-full h-full rounded-[6px] flex text-white text-[12px] mb-[16px]">
       {children && <p className="p-3 mx-2">{children}</p>}
-      <textarea rows="6" className="bg-grayinput h-full text-white w-full rounded-[6px] p-4 placeholder-lightgray"> </textarea>
+      <textarea
+        rows="6"
+        className="bg-grayinput h-full text-white w-full rounded-[6px] p-4 placeholder-lightgray"
+      >
+        {" "}
+      </textarea>
     </div>
   );
 };
 
-export const FileUpload = ({onChange}) => {
+export const FileUpload = ({ onChange }) => {
   return (
-    <div>
-       <input
+    <div className="w-full mb-4 bg-grayinput rounded-[6px] border-2 border-dashed border-lightgray p-4 flex items-center justify-center cursor-pointer">
+      <label
+        htmlFor="pdf-upload"
+        className="flex flex-col items-center space-y-2"
+      >
+        <AiOutlineCloudUpload className="text-lightgray text-4xl" />
+        <span className="text-lightgray text-[12px]">Upload PDF File</span>
+      </label>
+      <input
         type="file"
         id="pdf-upload"
         name="pdf-upload"
         accept=".pdf"
         onChange={onChange}
-        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+        className="hidden"
       />
     </div>
-  )
-}
+  );
+};
 
 export const InputSearch = React.forwardRef(
   ({ children, type, name, onChange, value }, ref) => {
@@ -58,16 +75,38 @@ export const InputSearch = React.forwardRef(
     );
   }
 );
-export const Inputlogin = React.forwardRef(({ type, name, onChange, value }) => {
+export const InputSearchu = React.forwardRef(
+  ({ children, type, name, onChange, value }, ref) => {
+    return (
+      <div className={` w-[350px] font-poppins font-white rounded-[8px] flex`}>
+        <div className="ml-[-400px] mt-[6%] z-10">
+          {" "}
+          <CiSearch className="pl-[-400px]" />
+        </div>
+
+        <input
+          type={type}
+          placeholder={name}
+          className="text-[#6A6A6A] z-0 placeholder-[#6A6A6A] ml-[-70px] rounded-lg h-[58px] bg-[#C4C4C4] w-[400px] text-center text-base "
+          onChange={onChange}
+          value={value}
+          ref={ref}
+        />
+      </div>
+    );
+  }
+);
+
+export const Inputlogin = React.forwardRef(({ type, name }) => {
   return (
     <div className={`h-full w-[95%]`}>
       <input
         name={name}
         type={type}
         placeholder={name}
-        className="pl-[1%] bg-white  border  rounded-xl text-left text-black w-[100%] h-[30px]"
-        onChange={onChange}
-        value={value}
+        className="pl-[1%] bg-white border rounded-xl text-left text-black w-[100%] h-[30px]"
+        // onChange={onChange}
+        // value={value}
       />
     </div>
   );
@@ -100,7 +139,7 @@ export const InputPassword = ({ children, name, onChange }) => {
   );
 };
 
-export const InputPasswordlogin = ({ name}) => {
+export const InputPasswordlogin = ({ name }) => {
   const [ShowStatus, setStatus] = useState(false);
   const handleClick = (e) => {
     e.preventDefault();

@@ -1,0 +1,3 @@
+Test Event is about Just a fun little test event. The date is 2024-08-23 at Hong Kong. Target population is Devs. Skillset required: N/A. Participant quota: 80, Volunteer quota: 15. Deadline for registration: 2024-08-28 09:39:01.
+Test Event 2 is about Just testing bro. The date is 2024-08-20 15:13:32 at Hong Kong. Target population is QA. Skillset required: Nun special. Participant quota: 30, Volunteer quota: 5. Deadline for registration: 2024-08-19 00:00:00.
+Test Event 3 is about Testing. The date is 2024-09-07 00:23:00 at HKU. Target population is 200. Skillset required: Drawing. Participant quota: 180, Volunteer quota: 20. Deadline for registration: 2024-08-31 00:24:00.
