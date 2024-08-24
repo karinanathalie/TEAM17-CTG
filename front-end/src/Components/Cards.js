@@ -1,3 +1,6 @@
+import React from "react";
+import { ButtonFull, ButtonFull2 } from "./Button";
+
 export const ScheduleCard = ({ onClick, date, eventName, eventSummary}) => {
     
     const SplittedDate = date.split("-");
@@ -6,7 +9,7 @@ export const ScheduleCard = ({ onClick, date, eventName, eventSummary}) => {
     const monthIndex = parseInt(SplittedDate[1], 10) - 1;
     const month = months[monthIndex];
     const day = SplittedDate[0];
-        
+
     const randomColour = colours[Math.floor(Math.random() * colours.length)];
 
     return (
@@ -29,4 +32,21 @@ export const ScheduleCard = ({ onClick, date, eventName, eventSummary}) => {
         </div>
       </div>
     );
+  };
+
+
+  export const CarousellCard = ({ onClick, date, location, eventPicture, eventName, eventSummary}) => {
+    const SplittedDate = date.split("-");
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const monthIndex = parseInt(SplittedDate[1], 10) - 1;
+    const month = months[monthIndex];
+    const day = SplittedDate[0];
+    const dayname = new Date(date).toLocaleString('en-us', {weekday:'long'});
+
+    return(
+        <div className="flex flex-col w-[342px] h-[469px] rounded-[16px] bg-white">
+
+        </div>
+    );
+
   };
