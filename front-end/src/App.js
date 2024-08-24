@@ -7,6 +7,7 @@ import HomeView from './Pages/Home.js';
 import SideBar from './Components/SideBar.js';
 import styled from 'styled-components';
 import { ScheduleCard, CarousellCard } from './Components/Cards.js';
+import { RegistrationCard } from './Components/RegistrationCard.js';
 
 const Container = styled.div``
 
@@ -24,9 +25,10 @@ function App() {
           <Route path="/volunteering" component={HomeView} />
         </Switch>
       </SideBar>
-    </Router> */}
+    </Router>  */}
         
-        <CarousellCard date="12-07-2003" location="Hong Kong" eventPicture="" eventName="Hello World" />
+        {/* <CarousellCard date="12-07-2003" location="Hong Kong" eventPicture="" eventName="Hello World" /> */}
+        <RegistrationCard />
     </Container>
   );
 }

@@ -13,6 +13,19 @@ export const ButtonFull = ({ onClick, children }) => {
   );
 };
 
+export const ButtonYellow = ({ onClick, children }) => {
+  return (
+    <div className="flex justify-center w-[146px] h-[36px] rounded-[8px] bg-buttonyellow hover:bg-buttonblackhover hover:drop-shadow-lg active:drop-shadow-none">
+      <button
+        className="w-full h-full text-black text-[15px] font-poppins font-semibold hover:cursor-pointer"
+        onClick={onClick}
+      >
+        {children}
+      </button>
+    </div>
+  );
+};
+
 
 export const ButtonFull2 = ({ onClick, children }) => {
   return (
