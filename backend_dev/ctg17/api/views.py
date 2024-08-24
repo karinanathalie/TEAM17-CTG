@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core import serializers
-
+from passlib.hash import django_pbkdf2_sha256 as handler
 from .constants import RoleType
-from .models import Event, Profile
+from .models import Event, Profile, ProfileBadge
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 import json
@@ -21,7 +21,8 @@ def register_user(request):
     try:
         if request.method == "POST":
             data = json.loads(request.body)
-            user = User.objects.create_user(data['username'], data['email'], data['password'])
+            password = handler.hash(data['password'], rounds=170000, salt_size=11)
+            user = User.objects.create_user(username=data['username'], email=data['email'], password=password)
 
             userProfile = Profile()
             userProfile.phone = data['phone']
@@ -49,6 +50,7 @@ def create_staffuser(request):
             return HttpResponse(status=200)
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
+
 
 # EVENT
 def get_all_events(request):
@@ -156,3 +158,41 @@ def get_user_registrations(request, user_id=1):
         return HttpResponse('{"Response": "User/Profile does not exist"}', status=400, content_type="application/json")
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
+    
+def hall_of_fame(request, user_id=1):
+    try:
+        user = User.objects.get(id=user_id)
+        profile = Profile.objects.get(user=user)
+
+        if profile.role_type != RoleType.VOLUNTEER:
+            return HttpResponse('{"Response": "User is not a volunteer"}', status=403, content_type="application/json")
+
+        badges = ProfileBadge.objects.get(profile=profile)
+        streak = profile.streak
+
+        badges_list = [
+            {
+                "badge_name": badge.badge.badge_name, 
+                "badge_image": badge.badge.badge_image.url if badge.badge.badge_image else None,
+                "date_obtained": badge.date_obtained
+            } 
+            for badge in badges
+        ]
+
+        # Prepare the response data
+        response_data = {
+            "user": profile.user.username,
+            "name": profile.name,
+            "streak": streak,
+            "badges": badges_list,
+        }
+        return HttpResponse(response_data)
+
+    except User.DoesNotExist:
+        return HttpResponse('{"Response": "User does not exist"}', status=400, content_type="application/json")
+    except Profile.DoesNotExist:
+        return HttpResponse('{"Response": "Profile does not exist"}', status=400, content_type="application/json")
+    except Exception as e:
+        return HttpResponse(f'Error: {str(e)}', status=500)
+
+ 

@@ -3,10 +3,12 @@ from django.db import models
 from django.contrib.auth.models import User
 from api.constants import Gender, RoleType
 from django.core import serializers
+from datetime import datetime
 
 class Badge(models.Model):
     badge_name = models.CharField(max_length=255)
     badge_image = models.ImageField(null=True, blank=True)
+    pre_requisites = models.TextField(null=True, blank=True)  # New field added
 
     def __str__(self):
         return self.badge_name
@@ -39,9 +41,19 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     badges = models.ManyToManyField(Badge, related_name="volunteer_badges", blank=True)
     trainings = models.ManyToManyField(Training, related_name="completed_trainings", blank=True)
+    streak = models.PositiveIntegerField(default=0)  
+
 
     def __str__(self):
         return f"{self.name} ({self.user.username})"
+    
+class ProfileBadge(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    badge = models.ForeignKey(Badge, on_delete=models.CASCADE)
+    date_obtained = models.DateTimeField(default=datetime.now)
+
+    def __str__(self):
+        return f"{self.badge.badge_name} obtained by {self.profile.name} on {self.date_obtained}"
     
 
 class Application(models.Model):

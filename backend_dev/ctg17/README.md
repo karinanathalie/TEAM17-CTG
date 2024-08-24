@@ -17,7 +17,7 @@ cd content
 ```
 4. install all the dependencies
 ```
-pip install django
+pip install django Pillow passlib
 ```
 5. start the script
 ```
