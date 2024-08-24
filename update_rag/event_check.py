@@ -1,36 +1,23 @@
 import sqlite3
-import csv
 
-# Connect to the SQLite database
-conn = sqlite3.connect('your_database_name.db')
-cursor = conn.cursor()
+def event_check():
+    # Connect to the SQLite database
+    conn = sqlite3.connect('/Users/elizalesmana/Documents/GitHub/TEAM17-CTG/backend_dev/ctg17/db.sqlite3')
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT * FROM api_event")
+    rows = cursor.fetchall()
 
-# Specify the table name you want to export
-table_name = 'your_table_name'
+    txt_file_name = f"/Users/elizalesmana/Documents/GitHub/TEAM17-CTG/update_rag/info_file/api_event.txt"
 
-# Execute a query to select all data from the table
-cursor.execute(f"SELECT * FROM {table_name}")
+    with open(txt_file_name, mode='w') as file:
+        for row in rows:
+            event_id, event_name, event_description, event_date, event_location, event_image, target_population, skillset, participant_quota, volunteer_quota, deadline = row
 
-# Fetch all rows from the executed query
-rows = cursor.fetchall()
+            file.write(f"{event_name} is about {event_description}. The date is {event_date} at {event_location}. "
+                    f"Target population is {target_population}. Skillset required: {skillset}. "
+                    f"Participant quota: {participant_quota}, Volunteer quota: {volunteer_quota}. "
+                    f"Deadline for registration: {deadline}.\n")
 
-# Get the column names from the cursor
-column_names = [description[0] for description in cursor.description]
+    conn.close()
 
-# Define the CSV file name
-csv_file_name = f"{table_name}.csv"
-
-# Open the CSV file for writing
-with open(csv_file_name, mode='w', newline='') as file:
-    writer = csv.writer(file)
-
-    # Write the column names as the first row
-    writer.writerow(column_names)
-
-    # Write all rows from the table
-    writer.writerows(rows)
-
-# Close the database connection
-conn.close()
-
-print(f"Table {table_name} has been exported to {csv_file_name}")
+    print(f"Table has been exported to {txt_file_name.split('/')[-1]}")
