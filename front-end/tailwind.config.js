@@ -54,6 +54,7 @@ module.exports = {
       lightgray: "#F2F2F2",
       lightgreen:"#DCFFC0",
       gray: "#C4C4C4",
+      darkgray: "#6A6A6A",
       buttonblack: "#25221B",
       buttonblackhover: "#3b362b",
       buttonyellow: "#FFFF99",

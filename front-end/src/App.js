@@ -15,12 +15,24 @@ import { ButtonFull, ButtonFull2 } from "./Components/Button.js";
 import Login from "./Components/login2.jsx";
 import Calendarr from "./Components/Calendar.jsx";
 
-const Container = styled.div``;
-
 function App() {
   return (
     <Container>
       <Calendarr></Calendarr>
+
+      <Router>
+        <SideBar>
+          <Switch>
+            <Route exact path="/" component={HomeView} />
+            <Route path="/about" component={HomeView} />
+            <Route path="/profile" component={HomeView} />
+            <Route path="/training" component={HomeView} />
+            <Route path="/volunteering" component={HomeView} />
+          </Switch>
+        </SideBar>
+      </Router>
+
+      {/* <ScheduleCard date="12-07-2003" eventName="Hello World" eventSummary="hello" /> */}
     </Container>
   );
 }

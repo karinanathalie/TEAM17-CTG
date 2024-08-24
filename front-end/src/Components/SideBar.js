@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+// import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import BarChartOutlinedIcon from '@mui/icons-material/BarChartOutlined';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
+import { HomeIcon, ChartBarIcon, InformationCircleIcon, UserIcon } from '@heroicons/react/outline';
 
 export default function SideBar({ children }) {
     const location = useLocation();
@@ -25,36 +26,44 @@ export default function SideBar({ children }) {
             </div>
             <nav>
                 <ul>
-                <li className='mb-[15px] font-[700]'>
-                    <div className={active_link != 'home' ? 'bg-darkgray text-white py-[10px] rounded-2xl' : 'bg-white text-black py-[10px] rounded-2xl'}>
-                        <HomeOutlinedIcon />
-                        <Link to="/home" className="ml-[15px]" onClick={() => {set_active_link('home')}}>
-                        Home
-                        </Link>
+                <li className='ml-[10px] mb-[15px] font-[500]'>
+                    <div className={active_link != 'home' ? 'bg-darkgray text-white py-[10px] rounded-xl' : 'bg-white text-black py-[10px] px-[10px] rounded-xl'}>
+                        <div className="flex">
+                            <HomeIcon class="h-6 w-6" />
+                            <Link to="/home" className="ml-[15px]" onClick={() => {set_active_link('home')}}>
+                            Home
+                            </Link>
+                        </div>
                     </div>
                 </li>
-                <li className='mb-[15px] font-[700]'>
-                    <div className={active_link != 'events' ? 'bg-darkgray text-white py-[10px] rounded-2xl' : 'bg-white text-black py-[10px] rounded-2xl'}>
-                        <BarChartOutlinedIcon />
-                        <Link to="/events" className="ml-[15px]" onClick={ () => {set_active_link('events')}}>
-                        Events
-                        </Link>
+                <li className='ml-[10px] mb-[15px] font-[500]'>
+                    <div className={active_link != 'events' ? 'bg-darkgray text-white py-[10px] rounded-xl' : 'bg-white text-black py-[10px] px-[10px] rounded-xl'}>
+                        <div className="flex">
+                            <ChartBarIcon class="h-6 w-6"/>
+                            <Link to="/events" className="ml-[15px]" onClick={ () => {set_active_link('events')}}>
+                            Events
+                            </Link>
+                        </div>
                     </div>
                 </li>
-                <li className='mb-[15px] font-[700]'>
-                    <div className={active_link != 'about' ? 'bg-darkgray text-white py-[10px] rounded-2xl' : 'bg-white text-black py-[10px] rounded-2xl'}>
-                        <InfoOutlinedIcon />
-                        <Link to="/about" className="ml-[15px]" onClick={ () => {set_active_link('about')}}>
-                        About
-                        </Link>
+                <li className='ml-[10px] mb-[15px] font-[500]'>
+                    <div className={active_link != 'about' ? 'bg-darkgray text-white py-[10px] rounded-xl' : 'bg-white text-black py-[10px] px-[10px] rounded-xl'}>
+                         <div className="flex">
+                            <InformationCircleIcon class="h-6 w-6" />
+                            <Link to="/about" className="ml-[15px]" onClick={ () => {set_active_link('about')}}>
+                            About
+                            </Link>
+                        </div>
                     </div>
                 </li>
-                <li className='mb-[15px] font-[700]'>
-                    <div className={active_link != 'user' ? 'bg-darkgray text-white py-[10px] rounded-2xl' : 'bg-white text-black py-[10px] rounded-2xl'}>
-                        <PermIdentityOutlinedIcon />
-                        <Link to="/user" className="ml-[15px]" onClick={ () => {set_active_link('user')}}>
-                        User
-                        </Link>
+                <li className='ml-[10px] mb-[15px] font-[500]'>
+                    <div className={active_link != 'user' ? 'bg-darkgray text-white py-[10px] rounded-xl' : 'bg-white text-black py-[10px] px-[10px] rounded-xl'}>
+                         <div className="flex">
+                            <UserIcon class="h-6 w-6" />
+                            <Link to="/user" className="ml-[15px]" onClick={ () => {set_active_link('user')}}>
+                            Volunteering
+                            </Link>
+                        </div>
                     </div>
                 </li>
                 </ul>
