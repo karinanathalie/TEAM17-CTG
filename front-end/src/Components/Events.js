@@ -30,16 +30,16 @@ const Events = ({ item }) => {
         alt={item.event_name}
         className="w-full h-[197px] rounded-t-3xl"
       /> 
-        <div className="flex mt-[5%]">
-          <div className="w-[100px] items-center">
+        <div className="flex m-[16px]">
+          <div className="w-[100px] items-center align-center mr-[12px]">
             <h1 className="text-center text-[16px] text-[#923417] font-semibold">
               {month}
             </h1>
             <h1 className="text-center text-[28px] font-medium">{day}</h1>
           </div>
           <div>
-            <h1 className="font-poppins font-semibold text-[18px]">{item.event_name}</h1>
-            <h1 className="font-medium text-gray text-[14px]">{item.event_description}</h1>
+            <h1 className="font-poppins font-semibold text-[16px]">{item.event_name}</h1>
+            <h1 className="font-medium text-gray text-[12px]">{item.event_description}</h1>
           </div>
         </div>
       </div>

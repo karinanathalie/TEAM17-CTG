@@ -142,7 +142,7 @@ def get_all_events(request):
             if event_image:
                 filename = event_image.split('/')[-1]  # Extract the filename
                 event_obj['fields']['event_image'] = filename
-            if event_obj['fields'].get(['event_description']):
+            if event_obj['fields'].get('event_description'):
                 event_obj['fields']['event_description']= event_obj['fields']['event_description'][:75]+'...'
         
         events_json = json.dumps(events_data, cls=DjangoJSONEncoder)
