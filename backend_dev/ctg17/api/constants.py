@@ -16,3 +16,13 @@ class Gender(Enum):
     @classmethod
     def choices(cls):
         return [(key.name, key.value) for key in cls]
+
+
+class Status(Enum):
+    SUCCESSFUL = 'successful'
+    PENDING = 'pending'
+    UNSUCCESSFUL = 'unsuccessful'
+    
+    @classmethod
+    def choices(cls):
+        return [(key.name, key.value) for key in cls]
