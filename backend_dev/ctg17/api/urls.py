@@ -31,5 +31,6 @@ urlpatterns = [
     path('application/create/volunteers', views.create_volunteer_application, name="create-volunteer-application"),
 
     path('reminder/emailtemplates', views.get_all_email_templates, name="get-all-email-templates"),
-    path('reminder/sendemail', views.send_mass_email, name="send-mass-email")
+    path('reminder/sendemail', views.send_mass_email, name="send-mass-email"),
+    path('reminder/emailtemplate/<int:template_id>', views.send_emails_from_template, name="send-email-from-template")
 ]
