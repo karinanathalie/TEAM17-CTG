@@ -735,9 +735,19 @@ def send_whatsapp(phone='+85252633364', message=''):
     )
     print(message.status)
 
-def analytics_participants_ratio(response):
+def get_attendance_analytics(request):
+    events = Event.objects.all()
+    response = []
+
+    for event in events:
+        event_analytics = analytics_participants_ratio(event.id)
+        if isinstance(event_analytics, dict):
+            response.append(event_analytics)
+    
+    return HttpResponse(str(response), status=200, content_type="application/json")
+
+def analytics_participants_ratio(event_id):
     try:
-        event_id = response.GET.get('event_id')
         event = Event.objects.filter(id=event_id).first()
 
         if event is None:
@@ -762,11 +772,12 @@ def analytics_participants_ratio(response):
         }
 
         # Return the ratio as a response
-        return HttpResponse(
-            json.dumps(response_data), 
-            content_type="application/json",
-            status=200
-        )
+        # return HttpResponse(
+        #     json.dumps(response_data), 
+        #     content_type="application/json",
+        #     status=200
+        # )
+        return response_data
         
     except Exception as e:
         return HttpResponse(
@@ -774,6 +785,14 @@ def analytics_participants_ratio(response):
             content_type="application/json",
             status=500
         )
+
+# Creates the JSON for pie chart representation of participants/volunteers
+def participants_ratio(participants_count, volunteers_count):
+    if participants_count == 0 and volunteers_count == 0: return {}
+    return [
+        {'id': 0, 'value': participants_count, 'label': 'Participants', 'color': '#FFFF99'},
+        {'id': 1, 'value': volunteers_count, 'label': 'Volunteers', 'color': '#DDAD41'},
+    ]
 
 def pic_show(request, image_filename):
     try:
