@@ -13,7 +13,6 @@ export default function SideBar({ children }) {
 
   const [active_link, set_active_link] = useState("home");
   useEffect(() => {
-    console.log("hello");
     const pathname = window.location.pathname.split("/")[1];
     set_active_link(pathname);
   }, []);
