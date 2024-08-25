@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.core import serializers
 from django.contrib.auth import login, authenticate, logout
 from .constants import RoleType
-from .models import Application, Event, Profile, ProfileBadge, EmailTemplate, VolunteerApplication, WhatsappTemplate
+from .models import Badge, Application, Event, Profile, ProfileBadge, EmailTemplate, VolunteerApplication, WhatsappTemplate
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 import json
@@ -36,6 +36,33 @@ def register_user(request):
             userProfile.save()
 
             return HttpResponse(status=200)
+    except Exception as e:
+        return HttpResponse(f'Error: {str(e)}', status=500)
+
+@csrf_exempt
+def create_badge(request):
+    try:
+        if request.method == "POST":
+            # Parse the request body as JSON
+            data = json.loads(request.body)
+
+            # Create a new Badge instance and populate it with the data from the request
+            badge = Badge(
+                badge_name=data['badge_name'],
+                pre_requisites=data.get('pre_requisites', '')  # Use .get() to handle optional field
+            )
+
+            # Handle file upload for badge_image if provided
+            if 'badge_image' in request.FILES:
+                badge.badge_image = request.FILES['badge_image']
+
+            # Save the new Badge instance to the database
+            badge.save()
+
+            return HttpResponse(status=200)
+        else:
+            return HttpResponse('Invalid request method.', status=405)
+    
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
 
@@ -222,6 +249,7 @@ def create_event(request):
         "message": 'Wrong Method'
     }
     return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
+
 @csrf_exempt
 def send_event_reminder_email(request, event_id=1):
     try:
