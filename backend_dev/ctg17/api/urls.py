@@ -29,7 +29,7 @@ urlpatterns = [
 
     path('application/participants', views.get_all_participant_application, name="application-participants-list"),
     path('application/volunteers', views.get_all_volunteer_application, name="application-volunteer-list"),
-    path('application/update', views.update_application, name="application-update"),
+    # path('application/update', views.update_application, name="application-update"),
 
     path('application/create/participants', views.create_application, name="create-application"),
     path('application/create/volunteers', views.create_volunteer_application, name="create-volunteer-application"),
@@ -45,6 +45,8 @@ urlpatterns = [
 
     path('analytics/attendance', views.get_attendance_analytics, name='get-attendance-analytics'),
     path('analytics/demographic', views.get_demographic_analytics, name="get-demographic-analytics"),
+    path('analytics/quota', views.get_quota_analytics, name="get-quota-analytics"),
+
 
     path('file/<str:path>/', views.file_show, name="file-show"),
     path('pic/<str:image_filename>/', views.pic_show, name="pic-show")
