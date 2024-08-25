@@ -414,7 +414,7 @@ def get_user_badges(request, user_id=1):
  # PROFILE
 def get_all_participant(request):
     try:
-        profiles = Profile.objects.filter(role_type=RoleType.PARTICIPANT.value)
+        profiles = Profile.objects.filter(role_type=RoleType.PARTICIPANT.value.upper())
         profile_json = serializers.serialize('json', profiles)
         return HttpResponse(profile_json, content_type="application/json")
     except Exception as e:
@@ -422,7 +422,7 @@ def get_all_participant(request):
 
 def get_all_volunteer(request):
     try:
-        profiles = Profile.objects.filter(role_type=RoleType.VOLUNTEER.value)
+        profiles = Profile.objects.filter(role_type=RoleType.VOLUNTEER.value.upper())
         profile_json = serializers.serialize('json', profiles)
         return HttpResponse(profile_json, content_type="application/json")
     except Exception as e:
@@ -430,7 +430,7 @@ def get_all_volunteer(request):
     
 def get_all_staff(request):
     try:
-        profiles = Profile.objects.filter(role_type=RoleType.STAFF.value)
+        profiles = Profile.objects.filter(role_type=RoleType.STAFF.value.upper)
         profile_json = serializers.serialize('json', profiles)
         return HttpResponse(profile_json, content_type="application/json")
     except Exception as e:
