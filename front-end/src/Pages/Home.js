@@ -17,6 +17,7 @@ import Achievements from "../Components/Achievements.js";
 import { SwipingCard } from "../Components/SwipingCard.js";
 import Events from "../Components/Events.js";
 import DistanceCalculator from "../Components/kilo.js";
+import Profile from "../Components/Profile.js";
 
 const Container = styled.div``;
 const Wrapper = styled.div``;
