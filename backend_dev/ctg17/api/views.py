@@ -775,11 +775,28 @@ def analytics_participants_ratio(response):
             status=500
         )
 
-def file_show(request, path):
+def pic_show(request, path):
     try:
         # Determine the content type based on the file extension
         path = f"static/event_image/{path}"
         content_type, _ = mimetypes.guess_type(f"static/event_image/{path}")
+        
+        # Open and return the image
+        with open(path, "rb") as f:
+            return HttpResponse(f.read(), content_type=content_type or "image/jpeg")
+    
+    except IOError:
+        # Create a 1x1 red image
+        red = Image.new('RGB', (1, 1), (255, 0, 0))
+        response = HttpResponse(content_type="image/jpeg")
+        red.save(response, "JPEG")
+        return response
+    
+def file_show(request, path):
+    try:
+        # Determine the content type based on the file extension
+        path = f"cv_files/{path}"
+        content_type, _ = mimetypes.guess_type(f"cv_files/{path}")
         
         # Open and return the image
         with open(path, "rb") as f:
