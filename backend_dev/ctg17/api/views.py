@@ -613,7 +613,7 @@ def send_mass_whatsapp(request):
             saveAsTemplate = data['save_as_template']
 
             # Send whatsapp to either provided phone numbers or to role_type group
-            phone_numbers_list = data['phone_numbers'].split(",")
+            phone_numbers_list = data['phone_numbers']
             receiver_group = data['group']
 
             recipient_list = []
