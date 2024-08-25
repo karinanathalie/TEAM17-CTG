@@ -60,18 +60,21 @@ const Upcoming = () => {
     setDatas(filteredGroup);
   };
   return (
-    <div>
-      <div className="flex justify-end mt-[3%]">
+    <div className="w-full">
+      <div className="w-full">
+        <div className="w-full justify-content">
         <InputSearchu type={"text"} name={"Search Event..."}></InputSearchu>
 
         <button className="mr-[12%] mt-[1%] h-[40px] w-[310px] bg-black text-white rounded-xl px-4">
           View my registrations
         </button>
+        </div>
       </div>
-      <div className="flex ">
-        <h1 className="font-poppins font-semibold text-3xl mt-[3%] ml-[12%]">
+      
+      <div className="flex">
+        <div className="font-poppins font-semibold text-3xl mt-[3%]">
           Upcoming Events
-        </h1>
+        </div>
         <div className="mt-[3%] gap-3 ml-[40%] flex w-[300px]">
           <Select
             options={optionsGroup}
@@ -89,10 +92,12 @@ const Upcoming = () => {
           ></Select>
         </div>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-6 py-6 w-[80%]">
+      <div>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 py-6">
         {datas.map((item, index) => (
           <Events item={item} key={index}></Events>
         ))}
+        </div>
       </div>
     </div>
   );

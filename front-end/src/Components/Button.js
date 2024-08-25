@@ -1,4 +1,5 @@
 import React from "react";
+import { CiLocationOn } from "react-icons/ci";
 
 export const ButtonFull = ({ onClick, children }) => {
   return (
@@ -122,5 +123,26 @@ export const ButtonSocial = ({ icon, text }) => {
     </button>
   );
 };
+
+export const ButtonAccount = ({ text }) => {
+  return(
+    <div className="w-full flex flex-row-reverse h-auto">
+      <div className="mb-4 flex bg-lightgray h-[80px] rounded-[16px] w-[350px]">
+        <div className="flex p-4 text-[18px] font-semibold">
+            <div className="w-10 h-10 bg-gray rounded-full flex items-center justify-center text-white font-bold">
+                IMG
+            </div>
+            <div className="ml-4">
+                <div> Vanessa Laurel </div>
+                <div className="flex text-[14px] font-medium text-darkgray">
+                  <CiLocationOn className="h-6 w-6 mr-2" />
+                  Location away
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 

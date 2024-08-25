@@ -8,30 +8,50 @@ import {
 } from "react-router-dom";
 
 
-import { ScheduleCard, CarousellCard} from "../Components/Cards.js";
-import { ButtonFull } from "../Components/Button.js";
+import { ScheduleCard, CarousellCard, EventCard} from "../Components/Cards.js";
+import { ButtonAccount, ButtonFull } from "../Components/Button.js";
 import SideBar from '../Components/SideBar.js';
 import Calendarr from '../Components/Calendar.jsx';
+import Achievements from '../Components/Achievements.js';
+import { SwipingCard } from '../Components/SwipingCard.js';
+import Events from '../Components/Events.js';
+import DialogflowChatbot from '../Components/DialogChatBot.js';
 
 const Container = styled.div``;
 const Wrapper = styled.div``;
 
 export default function HomeView() {
     return (
-        <Container className="font-poppins flex w-full h-screen m-8">
+        <Container className="font-poppins flex w-full h-screen m-12">
             <Wrapper className='flex flex-col mt-4 w-full'>
-                <div>
-                    <div className="text-[32px] font-medium">
+                <Wrapper>
+                    <Wrapper className="text-[32px] font-medium">
                         Welcome Back! 👋🏻
-                    </div>
-                    <div className="">
-                        <Calendarr />
-                    </div>
-                </div>
-                 
+                    </Wrapper>
+                    <Wrapper className="mt-4">
+                        <Achievements />
+                        <Wrapper className="flex space-x-4 mt-4">
+                            <Calendarr />
+                            <Wrapper className="space-y-2">
+                                <Wrapper className="text-[28px] font-medium">
+                                    Schedule
+                                </Wrapper>
+                                <ScheduleCard date="12-07-2003" location="Hong Kong" eventPicture="" eventName="Hello World" eventSummary="Hello World Lorem Ipsum" role="Participant" />
+                                <ScheduleCard date="12-07-2003" location="Hong Kong" eventPicture="" eventName="Hello World" eventSummary="Hello World Lorem Ipsum" role="Participant" />
+                                <ScheduleCard date="12-07-2003" location="Hong Kong" eventPicture="" eventName="Hello World" eventSummary="Hello World Lorem Ipsum" role="Participant" />
+                            </Wrapper>
+                             {/* <EventCard date="12-07-2003" location="Hong Kong" eventPicture="" eventName="Hello World" eventSummary="Hello World Lorem Ipsum" role="Participant" /> */}
+                            {/* <Calendarr /> */}
+                        </Wrapper>
+                    </Wrapper>
+                    <Wrapper className="border border-black h-[240px] rounded-[8px] w-[670px]">
+                        <DialogflowChatbot />
+                    </Wrapper>
+                </Wrapper>
             </Wrapper> 
             <Wrapper>
-
+                <ButtonAccount />
+                <SwipingCard />
             </Wrapper>
         </Container>
     );

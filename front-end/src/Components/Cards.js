@@ -24,18 +24,18 @@ export const ScheduleCard = ({ date, eventName, eventSummary }) => {
   const day = SplittedDate[0];
 
   return (
-    <div className="flex w-[236px] h-[54px] rounded-[8px] bg-lightgray">
-      <div className="flex flex-col w-[56px] h-[54px] px-[13px] bg-buttonblack rounded-[8px]">
-        <div className="flex justify-center font-semibold text-pastelyellow text-[24px]">
+    <div className="flex w-[290px] h-[70px] rounded-[8px] bg-lightgray">
+      <div className="flex flex-col w-[70px] h-[70px] px-[16px] bg-buttonblack rounded-[8px]">
+        <div className="mt-1 flex justify-center font-semibold text-pastelyellow text-[30px]">
           {day}
         </div>
-        <div className="flex justify-center font-semibold text-gray text-[8px]">
+        <div className="flex justify-center font-semibold text-gray text-[12px]">
           {month}
         </div>
       </div>
       <div className="flex flex-col mx-[15px] my-[13px]">
-        <div className="font-semibold text-[10px]">{eventName}</div>
-        <div className="font-medium text-darkgray text-[8px]">
+        <div className="font-semibold text-[16px]">{eventName}</div>
+        <div className="font-medium text-darkgray text-[12px]">
           {eventSummary}
         </div>
       </div>
