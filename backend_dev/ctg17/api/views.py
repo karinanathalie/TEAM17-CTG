@@ -14,6 +14,9 @@ from django.core.mail import send_mail
 from api.drive.script import DriveAPI
 from twilio.rest import Client
 from django.core.serializers.json import DjangoJSONEncoder
+import mimetypes
+from PIL import Image
+
 
 
 
@@ -119,8 +122,7 @@ def get_all_events(request):
             event_image = event_obj['fields']['event_image']
             if event_image:
                 filename = event_image.split('/')[-1]  # Extract the filename
-                new_path = f"{settings.BASE_DIR}/static/event_image/{filename}"
-                event_obj['fields']['event_image'] = new_path
+                event_obj['fields']['event_image'] = filename
         
         events_json = json.dumps(events_data, cls=DjangoJSONEncoder)
         return HttpResponse(events_json, content_type="application/json")
@@ -142,8 +144,7 @@ def get_event_details(request, event_id=1):
             event_image = event_obj['fields']['event_image']
             if event_image:
                 filename = event_image.split('/')[-1]  # Extract the filename
-                new_path = f"TEAM17-CTG/backend_dev/ctg17/static/event_image/{filename}"
-                event_obj['fields']['event_image'] = new_path
+                event_obj['fields']['event_image'] = filename
         
         event_json = json.dumps(event_data, cls=DjangoJSONEncoder)
         return HttpResponse(event_json, content_type="application/json")
@@ -774,6 +775,23 @@ def analytics_participants_ratio(response):
             status=500
         )
 
+def pic_show(request, image_filename):
+    try:
+        # Determine the content type based on the file extension
+        path = f"static/event_image/{image_filename}"
+        content_type, _ = mimetypes.guess_type(f"static/event_image/{image_filename}")
+        
+        # Open and return the image
+        with open(path, "rb") as f:
+            return HttpResponse(f.read(), content_type=content_type or "image/jpeg")
+    
+    except IOError:
+        # Create a 1x1 red image
+        red = Image.new('RGB', (1, 1), (255, 0, 0))
+        response = HttpResponse(content_type="image/jpeg")
+        red.save(response, "JPEG")
+        return response
+
 def get_demographic_analytics(request):
     events = Event.objects.all()
     response = []
@@ -790,20 +808,29 @@ def calculate_demographic_analytics(event_id):
         event = Event.objects.get(id=event_id)
 
         ethnicityCount = collections.defaultdict(int)
-        avgAge, count = 0, 0
+        avgAge_participant, avgAge_volunteer, count = 0, 0, 0
 
         for user in event.registered_participants.all():
             profile = Profile.objects.get(user=user)
             ethnicityCount[profile.ethnicity] += 1
-            avgAge += profile.age
+            avgAge_participant += profile.age
             count += 1
         if count != 0:
-            avgAge = avgAge / count
+            avgAge_participant = avgAge_participant / count
+        
+        for user in event.registered_participants.all():
+            profile = Profile.objects.get(user=user)
+            ethnicityCount[profile.ethnicity] += 1
+            avgAge_volunteer += profile.age
+            count += 1
+        if count != 0:
+            avgAge_volunteer = avgAge_volunteer / count
 
         response = {
             'event_id': event.id,
             'event_name': event.event_name,
-            'average_age': avgAge,
+            'average_participant_age': avgAge_participant,
+            'average_volunteer_age': avgAge_volunteer,
             'xLabels': list(ethnicityCount.keys()),
             'yData': list(ethnicityCount.values())
         }
