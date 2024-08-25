@@ -56,7 +56,7 @@ const LoginComponent = () => {
       body: JSON.stringify(data)
     }).then(async (res) => {
       if (res.status == 200) {
-          window.location.href = '/'; // redirect to the home page
+          window.location.href = '/home'; // redirect to the home page
       } else {
           // if the fetch is unsuccessful, display an error message
           alert(await res.json().then(data => data.message));
@@ -64,18 +64,10 @@ const LoginComponent = () => {
     })
   }
 
-  function handleGoogleLogin(){
-    // will be implemented later on
-  }
-
-  function handleFacebookLogin(){
-    // will be implemented later on
-  }
-
   return (
     <div>
       <div>
-        <button onClick={() => setOpenFirst(true)} className="bg-blue">
+        <button onClick={() => setOpenFirst(true)} className="font-poppins font-semibold bg-blue px-[64px] py-[16px] rounded-[16px]">
           Log In
         </button>
 

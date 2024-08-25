@@ -57,21 +57,25 @@ export default function IndividualEventDetail(location) {
     }
 
     return (
-        <div className="flex w-full h-screen">
-            <div className="w-full m-[28px] font-poppins">
+        <div className="flex h-screen w-full overflow-y-scroll">
+            <div className="m-[28px] font-poppins w-fit">
                 <div className="flex justify-between mb-8">
                 <BackButton onClick={goBack}/>
                 <VolunteerParticipantToggle onClick={handleRoleToggle}/>
                 </div>
                 <div className="">
-                    <img src="http://placehold.it/1200x300"></img>
-                    <div className="flex mt-[16px] justify-between space-x-8">
-                        <div className="text-[32px] font-semibold">
+                    <img
+                        src={`http://localhost:8000/api/pic/${eventDetails.event_image}`}
+                        alt={eventDetails.event_name}
+                        className="w-full h-[197px] rounded-t-3xl"
+                    /> 
+                    <div className="flex mt-[16px] justify-between space-x-8 ">
+                        <div className="text-[32px] font-semibold w-[800px]">
                             {eventDetails.event_name || 'Online Training Academy'}
-                            <div className="text-[14px] font-medium mb-4 text-darkgray space-y-1">
+                            <div className="text-[14px] w-[770px] font-medium mb-4 text-darkgray space-y-1">
                                  <div className="flex">
                                     <IoCalendarOutline className="h-5 w-5 mr-4" />
-                                    Friday, 23 August 2024
+                                    {eventDetails.event_date}
                                 </div>
                                 <div className="flex">
                                     <IoLocationOutline className="h-5 w-5 mr-4" />
@@ -87,14 +91,18 @@ export default function IndividualEventDetail(location) {
                                  Details
                             </div>
 
-                            <div className="text-[12px] font-medium text-justify text-darkgray ">
+                            <div className="text-[14px] font-medium text-justify text-darkgray">
                                 {eventDetails.event_description || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'}
                             </div>
 
-                            <div className="mt-[16px]">
-                                <img src="http://placehold.it/700x300"></img>
+                            <div className="mt-[16px] rounded-[16px]">
+                                 <img
+                                    src={`http://localhost:8000/api/pic/${eventDetails.event_image}`}
+                                    alt={eventDetails.event_name}
+                                    className="w-[700px] h-[350px] rounded-[16px]"
+                                /> 
                             </div>
-                            <div>
+                            <div className="w-full">
                                 {CheckRoleTraining()}
                             </div>
                         </div>
