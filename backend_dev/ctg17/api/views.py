@@ -456,10 +456,14 @@ def get_all_participant_application(request):
         application_data = []
         for application in applications:
             data = {
-                'id': application.id,
-                'user_profile_name': application.user_profile.name if application.user_profile else None,
-                'event_name': application.event.event_name if application.event else None,
-                'status_code': application.status
+                "model": "api.application",  # Adjust the model name according to your app structure
+                "pk": str(application.id),
+                "fields": {
+                    "user_profile_id": str(application.user_profile.id) if application.user_profile else None,
+                    "user_profile_name": application.user_profile.name if application.user_profile else None,
+                    "event_name": application.event.event_name if application.event else None,
+                    "status": application.get_status_display(),
+                }
             }
             application_data.append(data)
         
@@ -469,7 +473,7 @@ def get_all_participant_application(request):
     except Exception as e:
         error_message = json.dumps({'error': str(e)})
         return HttpResponse(error_message, content_type="application/json", status=500)
-    
+     
 def get_volunteer_application(request):
     try:
         application = Application.objects.all()
@@ -488,6 +492,7 @@ def get_all_volunteer_application(request):
                 "model": "api.volunteerapplication",  # Adjust the model name according to your app structure
                 "pk": str(application.id),
                 "fields": {
+                    "user_profile_id": str(application.user_profile.id) if application.user_profile else None,
                     "user_profile_name": application.user_profile.name if application.user_profile else None,
                     "event_name": application.event.event_name if application.event else None,
                     "status": application.get_status_display(),
