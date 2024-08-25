@@ -121,3 +121,7 @@ abbr[title] {
   background: #ffff99;
   color: white;
 }
+
+.swipe {
+  position: absolute;
+}

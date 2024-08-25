@@ -12,11 +12,12 @@ import HomeView from "./Pages/Home.js";
 import SideBar from "./Components/SideBar.js";
 import styled from "styled-components";
 import { BackButton, VolunteerParticipantToggle } from "./Components/Button.js";
-import { ScheduleCard, CarousellCard, EventCard} from "./Components/Cards.js";
+import { ScheduleCard, CarousellCard, EventCard } from "./Components/Cards.js";
 import { RegistrationCard } from "./Components/RegistrationCard.js";
-import  Upcoming  from "./Pages/Upcoming.js"
+import Upcoming from "./Pages/Upcoming.js";
 import EventDetails from "./Pages/EventDetails.js";
 import IndividualEventDetail from "./Pages/IndividualEventDetail.js";
+import { CarousellCards } from "./Components/Cards.js";
 
 const Container = styled.div``;
 
@@ -34,13 +35,12 @@ function App() {
         </Switch>
       </SideBar>
     </Router>  */}
-
       {/* <VolunteerParticipantToggle /> */}
       {/* <RegistrationCard /> */}
       {/* <Upcoming> </Upcoming> */}
-      {/* <EventCard date="12-07-2003" location="Hong Kong" eventPicture="" eventName="Hello World" eventSummary="Hello World Lorem Ipsum" role="Participant" /> */}
-      <EventDetails />
-      
+      \
+      <CarousellCards />
+      {/* <EventDetails /> */}
     </Container>
   );
 }
