@@ -94,28 +94,6 @@ export default function SideBar({ children }) {
                   </div>
                 </div>
               </li>
-              <li className="ml-[10px] mb-[15px] font-[500]">
-                <div
-                  className={
-                    active_link != "login"
-                      ? "bg-darkgray text-white py-[10px] rounded-xl"
-                      : "bg-white text-black py-[10px] px-[10px] rounded-xl"
-                  }
-                >
-                  <div className="flex">
-                    <ChartBarIcon class="h-6 w-6" />
-                    <Link
-                      to="/login"
-                      className="ml-[15px]"
-                      onClick={() => {
-                        set_active_link("login");
-                      }}
-                    >
-                      Login
-                    </Link>
-                  </div>
-                </div>
-              </li>
             </ul>
           </nav>
         </div>
