@@ -78,7 +78,7 @@ export default function SideBar({ children }) {
               <li className="ml-[10px] mb-[15px] font-[500]">
                 <div
                   className={
-                    active_link != "about"
+                    active_link != "myregistration"
                       ? "bg-darkgray text-white py-[10px] rounded-xl"
                       : "bg-white text-black py-[10px] px-[10px] rounded-xl"
                   }
@@ -86,35 +86,13 @@ export default function SideBar({ children }) {
                   <div className="flex">
                     <InformationCircleIcon class="h-6 w-6" />
                     <Link
-                      to="/about"
+                      to="/myregistration"
                       className="ml-[15px]"
                       onClick={() => {
-                        set_active_link("about");
+                        set_active_link("myregistration");
                       }}
                     >
                       My Registration
-                    </Link>
-                  </div>
-                </div>
-              </li>
-              <li className="ml-[10px] mb-[15px] font-[500]">
-                <div
-                  className={
-                    active_link != "user"
-                      ? "bg-darkgray text-white py-[10px] rounded-xl"
-                      : "bg-white text-black py-[10px] px-[10px] rounded-xl"
-                  }
-                >
-                  <div className="flex">
-                    <UserIcon class="h-6 w-6" />
-                    <Link
-                      to="/user"
-                      className="ml-[15px]"
-                      onClick={() => {
-                        set_active_link("user");
-                      }}
-                    >
-                      Account
                     </Link>
                   </div>
                 </div>
@@ -123,7 +101,7 @@ export default function SideBar({ children }) {
           </nav>
         </div>
       </div>
-      {/* <div className="w-full h-full">{children}</div> */}
+      <div className="w-full h-full">{children}</div>
     </div>
   );
 }
