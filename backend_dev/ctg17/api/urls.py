@@ -22,6 +22,7 @@ urlpatterns = [
     path('profile/participants', views.get_all_participant, name="profile-participants-list"),
     path('profile/volunteers', views.get_all_volunteer, name="profile-volunteers-list"),
     path('profile/staffs', views.get_all_staff, name="profile-staffs-list"),
+    path('profile/staff/create/', views.create_staff, name="create-profile"),
 
     path('application/participants', views.get_all_participant_application, name="application-participants-list"),
     path('application/volunteers', views.get_all_volunteer_application, name="application-volunteer-list"),

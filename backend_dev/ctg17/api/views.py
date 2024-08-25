@@ -273,7 +273,67 @@ def get_all_staff(request):
         return HttpResponse(profile_json, content_type="application/json")
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
-    
+
+@csrf_exempt
+def create_staff(request):
+    if request.method == "POST":
+        try:
+            staffJSON = json.loads(request.body)
+
+            # Check if user already exists
+            if User.objects.filter(username=staffJSON['username']).exists():
+                response_data = {
+                    "status": "error",
+                    "message": "Username already taken"
+                }
+                return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
+
+            # Create User
+            user = User.objects.create_user(
+                username=staffJSON['username'],
+                password=staffJSON['password'],
+                email=staffJSON['email'],
+            )
+
+            # Create Profile
+            newProfile = Profile(
+                user=user,
+                name=staffJSON['name'],
+                age=staffJSON['age'],
+                phone=staffJSON.get('phone', ''),
+                gender=staffJSON['gender'],
+                role_type=RoleType.STAFF.value,
+                nationality=staffJSON.get('nationality', ''),
+                ethnicity=staffJSON.get('ethnicity', ''),
+            )
+            newProfile.save()
+
+            response_data = {
+                "status": "success",
+                "message": "Staff profile created successfully",
+                "profile_id": str(newProfile.id)
+            }
+            return HttpResponse(json.dumps(response_data), content_type="application/json", status=201)
+
+        except KeyError as e:
+            response_data = {
+                "status": "error",
+                "message": f"Missing field: {str(e)}"
+            }
+            return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
+        except Exception as e:
+            response_data = {
+                "status": "error",
+                "message": str(e)
+            }
+            return HttpResponse(json.dumps(response_data), content_type="application/json", status=500)
+
+    response_data = {
+        "status": "error",
+        "message": "Wrong Method"
+    }
+    return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
+
 
 # APPLICATION
 def get_all_participant_application(request):
