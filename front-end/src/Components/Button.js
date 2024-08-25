@@ -82,7 +82,7 @@ export const BackButton = ({ onClick }) => {
 };
 
 
-export const VolunteerParticipantToggle = ({ onClick }) => {
+export const VolunteerParticipantToggle = ({ onChecked }) => {
   // Using checkbox, if not checked, volunteer. Else, participants.
   return (
     <label className="font-poppins relative flex justify-center items-center w-[289px] h-[50px] rounded-[8px] cursor-pointer peer">
