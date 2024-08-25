@@ -1,16 +1,8 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  NavLink,
-} from "react-router-dom";
-
-import SideBar from "../Components/SideBar";
+import { useHistory } from 'react-router-dom';
 import { BackButton, VolunteerParticipantToggle } from '../Components/Button';
 import { EventCard } from "../Components/Cards";
-import HomeView from './Home';
 
 const Container = styled.div``;
 const SideBarWrapper = styled.div``;
@@ -23,6 +15,12 @@ export default function EventDetails(){
 
     const handleRoleToggle = () => {
         setRole(prevRole => prevRole === 'Participant' ? 'Volunteer' : 'Participant');
+    };
+
+    const history = useHistory();
+
+    const goBack = () => {
+        history.goBack();
     };
 
     const list_of_events = [
@@ -48,7 +46,7 @@ export default function EventDetails(){
         <Container className="flex w-full h-screen">
             <ContentWrapper className="w-full flex flex-col px-[53px]">
                 <ContentWrapper className="w-full flex justify-between mt-[58px] mb-8">
-                    <BackButton />
+                    <BackButton onClick={goBack}/>
                     <VolunteerParticipantToggle onClick={handleRoleToggle}/>
                 </ContentWrapper>
                 <EventListWrapper className="w-full flex flex-col">
