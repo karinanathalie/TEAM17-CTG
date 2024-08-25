@@ -19,7 +19,6 @@ import { SwipingCard } from "../Components/SwipingCard.js";
 import Profile from "../Components/Profile.js";
 import Events from "../Components/Events.js";
 import DistanceCalculator from "../Components/kilo.js";
-import Profile from "../Components/Profile.js";
 
 const Container = styled.div``;
 const Wrapper = styled.div``;
