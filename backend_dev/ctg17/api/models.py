@@ -1,7 +1,7 @@
 import uuid
 from django.db import models
 from django.contrib.auth.models import User
-from api.constants import Gender, RoleType
+from api.constants import Gender, RoleType, Status
 from django.core import serializers
 from django.utils import timezone
 from datetime import datetime
@@ -85,6 +85,9 @@ class Application(models.Model):
         related_name='applications',
         null=True, 
         blank=True,
+    )
+    status = models.TextField(
+        choices=Status.choices(),
     )
 
     def __str__(self):
