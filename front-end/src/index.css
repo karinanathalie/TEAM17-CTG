@@ -23,7 +23,7 @@ body > #root > div {
 .react-calendar {
   width: 400px;
   max-width: 100%;
-  background-color: #fff;
+  background: #000000;
   color: #222;
   border-radius: 8px;
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
@@ -56,7 +56,7 @@ abbr[title] {
 
 .react-calendar__tile:enabled:hover,
 .react-calendar__tile:enabled:focus {
-  background: #f8f8fa;
+  background: #000000;
   color: #d4a713;
   border-radius: 6px;
 }
@@ -78,20 +78,20 @@ abbr[title] {
 
 .react-calendar__tile--hasActive:enabled:hover,
 .react-calendar__tile--hasActive:enabled:focus {
-  background: #f8f8fa;
+  background: #000000;
 }
 
 .react-calendar__tile--active {
   background: #ffff99;
   border-radius: 6px;
   font-weight: bold;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 
 .react-calendar__tile--active:enabled:hover,
 .react-calendar__tile--active:enabled:focus {
   background: #ffff99;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 
 .react-calendar--selectRange .react-calendar__tile--hover {
@@ -124,4 +124,7 @@ abbr[title] {
 
 .swipe {
   position: absolute;
+}
+.calender-body {
+  background-color: #181d20 !important;
 }

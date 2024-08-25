@@ -11,9 +11,9 @@ const Calendarr = () => {
         <Calendar
           onChange={setDate}
           value={date}
-          className="react-calendar"
+          className="bg-black"
         ></Calendar>
-        <p className="text-center">
+        <p className="text-center font-poppins">
           <span className=" font-bold text-l font-poppins">
             {date.toDateString()}
           </span>
