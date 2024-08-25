@@ -7,14 +7,10 @@ const Calendarr = () => {
   const [date, setDate] = useState(new Date());
   return (
     <div>
-      <div className="font-poppins flex justify-center w-[30%] flex-col items-center ">
-        <Calendar
-          onChange={setDate}
-          value={date}
-          className="bg-black"
-        ></Calendar>
+      <div className="font-poppins flex justify-center w-[100%] flex-col items-center ">
+        <Calendar onChange={setDate} value={date}></Calendar>
         <p className="text-center font-poppins">
-          <span className=" font-bold text-l font-poppins">
+          <span className=" font-bold text-xs font-poppins">
             {date.toDateString()}
           </span>
           : event name
