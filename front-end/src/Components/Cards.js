@@ -24,8 +24,6 @@ export const ScheduleCard = ({ date, eventName, eventSummary }) => {
   const month = months[monthIndex];
   const day = SplittedDate[0];
 
-  const randomColour = colours[Math.floor(Math.random() * colours.length)];
-
   return (
     <div className="flex w-[236px] h-[54px] rounded-[8px] bg-lightgray">
       <div className="flex flex-col w-[56px] h-[54px] px-[13px] bg-buttonblack rounded-[8px]">
@@ -69,7 +67,7 @@ export const CarousellCard = ({ date, location, eventPicture, eventName }) => {
   const year = SplittedDate[2];
 
   return (
-    <div className=" ml-[4%] flex flex-col w-[342px] h-[469px] rounded-[16px] p-[24px] bg-white">
+    <div className="flex flex-col w-[342px] h-[469px] rounded-[16px] p-[24px] bg-white">
       <div className="flex w-[302px]] h-[249px] rounded-[16px] bg-lightgray">
         <img
           src={eventPicture}
