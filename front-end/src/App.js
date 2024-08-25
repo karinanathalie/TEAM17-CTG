@@ -17,6 +17,7 @@ import { RegistrationCard } from "./Components/RegistrationCard.js";
 import  Upcoming  from "./Pages/Upcoming.js"
 import EventDetails from "./Pages/EventDetails.js";
 import IndividualEventDetail from "./Pages/IndividualEventDetail.js";
+import HomePage from "./Pages/Home.js";
 
 const Container = styled.div``;
 
@@ -39,7 +40,8 @@ function App() {
       {/* <RegistrationCard /> */}
       {/* <Upcoming> </Upcoming> */}
       {/* <EventCard date="12-07-2003" location="Hong Kong" eventPicture="" eventName="Hello World" eventSummary="Hello World Lorem Ipsum" role="Participant" /> */}
-      <EventDetails />
+      
+      <HomePage />
       
     </Container>
   );
