@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 import HomeView from './Home';
 import { RegistrationCard } from '../Components/RegistrationCard';
-import { IoCalendarOutline, IoLocationOutline } from 'react-icons/io5';
+import { IoCalendarOutline, IoLocationOutline, IoPeopleOutline } from 'react-icons/io5';
 import { TrainingCard } from '../Components/Cards';
 
 
@@ -17,9 +17,9 @@ export default function IndividualEventDetail() {
     return (
         <div className="flex w-full h-screen">
             <div>
-            <Router>
+            {/* <Router>
                 <SideBar />
-                <div className="flex flex-col w-full p-4">
+                <div className="flex flex-col w-full p-4 h-full">
                     <Switch>
                         <Route exact path="/" component={HomeView} />
                         <Route path="/about" component={HomeView} />
@@ -28,7 +28,7 @@ export default function IndividualEventDetail() {
                         <Route path="/volunteering" component={HomeView} />
                     </Switch>
                 </div>
-            </Router>
+            </Router> */}
             </div>
             <div className="w-full m-[28px] font-poppins">
                 <div className="flex justify-between mb-8">
@@ -36,7 +36,7 @@ export default function IndividualEventDetail() {
                 <VolunteerParticipantToggle />
                 </div>
                 <div className="">
-                    <img src="http://placehold.it/1050x300"></img>
+                    <img src="http://placehold.it/1200x300"></img>
                     <div className="flex mt-[16px] justify-between space-x-8">
                         <div className="text-[32px] font-semibold">
                             Online Training Academy
@@ -48,6 +48,10 @@ export default function IndividualEventDetail() {
                                 <div className="flex">
                                     <IoLocationOutline className="h-5 w-5 mr-4" />
                                     Carnavon Road, Tsim Sha Tsui
+                                </div>
+                                  <div className="flex">
+                                    <IoPeopleOutline className="h-5 w-5 mr-4" />
+                                    100 participants
                                 </div>
                             </div>
 

@@ -22,24 +22,25 @@ const Container = styled.div``;
 
 function App() {
   return (
-    <Container>
-      {/* <Router>
-      <SideBar>
-        <Switch>
-          <Route exact path="/" component={HomeView} />
-          <Route path="/about" component={HomeView} />
-          <Route path="/profile" component={HomeView} />
-          <Route path="/training" component={HomeView} />
-          <Route path="/volunteering" component={HomeView} />
-        </Switch>
-      </SideBar>
-    </Router>  */}
+    <Container className="flex">
+      <Router>
+        <SideBar>
+          <Switch>
+            <Route exact path="/" component={HomeView} />
+            <Route path="/about" component={HomeView} />
+            <Route path="/profile" component={HomeView} />
+            <Route path="/training" component={HomeView} />
+            <Route path="/volunteering" component={HomeView} />
+          </Switch>
+        </SideBar>
+      </Router> 
 
       {/* <VolunteerParticipantToggle /> */}
       {/* <RegistrationCard /> */}
       {/* <Upcoming> </Upcoming> */}
       {/* <EventCard date="12-07-2003" location="Hong Kong" eventPicture="" eventName="Hello World" eventSummary="Hello World Lorem Ipsum" role="Participant" /> */}
-      <EventDetails />
+      {/* <EventDetails /> */}
+      <IndividualEventDetail />
       
     </Container>
   );
