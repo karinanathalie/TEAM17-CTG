@@ -367,6 +367,14 @@ def get_all_participant_application(request):
         return HttpResponse(application_json, content_type="application/json")
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
+    
+def get_volunteer_application(request):
+    try:
+        application = Application.objects.all()
+        application_json = serializers.serialize('json', application)
+        return HttpResponse(application_json, content_type="application/json")
+    except Exception as e:
+        return HttpResponse(f'Error: {str(e)}', status=500)
 
 def get_all_volunteer_application(request):
     try:
@@ -375,7 +383,8 @@ def get_all_volunteer_application(request):
         return HttpResponse(volunteer_json, content_type="application/json")
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
-    
+
+@csrf_exempt    
 def create_volunteer_application(request):
     if request.method == 'POST':
         try:
@@ -383,9 +392,10 @@ def create_volunteer_application(request):
             event_id = request.POST.get('event_id')
             reason_joining = request.POST.get('reason_joining')
             cv_file = request.FILES.get('cv_file')
+            print(user_profile_id, event_id)
 
             # Get the user profile and event objects
-            user_profile = get_object_or_404(Profile, id=user_profile_id)
+            user_profile = get_object_or_404(Profile, user_id=user_profile_id)
             event = get_object_or_404(Event, id=event_id)
 
             # Create the VolunteerApplication object
