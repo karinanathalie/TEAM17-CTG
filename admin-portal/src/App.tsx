@@ -19,6 +19,8 @@ import Whatsapp from './pages/CRM/Whatsapp';
 import CalendarComponent from './pages/Event/Calendar';
 import EmailReminder from './pages/CRM/EmailReminder';
 import EventDetail from './pages/Event/EventDetail';
+import WhatsappCreate from './pages/CRM/WhatsappCreate';
+import WhatsappReminder from './pages/CRM/WhatsappReminder';
 
 function App() {
   const theme = useTheme();
@@ -90,6 +92,14 @@ function App() {
           <Route 
             path={Path.CRM.ReminderEmail}
             element={<EmailReminder isSidebarOpen={isSidebarOpen} />} 
+          />
+          <Route 
+            path={Path.CRM.CreateWhatsapp}
+            element={<WhatsappCreate isSidebarOpen={isSidebarOpen} />} 
+          />
+          <Route 
+            path={Path.CRM.ReminderWhatsapp}
+            element={<WhatsappReminder isSidebarOpen={isSidebarOpen} />} 
           />
           <Route 
             path={Path.CRM.Whatsapp}

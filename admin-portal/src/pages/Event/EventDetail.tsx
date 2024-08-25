@@ -29,6 +29,7 @@ const EventDetail: React.FC = () => {
                         participantQuota: event.participant_quota,
                         volunteerQuota: event.volunteer_quota,
                         deadline: event.deadline,
+                        eventImage: event.event_image
                     });
                 }
             } catch (error) {
