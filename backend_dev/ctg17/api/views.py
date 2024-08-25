@@ -276,17 +276,9 @@ def get_all_staff(request):
     
 
 # APPLICATION
-def get_all_volunteer_application(request):
-    try:
-        application = Application.objects.filter(role_type=RoleType.VOLUNTEER.value)
-        application_json = serializers.serialize('json', application)
-        return HttpResponse(application_json, content_type="application/json")
-    except Exception as e:
-        return HttpResponse(f'Error: {str(e)}', status=500)
-
 def get_all_participant_application(request):
     try:
-        application = Application.objects.filter(role_type=RoleType.PARTICIPANT.value)
+        application = Application.objects.all()
         application_json = serializers.serialize('json', application)
         return HttpResponse(application_json, content_type="application/json")
     except Exception as e:
