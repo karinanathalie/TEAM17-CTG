@@ -394,12 +394,24 @@ def create_application(request):
         except Exception as e:
             return HttpResponse(f'Error: {str(e)}', status=500)
 
-# Reminder
+# REMINDER
 def get_all_email_templates(request):
     try:
         emailTemplates = EmailTemplate.objects.all()
         emailTemplatesJSON = serializers.serialize('json', emailTemplates)
         return HttpResponse(emailTemplatesJSON, content_type="application/json")
+    except Exception as e:
+        return HttpResponse(f'Error: {str(e)}', status=500)
+
+def send_emails_from_template(request, template_id=1):
+    try:
+        template = EmailTemplate.objects.get(id=template_id)
+        recipient_list = json.loads(template.recipient_list)
+
+        send_email(template.subject, template.body, recipient_list)
+        response = {'Message': f'Email reminders sent to {len(recipient_list)} users!'}
+
+        return HttpResponse(str(response), status=200, content_type="application/json")
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
 
