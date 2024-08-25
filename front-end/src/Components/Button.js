@@ -44,6 +44,19 @@ export const ButtonYellow = ({ onClick, children}) => {
   );
 };
 
+export const ButtonBlue = ({ onClick, children}) => {
+  return (
+    <div className="flex justify-center w-[146px] h-[36px] rounded-[8px] bg-blue hover:bg-buttonblackhover hover:drop-shadow-lg active:drop-shadow-none">
+      <button
+        className="w-full h-full text-black text-[15px] font-poppins font-semibold hover:cursor-pointer"
+        onClick={onClick}
+      >
+        {children}
+      </button>
+    </div>
+  );
+};
+
 
 export const ButtonFull2 = ({ onClick, children }) => {
   return (
