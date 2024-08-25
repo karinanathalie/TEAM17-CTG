@@ -107,7 +107,7 @@ class Event(models.Model):
     event_description = models.TextField()
     event_date = models.DateTimeField()
     event_location = models.CharField(max_length=255)
-    event_image = models.FileField(null=True, blank=True)
+    event_image = models.FileField(upload_to='static/event_image/',null=True, blank=True)
 
     # To enfore validation for event demographics
     target_population = models.CharField(max_length=255, null=True, blank=True)

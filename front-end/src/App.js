@@ -19,13 +19,14 @@ import IndividualEventDetail from "./Pages/IndividualEventDetail.js";
 import { CarousellCards } from "./Components/Cards.js";
 import Calendarr from "./Components/Calendar.jsx";
 import { SwipingCard } from "./Components/SwipingCard.js";
+import Profile from "./Components/Profile.js";
 
 const Container = styled.div``;
 
 function App() {
   return (
     <Container className="w-screen h-screen flex">
-      <div className="w-[400px]">
+      {/* <div className="w-[400px]">
         <Router>
           <SideBar>
             <Switch>
@@ -37,18 +38,17 @@ function App() {
             </Switch>
           </SideBar>
         </Router>
-      </div>
+      </div> */}
       {/* <VolunteerParticipantToggle /> */}
       {/* <RegistrationCard /> */}
       {/* <Upcoming> </Upcoming> */}
       <Calendarr></Calendarr>
       {/* <EventDetails /> */}
       {/* <EventCard date="12-07-2003" location="Hong Kong" eventPicture="" eventName="Hello World" eventSummary="Hello World Lorem Ipsum" role="Participant" /> */}
-      
+
       {/* <IndividualEventDetail /> */}
 
       <SwipingCard />
-      
     </Container>
   );
 }

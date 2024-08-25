@@ -170,9 +170,6 @@ class DriveAPI:
                 progress = int(status.progress() * 100)
                 print(f"Upload progress: {progress}%")
             
-            # sio.emit('progress_update', {'progress': 'just a test'})
-        # sio.disconnect()
-        # print("Uploaded file:", item)
 
     def get_filename(self, source_id):
         #Get all the items in the source folder
