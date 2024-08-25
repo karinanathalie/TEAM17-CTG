@@ -777,10 +777,11 @@ def analytics_participants_ratio(response):
             status=500
         )
 
-def pic_show(request, path):
+def pic_show(request, image_filename):
     try:
         # Determine the content type based on the file extension
-        content_type, _ = mimetypes.guess_type(path)
+        path = f"static/event_image/{image_filename}"
+        content_type, _ = mimetypes.guess_type(f"static/event_image/{image_filename}")
         
         # Open and return the image
         with open(path, "rb") as f:
@@ -809,20 +810,29 @@ def calculate_demographic_analytics(event_id):
         event = Event.objects.get(id=event_id)
 
         ethnicityCount = collections.defaultdict(int)
-        avgAge, count = 0, 0
+        avgAge_participant, avgAge_volunteer, count = 0, 0, 0
 
         for user in event.registered_participants.all():
             profile = Profile.objects.get(user=user)
             ethnicityCount[profile.ethnicity] += 1
-            avgAge += profile.age
+            avgAge_participant += profile.age
             count += 1
         if count != 0:
-            avgAge = avgAge / count
+            avgAge_participant = avgAge_participant / count
+        
+        for user in event.registered_participants.all():
+            profile = Profile.objects.get(user=user)
+            ethnicityCount[profile.ethnicity] += 1
+            avgAge_volunteer += profile.age
+            count += 1
+        if count != 0:
+            avgAge_volunteer = avgAge_volunteer / count
 
         response = {
             'event_id': event.id,
             'event_name': event.event_name,
-            'average_age': avgAge,
+            'average_participant_age': avgAge_participant,
+            'average_volunteer_age': avgAge_volunteer,
             'xLabels': list(ethnicityCount.keys()),
             'yData': list(ethnicityCount.values())
         }
