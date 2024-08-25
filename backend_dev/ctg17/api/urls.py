@@ -35,6 +35,7 @@ urlpatterns = [
     path('application/create/volunteers', views.create_volunteer_application, name="create-volunteer-application"),
 
     path('badge/create', views.create_badge, name="create-badge"),
+    path('badge/all', views.get_all_badges, name="all-badge"),
 
     path('reminder/emailtemplates', views.get_all_email_templates, name="get-all-email-templates"),
     path('reminder/sendemail', views.send_mass_email, name="send-mass-email"),
@@ -46,7 +47,6 @@ urlpatterns = [
     path('analytics/attendance', views.get_attendance_analytics, name='get-attendance-analytics'),
     path('analytics/demographic', views.get_demographic_analytics, name="get-demographic-analytics"),
     path('analytics/quota', views.get_quota_analytics, name="get-quota-analytics"),
-
 
     path('file/<str:path>/', views.file_show, name="file-show"),
     path('pic/<str:image_filename>/', views.pic_show, name="pic-show")
