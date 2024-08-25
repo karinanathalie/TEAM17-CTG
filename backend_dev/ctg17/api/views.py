@@ -808,8 +808,8 @@ def pic_show(request, image_filename):
 def file_show(request, file_path):
     try:
         # Determine the content type based on the file extension
-        path = f"cv_files/{file_path}"
-        content_type, _ = mimetypes.guess_type(f"cv_files/{file_path}")
+        path = f"{file_path}"
+        content_type, _ = mimetypes.guess_type(f"{file_path}")
         
         # Open and return the image
         with open(path, "rb") as f:
