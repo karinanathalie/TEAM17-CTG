@@ -138,10 +138,10 @@ export const EventCard = ({
     <div className="m-3 flex space-x- w-[1040px] h-[231px] rounded-[8px] px-[24px] py-[16px] bg-[#F2F2F2]">
       <div className="flex flex-col justify-center w-[344px] h-[197px] rounded-[8px] bg-gray">
         <img
-          src={eventPicture}
-          alt="event"
-          className="w-full h-full object-cover rounded-t-[16px]"
-        />
+        src={`http://localhost:8000/api/pic/${eventPicture}`}
+        alt={eventName}
+        className="w-full h-[197px] rounded-[8px]"
+      /> 
       </div>
       <div className="flex flex-col pl-[41px]">
         <div className="h-[150px] w-[600px]">
