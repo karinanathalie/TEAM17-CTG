@@ -89,6 +89,9 @@ class Application(models.Model):
     status = models.TextField(
         choices=Status.choices(),
     )
+    role_type = models.TextField(
+        choices=RoleType.choices(),
+    )
 
     def __str__(self):
         return f"{self.user_profile.name} applied as {self.role_type} for {self.event.event_name}"

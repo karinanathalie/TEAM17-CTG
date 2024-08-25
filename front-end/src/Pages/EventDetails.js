@@ -77,6 +77,7 @@ export default function EventDetails() {
                 location={event.event_location}
                 eventPicture={event.event_image}
                 eventName={event.event_name}
+                eventDescription={event.event_description}
                 eventSummary={event.event_summary}
                 role={current_role}
               />

@@ -12,6 +12,7 @@ import axios from "axios";
 import { ScheduleCard, CarousellCard, EventCard } from "../Components/Cards.js";
 import { ButtonAccount, ButtonFull } from "../Components/Button.js";
 import SideBar from "../Components/SideBar.js";
+import Feedbackform from "../Components/Feedbackform.js";
 import Calendarr from "../Components/Calendar.jsx";
 import Achievements from "../Components/Achievements.js";
 import { SwipingCard } from "../Components/SwipingCard.js";
@@ -147,7 +148,9 @@ export default function HomeView() {
               {/* <Calendarr /> */}
             </Wrapper>
           </Wrapper>
-          <Wrapper className="border border-black h-[240px] rounded-[8px] w-[670px]"></Wrapper>
+          <Wrapper className="border border-black h-[240px] rounded-[8px] w-[670px]">
+            <Feedbackform />
+          </Wrapper>
         </Wrapper>
       </Wrapper>
       <Wrapper>

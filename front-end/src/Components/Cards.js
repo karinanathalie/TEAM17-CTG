@@ -112,6 +112,7 @@ export const EventCard = ({
   location,
   eventPicture,
   eventName,
+  eventDescription,
   eventSummary,
   role,
 }) => {
@@ -146,10 +147,10 @@ export const EventCard = ({
       <div className="flex flex-col pl-[41px]">
         <div className="h-[150px] w-[600px]">
           <div className="font-semibold text-[24px]">{eventName}</div>
-          <div className="pt-[1px] font-medium text-[14px] text-gray">
-            {eventSummary}
+          <div className="pt-[1px] font-medium text-[14px] text-mediumgray">
+            {eventDescription}
           </div>
-          <div className="pt-[1px] flex font-medium text-[14px] text-gray">
+          <div className="pt-[1px] flex font-semibold text-[16px] text-mediumgray mt-2">
             <div className="flex flex-col justify-center">
               <CiLocationOn />
             </div>
