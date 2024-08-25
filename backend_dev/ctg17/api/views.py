@@ -798,7 +798,7 @@ def pic_show(request, image_filename):
     try:
         # Determine the content type based on the file extension
         path = f"static/event_image/{image_filename}"
-        content_type, _ = mimetypes.guess_type(f"static/event_image/{path}")
+        content_type, _ = mimetypes.guess_type(f"static/event_image/{image_filename}")
         
         # Open and return the image
         with open(path, "rb") as f:
