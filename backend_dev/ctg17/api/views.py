@@ -14,6 +14,9 @@ from django.core.mail import send_mail
 from api.drive.script import DriveAPI
 from twilio.rest import Client
 from django.core.serializers.json import DjangoJSONEncoder
+import mimetypes
+from PIL import Image
+
 
 
 
@@ -111,16 +114,41 @@ def logout_user(request):
 def get_all_events(request):
     try:
         events = Event.objects.all()
-        events_json = serializers.serialize('json', events)
+        
+        events_data = json.loads(serializers.serialize('json', events))
+        
+        # Modify the image path in the fields section for each event
+        for event_obj in events_data:
+            event_image = event_obj['fields']['event_image']
+            if event_image:
+                filename = event_image.split('/')[-1]  # Extract the filename
+                event_obj['fields']['event_image'] = filename
+        
+        events_json = json.dumps(events_data, cls=DjangoJSONEncoder)
         return HttpResponse(events_json, content_type="application/json")
+        
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
 
 def get_event_details(request, event_id=1):
     try:
         event = Event.objects.filter(id=event_id)
-        event_json = serializers.serialize('json', event)
+        
+        if not event.exists():
+            return HttpResponse(json.dumps({'error': 'Event not found.'}), content_type="application/json", status=404)
+        
+        event_data = json.loads(serializers.serialize('json', event))
+        
+        # Modify the image path in the fields section
+        for event_obj in event_data:
+            event_image = event_obj['fields']['event_image']
+            if event_image:
+                filename = event_image.split('/')[-1]  # Extract the filename
+                event_obj['fields']['event_image'] = filename
+        
+        event_json = json.dumps(event_data, cls=DjangoJSONEncoder)
         return HttpResponse(event_json, content_type="application/json")
+        
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
 
@@ -707,9 +735,19 @@ def send_whatsapp(phone='+85252633364', message=''):
     )
     print(message.status)
 
-def analytics_participants_ratio(response):
+def get_attendance_analytics(request):
+    events = Event.objects.all()
+    response = []
+
+    for event in events:
+        event_analytics = analytics_participants_ratio(event.id)
+        if isinstance(event_analytics, dict):
+            response.append(event_analytics)
+    
+    return HttpResponse(str(response), status=200, content_type="application/json")
+
+def analytics_participants_ratio(event_id):
     try:
-        event_id = response.GET.get('event_id')
         event = Event.objects.filter(id=event_id).first()
 
         if event is None:
@@ -734,11 +772,12 @@ def analytics_participants_ratio(response):
         }
 
         # Return the ratio as a response
-        return HttpResponse(
-            json.dumps(response_data), 
-            content_type="application/json",
-            status=200
-        )
+        # return HttpResponse(
+        #     json.dumps(response_data), 
+        #     content_type="application/json",
+        #     status=200
+        # )
+        return response_data
         
     except Exception as e:
         return HttpResponse(
@@ -746,6 +785,48 @@ def analytics_participants_ratio(response):
             content_type="application/json",
             status=500
         )
+
+# Creates the JSON for pie chart representation of participants/volunteers
+def participants_ratio(participants_count, volunteers_count):
+    if participants_count == 0 and volunteers_count == 0: return {}
+    return [
+        {'id': 0, 'value': participants_count, 'label': 'Participants', 'color': '#FFFF99'},
+        {'id': 1, 'value': volunteers_count, 'label': 'Volunteers', 'color': '#DDAD41'},
+    ]
+
+def pic_show(request, image_filename):
+    try:
+        # Determine the content type based on the file extension
+        path = f"static/event_image/{image_filename}"
+        content_type, _ = mimetypes.guess_type(f"static/event_image/{path}")
+        
+        # Open and return the image
+        with open(path, "rb") as f:
+            return HttpResponse(f.read(), content_type=content_type or "image/jpeg")
+    
+    except IOError:
+        # Create a 1x1 red image
+        red = Image.new('RGB', (1, 1), (255, 0, 0))
+        response = HttpResponse(content_type="image/jpeg")
+        red.save(response, "JPEG")
+        return response
+    
+def file_show(request, path):
+    try:
+        # Determine the content type based on the file extension
+        path = f"cv_files/{path}"
+        content_type, _ = mimetypes.guess_type(f"cv_files/{path}")
+        
+        # Open and return the image
+        with open(path, "rb") as f:
+            return HttpResponse(f.read(), content_type=content_type or "image/jpeg")
+    
+    except IOError:
+        # Create a 1x1 red image
+        red = Image.new('RGB', (1, 1), (255, 0, 0))
+        response = HttpResponse(content_type="image/jpeg")
+        red.save(response, "JPEG")
+        return response
 
 def get_demographic_analytics(request):
     events = Event.objects.all()
@@ -763,20 +844,29 @@ def calculate_demographic_analytics(event_id):
         event = Event.objects.get(id=event_id)
 
         ethnicityCount = collections.defaultdict(int)
-        avgAge, count = 0, 0
+        avgAge_participant, avgAge_volunteer, count = 0, 0, 0
 
         for user in event.registered_participants.all():
             profile = Profile.objects.get(user=user)
             ethnicityCount[profile.ethnicity] += 1
-            avgAge += profile.age
+            avgAge_participant += profile.age
             count += 1
         if count != 0:
-            avgAge = avgAge / count
+            avgAge_participant = avgAge_participant / count
+        
+        for user in event.registered_participants.all():
+            profile = Profile.objects.get(user=user)
+            ethnicityCount[profile.ethnicity] += 1
+            avgAge_volunteer += profile.age
+            count += 1
+        if count != 0:
+            avgAge_volunteer = avgAge_volunteer / count
 
         response = {
             'event_id': event.id,
             'event_name': event.event_name,
-            'average_age': avgAge,
+            'average_participant_age': avgAge_participant,
+            'average_volunteer_age': avgAge_volunteer,
             'xLabels': list(ethnicityCount.keys()),
             'yData': list(ethnicityCount.values())
         }

@@ -1,11 +1,32 @@
-import { React, useState } from "react";
-import { data } from "../Components/data.js";
+import { React, useEffect, useState } from "react";
+// import { data } from "../Components/data.js";
 import Events from "../Components/Events.js";
-import { InputSearchu } from "../Components/Input.js";
+import { useHistory } from 'react-router-dom';
 import Select from "react-dropdown-select";
-import { CiSearch } from "react-icons/ci";
 
 const Upcoming = () => {
+
+  useEffect(() => {
+    let backend_base = "http://localhost:8000/";
+    fetch(backend_base + "api/events", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then(async (res) => {
+      if (res.status == 200) {
+        const json_data = await res.json();
+        console.log(json_data);
+
+        const proc_data = json_data.map((event) => {return event.fields});
+        setDatas(proc_data);
+      } else {
+        alert("Internal Server Error");
+      }
+    });
+  }, []);
+
+
   const styles = {
     fontSize: 14,
     border: "none",
@@ -45,6 +66,13 @@ const Upcoming = () => {
       label: "Gathering",
     },
   ];
+
+  const history = useHistory();
+
+  const handleButtonClick = () => {
+    history.push('/myregistration');
+  };
+  const [data, setData] = useState([]);
   const [datas, setDatas] = useState(data);
   const filterType = (type) => {
     const filteredData = data.filter((item) => {
@@ -66,7 +94,7 @@ const Upcoming = () => {
           <input type="text" class="w-[250px] px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Search Event..." />
         </div>
         <div class="ml-4">
-          <button class="bg-black text-white px-6 py-2 rounded-md hover:bg-gray-800 transition-colors duration-300">
+          <button class="bg-black text-white px-6 py-2 rounded-md hover:bg-gray-800 transition-colors duration-300" onClick={handleButtonClick}>
             View my registrations
           </button>
         </div>

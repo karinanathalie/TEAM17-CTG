@@ -1,7 +1,5 @@
 import React from "react";
 import { AiOutlineCheckCircle } from "react-icons/ai";
-// import { ButtonLove } from "./Button";
-// import Tag from "./Tag";
 import styled from "styled-components";
 
 const Container = styled.div``;

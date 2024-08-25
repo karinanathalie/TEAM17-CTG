@@ -6,6 +6,7 @@ import { useTheme } from "../../theme";
 import { useNavigate } from 'react-router-dom';
 import { Path } from "../../constants/path";
 import { applicationColumns } from "../../gridColDef/application";
+import { volunteerApplicationColumns } from "../../gridColDef/volunteerApplication";
 
 interface EventProps {
     isSidebarOpen: boolean;
@@ -18,7 +19,7 @@ const VolunteerApplication: React.FC<EventProps> = ({ isSidebarOpen }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch('http://0.0.0.0:8000/api/applications/volunteers')
+        fetch('http://0.0.0.0:8000/api/application/volunteers')
           .then((response) => response.json())
           .then((data) => {
               const rows = data.map((item: any) => ({
@@ -29,10 +30,6 @@ const VolunteerApplication: React.FC<EventProps> = ({ isSidebarOpen }) => {
           })
           .catch((error) => console.error('Error fetching data:', error));
     }, []);
-
-    const handleClick = () => {
-        navigate(Path.Event.Create);  
-    };
     
     return (
     <Box style={{ margin: 40, width: containerWidth }}>
@@ -47,16 +44,13 @@ const VolunteerApplication: React.FC<EventProps> = ({ isSidebarOpen }) => {
                 <Breadcrumbs>
                     <Typography variant='h5' color='primary'>Volunteer Application</Typography>
                 </Breadcrumbs>
-                <Button variant="outlined" color="primary" onClick={handleClick}>
-                    Create
-                </Button>
             </Box>
 
             <Stack style={{ marginTop: 20 }}>
                 <div style={{ height: 680 }}>
                     <DataGrid
                         rows={volunteer} 
-                        columns={applicationColumns}  
+                        columns={volunteerApplicationColumns}  
                         getRowId={(row) => row.id} 
                         initialState={{
                             pagination: {

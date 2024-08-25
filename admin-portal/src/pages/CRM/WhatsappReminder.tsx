@@ -15,19 +15,19 @@ interface Props {
     isSidebarOpen: boolean;
 }
 
-const EmailReminder: React.FC<Props> = ({ isSidebarOpen }) => {
+const WhatsappReminder: React.FC<Props> = ({ isSidebarOpen }) => {
     const { enqueueSnackbar } = useSnackbar();
     const navigate = useNavigate();
     
     const containerWidth = isSidebarOpen ? '75%' : '90%';
 
     const handleCancel = () => {
-        navigate(Path.CRM.Email);
+        navigate(Path.CRM.Whatsapp);
     };
 
     const handleSubmit = async (values: any) => {
         try {
-            const response = await fetch(`http://0.0.0.0:8000/api/event/${values.selectedEvent.id}/sendreminder-email`, {
+            const response = await fetch(`http://0.0.0.0:8000/api/event/${values.selectedEvent.id}/sendreminder-whatsapp`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ const EmailReminder: React.FC<Props> = ({ isSidebarOpen }) => {
                 throw new Error('Something went wrong');
             }
 
-            enqueueSnackbar('Email reminder sent successfully!', { variant: 'success' });
+            enqueueSnackbar('Whatsapp reminder sent successfully!', { variant: 'success' });
         } catch (error) {
             enqueueSnackbar('Error sending email reminder', { variant: 'error' });
         }
@@ -77,7 +77,7 @@ const EmailReminder: React.FC<Props> = ({ isSidebarOpen }) => {
                             Cancel
                         </Button>
                         <Button type="submit" variant="contained" color="primary">
-                            Send Email Reminder
+                            Send Whatsapp Reminder
                         </Button>
                     </Box>
                 </Box>
@@ -87,4 +87,4 @@ const EmailReminder: React.FC<Props> = ({ isSidebarOpen }) => {
     );
 };
 
-export default EmailReminder;
+export default WhatsappReminder;

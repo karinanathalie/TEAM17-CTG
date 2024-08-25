@@ -17,34 +17,35 @@ const validationSchema = Yup.object({
     participantQuota: Yup.number().required('Participant quota is required').min(1, 'Minimum 1 participant'),
     volunteerQuota: Yup.number().required('Volunteer quota is required').min(1, 'Minimum 1 volunteer'),
     deadline: Yup.date().required('Registration deadline is required'),
+    eventImage: Yup.mixed().required('Event image is required')
 });
 
 const EventCreate: React.FC = () => {
     const { enqueueSnackbar } = useSnackbar(); 
     const navigate = useNavigate();
 
-    const handleCancel = () => {
-        navigate(Path.Event.Root)
-    }
-
     const handleSubmit = async (values: any) => {
         try {
+            const formData = new FormData();
+            formData.append('event_name', values.eventName);
+            formData.append('event_description', values.eventDescription);
+            formData.append('event_date', values.eventDate);
+            formData.append('event_location', values.eventLocation);
+            formData.append('target_population', values.targetPopulation);
+            formData.append('skillset', values.skillset);
+            formData.append('participant_quota', values.participantQuota.toString());
+            formData.append('volunteer_quota', values.volunteerQuota.toString());
+            formData.append('deadline', values.deadline);
+    
+            // Only append the file if it exists
+            if (values.eventImage) {
+                formData.append('event_image', values.eventImage);
+            }
+    
             const response = await fetch('http://0.0.0.0:8000/api/events/create/', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    event_name: values.eventName,
-                    event_description: values.eventDescription,
-                    event_date: values.eventDate,
-                    event_location: values.eventLocation,
-                    target_population: values.targetPopulation,
-                    skillset: values.skillset,
-                    participant_quota: values.participantQuota,
-                    volunteer_quota: values.volunteerQuota,
-                    deadline: values.deadline,
-                }),
+                // Do not set Content-Type header, it will be automatically set to multipart/form-data
+                body: formData,
             });
 
             if (!response.ok) {
@@ -72,6 +73,7 @@ const EventCreate: React.FC = () => {
                 participantQuota: '',
                 volunteerQuota: '',
                 deadline: '',
+                eventImage: null
             }}
             onSubmit={handleSubmit}
         />

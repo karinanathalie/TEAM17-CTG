@@ -31,24 +31,13 @@ function App() {
         <Router>
           <SideBar>
             <Switch>
-              <Route exact path="/" component={HomeView} />
-              <Route path="/about" component={EventDetails} />
-              <Route path="/profile" component={HomeView} />
-              <Route path="/training" component={HomeView} />
+              <Route exact path="/home" component={HomeView} />
+              <Route path="/events" component={Upcoming} />
+              <Route path="/myregistration" component={EventDetails} />
             </Switch>
           </SideBar>
         </Router>
       </div>
-      {/* <VolunteerParticipantToggle /> */}
-      {/* <RegistrationCard /> */}
-      {/* <Upcoming> </Upcoming> */}
-      {/* <Calendarr></Calendarr> */}
-      {/* <Calendarr></Calendarr> */}
-      {/* <EventDetails /> */}
-      {/* <EventCard date="12-07-2003" location="Hong Kong" eventPicture="" eventName="Hello World" eventSummary="Hello World Lorem Ipsum" role="Participant" /> */}
-      {/* <IndividualEventDetail /> */}
-      <HomeView />
-      {/* <SwipingCard /> */}
     </Container>
   );
 }
