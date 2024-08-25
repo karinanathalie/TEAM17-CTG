@@ -45,6 +45,8 @@ urlpatterns = [
 
     path('analytics/attendance', views.get_attendance_analytics, name='get-attendance-analytics'),
     path('analytics/demographic', views.get_demographic_analytics, name="get-demographic-analytics"),
+    path('analytics/quota', views.get_quota_analytics, name="get-quota-analytics"),
+
 
     path('file/<str:path>/', views.file_show, name="file-show"),
     path('pic/<str:image_filename>/', views.pic_show, name="pic-show")
