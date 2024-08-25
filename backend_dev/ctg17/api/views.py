@@ -665,3 +665,44 @@ def send_whatsapp(phone='+85252633364', message=''):
         body=message
     )
     print(message.status)
+
+def analytics_participants_ratio(response):
+    try:
+        event_id = response.GET.get('event_id')
+        event = Event.objects.filter(id=event_id).first()
+
+        if event is None:
+            return HttpResponse(
+                json.dumps({"error": "Event not found"}), 
+                content_type="application/json",
+                status=404
+            )
+
+        # Calculate the ratio
+        participants_count = event.registered_participants.count()
+        volunteers_count = event.registered_volunteers.count()
+
+        data = participants_ratio(participants_count, volunteers_count)
+
+        # Prepare the response data
+        response_data = {
+            "event_name": event.event_name,
+            "participants_count": participants_count,
+            "volunteers_count": volunteers_count,
+            "data": data
+        }
+
+        # Return the ratio as a response
+        return HttpResponse(
+            json.dumps(response_data), 
+            content_type="application/json",
+            status=200
+        )
+        
+    except Exception as e:
+        return HttpResponse(
+            json.dumps({"error": f"Error: {str(e)}"}), 
+            content_type="application/json",
+            status=500
+        )
+    
