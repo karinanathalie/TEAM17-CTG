@@ -55,7 +55,7 @@ export const getThemeFromMode = (themeMode : ThemeMode) =>
             ...(themeMode === ThemeMode.DARK
                 ? {
                     primary: {
-                        main: BLUE,
+                        main: LIGHT_BLUE,
                         light: LIGHT_BLUE,
                     },
                     secondary: {

@@ -30,6 +30,8 @@ export const Path = {
         CreateEmail: `/email/create`,
         ReminderEmail: `/email/reminder`,
         Whatsapp: `/whatsapp`,
+        CreateWhatsapp: `/whatsapp/create`,
+        ReminderWhatsapp: `/whatsapp/reminder`,
     },
     Services: {
         Zendesk: `/services/zendesk`

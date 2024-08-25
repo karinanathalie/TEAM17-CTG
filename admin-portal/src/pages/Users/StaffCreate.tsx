@@ -1,18 +1,20 @@
 import React from 'react';
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { Box, Button, Divider, TextField, Typography } from '@mui/material';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { Path } from '../../constants/path';
 import { useSnackbar } from 'notistack';
+import GenderDropdown from '../../helpers/GenderDropdown';
+import Dropdown from '../../helpers/Dropdown';
 
 const validationSchema = Yup.object({
     name: Yup.string().required('Name is required'),
     age: Yup.number().required('Age is required').min(18, 'Must be at least 18 years old'),
     phone: Yup.string().required('Phone number is required').matches(/^[0-9]{10,15}$/, 'Phone number is not valid'),
     gender: Yup.string().required('Gender is required'),
-    joinDate: Yup.date().required('Join Date is required'),
-    skillset: Yup.string().required('Skillset is required'),
+    nationality: Yup.string().required('Nationality is required'),
+    ethnicity: Yup.string().required('Ethnicity is required'),
 });
 
 const StaffCreate: React.FC = () => {
@@ -25,18 +27,21 @@ const StaffCreate: React.FC = () => {
 
     const handleSubmit = async (values: any) => {
         try {
-            const response = await fetch('http://0.0.0.0:8000/api/staff/create/', {
+            const response = await fetch('http://0.0.0.0:8000/api/profile/staff/create/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
+                    username: values.username,
+                    password: values.password,
+                    email: values.email,
                     name: values.name,
                     age: values.age,
                     phone: values.phone,
                     gender: values.gender,
-                    join_date: values.joinDate,
-                    skillset: values.skillset,
+                    nationality: values.nationality,
+                    ethnicity: values.ethnicity,
                 }),
             });
 
@@ -56,12 +61,15 @@ const StaffCreate: React.FC = () => {
     return (
         <Formik
             initialValues={{
+                username: '',
+                password: '',
+                email: '',
                 name: '',
                 age: '',
                 phone: '',
                 gender: '',
-                joinDate: '',
-                skillset: '',
+                nationality: '',
+                ethnicity: '',
             }}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
@@ -70,6 +78,62 @@ const StaffCreate: React.FC = () => {
                 <Box component={Form} onSubmit={handleSubmit} sx={{ padding: '16px', margin: 3 }}>
                     <Typography variant="h5" color='primary' gutterBottom>
                         Create New Staff Member
+                    </Typography>
+
+                    {/* User Info Section */}
+                    <Typography variant="h6" color="secondary" gutterBottom style={{marginTop: 20}}>
+                        I. User Info
+                    </Typography>
+
+                    <Field
+                        as={TextField}
+                        label="Username"
+                        name="username"
+                        fullWidth
+                        margin="normal"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.username}
+                        error={touched.username && Boolean(errors.username)}
+                        helperText={touched.username && errors.username}
+                        required
+                    />
+
+                    <Field
+                        as={TextField}
+                        label="Password"
+                        name="password"
+                        type="password"
+                        fullWidth
+                        margin="normal"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.password}
+                        error={touched.password && Boolean(errors.password)}
+                        helperText={touched.password && errors.password}
+                        required
+                    />
+
+                    <Field
+                        as={TextField}
+                        label="Email"
+                        name="email"
+                        type="email"
+                        fullWidth
+                        margin="normal"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.email}
+                        error={touched.email && Boolean(errors.email)}
+                        helperText={touched.email && errors.email}
+                        required
+                    />
+
+                    <Divider sx={{ my: 3 }} />
+
+                    {/* Profile Info Section */}
+                    <Typography variant="h6" color="secondary" gutterBottom>
+                        II. Profile Info
                     </Typography>
 
                     <Field
@@ -116,7 +180,7 @@ const StaffCreate: React.FC = () => {
                     />
 
                     <Field
-                        as={TextField}
+                        component={GenderDropdown}
                         label="Gender"
                         name="gender"
                         fullWidth
@@ -130,34 +194,38 @@ const StaffCreate: React.FC = () => {
                     />
 
                     <Field
-                        as={TextField}
-                        label="Join Date"
-                        name="joinDate"
-                        type="date"
+                        component={Dropdown}
+                        options={['Hong Kong', 'Non - Hong Kong']}
+                        label="Nationality"
+                        name="nationality"
                         fullWidth
                         margin="normal"
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        value={values.joinDate}
+                        value={values.nationality}
                         InputLabelProps={{
                             shrink: true,
                         }}
-                        error={touched.joinDate && Boolean(errors.joinDate)}
-                        helperText={touched.joinDate && errors.joinDate}
+                        error={touched.nationality && Boolean(errors.nationality)}
+                        helperText={touched.nationality && errors.nationality}
                         required
                     />
 
                     <Field
-                        as={TextField}
-                        label="Skillset"
-                        name="skillset"
+                        component={Dropdown}
+                        options={['Asian', 'Hispanic', 'Caucasian']}
+                        name="ethnicity"
+                        label="Ethnicity"
                         fullWidth
                         margin="normal"
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        value={values.skillset}
-                        error={touched.skillset && Boolean(errors.skillset)}
-                        helperText={touched.skillset && errors.skillset}
+                        value={values.ethnicity}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        error={touched.ethnicity && Boolean(errors.ethnicity)}
+                        helperText={touched.ethnicity && errors.ethnicity}
                         required
                     />
 
