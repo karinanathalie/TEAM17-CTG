@@ -223,7 +223,7 @@ def create_event(request):
     }
     return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
 @csrf_exempt
-def send_event_reminder(request, event_id=1):
+def send_event_reminder_email(request, event_id=1):
     try:
         event = Event.objects.get(id=event_id)
         recipient_list = []
@@ -240,6 +240,29 @@ def send_event_reminder(request, event_id=1):
         message = f"Hi! This is a friendly reminder for the upcoming event: {event}\nDate: {event.event_date}\nLocation: {event.event_location}\nWe hope to see you there!"
         send_email(subject, message, recipient_list)
         return HttpResponse('{"Response": "Email reminders sent!"}', status=200, content_type="application/json")
+    except Exception as e:
+        return HttpResponse(f'Error: {str(e)}', status=500)
+
+@csrf_exempt
+def send_event_reminder_whatsapp(request, event_id=1):
+    try:
+        event = Event.objects.get(id=event_id)
+        recipient_list = []
+
+        for user in event.registered_participants.all():
+            profile = Profile.objects.get(user=user)
+            recipient_list.append(profile.phone)
+        for user in event.registered_volunteers.all():
+            profile = Profile.objects.get(user=user)
+            recipient_list.append(profile.phone)
+        
+        if not recipient_list:
+            return HttpResponse('{"Response": "No registered participants/volunteers!"}', status=200, content_type="application/json")
+
+        message = f"Hi! This is a friendly reminder for the upcoming event: {event}\nDate: {event.event_date}\nLocation: {event.event_location}\nWe hope to see you there!"
+        for phone in recipient_list:
+            send_whatsapp(phone, message)
+        return HttpResponse('{"Response": "Whatsapp reminders sent!"}', status=200, content_type="application/json")
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
 
