@@ -17,6 +17,7 @@ import Upcoming from "./Pages/Upcoming.js";
 import EventDetails from "./Pages/EventDetails.js";
 import IndividualEventDetail from "./Pages/IndividualEventDetail.js";
 import { CarousellCards } from "./Components/Cards.js";
+import { SwipingCard } from "./Components/SwipingCard.js";
 
 const Container = styled.div``;
 
@@ -39,10 +40,12 @@ function App() {
       {/* <VolunteerParticipantToggle /> */}
       {/* <RegistrationCard /> */}
       {/* <Upcoming> </Upcoming> */}
-      <EventDetails />
+      {/* <EventDetails /> */}
       {/* <EventCard date="12-07-2003" location="Hong Kong" eventPicture="" eventName="Hello World" eventSummary="Hello World Lorem Ipsum" role="Participant" /> */}
       
-      {/* <IndividualEventDetail /> */}
+      <IndividualEventDetail />
+
+      {/* <SwipingCard /> */}
       
     </Container>
   );
