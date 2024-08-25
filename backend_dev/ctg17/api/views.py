@@ -778,7 +778,7 @@ def analytics_participants_ratio(response):
 def file_show(request, path):
     try:
         # Determine the content type based on the file extension
-        path = f"static/event_image/{image_filename}"
+        path = f"static/event_image/{path}"
         content_type, _ = mimetypes.guess_type(f"static/event_image/{image_filename}")
         
         # Open and return the image
