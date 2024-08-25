@@ -15,6 +15,7 @@ import Calendarr from "../Components/Calendar.jsx";
 import Achievements from "../Components/Achievements.js";
 import { SwipingCard } from "../Components/SwipingCard.js";
 import Events from "../Components/Events.js";
+import Profile from "../Components/Profile.js";
 
 const Container = styled.div``;
 const Wrapper = styled.div``;
@@ -27,6 +28,12 @@ export default function HomeView() {
     name: "",
   });
   const [error, setError] = useState("");
+
+  const [showProfile, setshowprofile] = useState(false);
+  const handleProfileClick = () => {
+    setshowprofile(!showProfile);
+    console.log(showProfile);
+    };
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -126,8 +133,20 @@ export default function HomeView() {
         </Wrapper>
       </Wrapper>
       <Wrapper>
-        <ButtonAccount location={location} />
-        <SwipingCard />
+        {!showProfile && (
+            <>
+            <ButtonAccount location={location} onClick={handleProfileClick} />
+            <div className="hidden sm:block">
+                <SwipingCard />
+            </div>
+            </>
+        )}
+
+        {showProfile && (
+            <div className="hidden sm:block">
+            <Profile onClick={handleProfileClick}/>
+            </div>
+        )}
       </Wrapper>
     </Container>
   );
