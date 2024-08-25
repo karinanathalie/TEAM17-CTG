@@ -124,10 +124,10 @@ export const ButtonSocial = ({ icon, text }) => {
   );
 };
 
-export const ButtonAccount = ({ text }) => {
+export const ButtonAccount = ({ onClick, text }) => {
   return(
     <div className="w-full flex flex-row-reverse h-auto">
-      <div className="mb-4 flex bg-lightgray h-[80px] rounded-[16px] w-[350px]">
+      <button className="mb-4 flex bg-lightgray h-[80px] rounded-[16px] w-[350px] hover:shadow-lg active:shadow-none" onClick={onClick}>
         <div className="flex p-4 text-[18px] font-semibold">
             <div className="w-10 h-10 bg-gray rounded-full flex items-center justify-center text-white font-bold">
                 IMG
@@ -140,7 +140,7 @@ export const ButtonAccount = ({ text }) => {
                 </div>
             </div>
         </div>
-      </div>
+      </button>
     </div>
   )
 }
