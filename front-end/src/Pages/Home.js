@@ -16,9 +16,9 @@ import SideBar from "../Components/SideBar.js";
 import Calendarr from "../Components/Calendar.jsx";
 import Achievements from "../Components/Achievements.js";
 import { SwipingCard } from "../Components/SwipingCard.js";
+import Profile from "../Components/Profile.js";
 import Events from "../Components/Events.js";
 import DistanceCalculator from "../Components/kilo.js";
-import Profile from "../Components/Profile.js";
 
 const Container = styled.div``;
 const Wrapper = styled.div``;
@@ -107,7 +107,7 @@ export default function HomeView() {
     }
   };
   return (
-    <Container className="font-poppins flex w-full h-screen m-[29px]">
+    <Container className="font-poppins flex w-full h-screen m-[29px] overflow-y-scroll">
       <Wrapper className="flex flex-col mt-4 w-full">
         <Wrapper className="w-full">
           <Wrapper className="text-[32px] font-medium">
@@ -144,8 +144,6 @@ export default function HomeView() {
                   role="Participant"
                 />
               </Wrapper>
-              {/* <EventCard date="12-07-2003" location="Hong Kong" eventPicture="" eventName="Hello World" eventSummary="Hello World Lorem Ipsum" role="Participant" /> */}
-              {/* <Calendarr /> */}
             </Wrapper>
           </Wrapper>
           {/* <Wrapper className="border border-black h-[240px] rounded-[8px] w-[670px]">
