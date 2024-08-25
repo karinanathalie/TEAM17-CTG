@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core import serializers
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from .constants import RoleType
 from .models import Application, Event, Profile, ProfileBadge, EmailTemplate, VolunteerApplication
 from django.views.decorators.csrf import csrf_exempt
@@ -73,6 +73,9 @@ def login_user(request):
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
 
+def logout_user(request):
+    logout(request)
+    return HttpResponse('{"Message": "Logged user out"}', status=200, content_type="application/json")
 
 # EVENT
 def get_all_events(request):
@@ -131,6 +134,27 @@ def event_registration_confirmation(request, event_id):
         return HttpResponse(f'user {user_id} is registered for {event_name}', status=200)
     else:
         return HttpResponse(f'user {user_id} is not registered for {event_name}', status=200)
+
+def unregister_from_event(request, event_id):
+    try:
+        event = Event.objects.get(id=event_id)
+        if request.user.is_authenticated:
+            user = request.user
+
+            removed = False
+            if user in event.registered_participants.all():
+                event.registered_participants.remove(user)
+                removed = True
+            elif user in event.registered_volunteers.all():
+                event.registered_volunteers.remove(user)
+                removed = True
+            if not removed:
+                return HttpResponse('{"Message": "User not registered for event"}', status=400, content_type="application/json")
+            return HttpResponse('{"Message": "User has been un-registered from event"}', status=200, content_type="application/json")
+        else:
+            return HttpResponse('{"Message": "User not logged in!"}', status=400, content_type="application/json")
+    except Exception as e:
+        return HttpResponse(f'Error: {str(e)}', status=500)
 
 @csrf_exempt
 def create_event(request):

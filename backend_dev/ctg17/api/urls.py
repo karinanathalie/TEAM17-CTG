@@ -7,12 +7,14 @@ urlpatterns = [
     path('user/register', views.register_user, name="register-user"),
     path('staffuser/register', views.create_staffuser, name="register-staffuser"),
     path('user/login', views.login_user, name="login-user"),
+    path('user/logout', views.logout_user, name="logout-user"),
     
     path('events/', views.get_all_events, name="event-list"),
     path('events/<int:event_id>/', views.get_event_details, name="event-detail"),
     path('events/create/', views.create_event, name="create-event"),
     path('event/<int:event_id>/register', views.event_registration, name = "event-registration"),
     path('event/<int:event_id>/register/confirmation', views.event_registration_confirmation, name = "event-registration-confirm"),
+    path('event/<int:event_id>/unregister', views.unregister_from_event, name="unregister-from-event"),
     path('event/<int:event_id>/sendreminder', views.send_event_reminder, name="send-event-reminder"),
     
     path('user/<int:user_id>/', views.get_user_details, name="user-detail"),
