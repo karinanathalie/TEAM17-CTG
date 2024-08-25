@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { BackButton, VolunteerParticipantToggle } from '../Components/Button';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  NavLink,
-} from "react-router-dom";
-
 import { RegistrationCard, RegistrationCardPar } from '../Components/RegistrationCard';
 import { IoCalendarOutline, IoLocationOutline, IoPeopleOutline } from 'react-icons/io5';
 import { TrainingCard } from '../Components/Cards';
