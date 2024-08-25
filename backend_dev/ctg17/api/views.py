@@ -71,6 +71,25 @@ def create_badge(request):
 
     except Exception as e:
         return HttpResponse(f"Error: {str(e)}", status=500)
+    
+def get_all_badges(request):
+    try:
+        badges = Badge.objects.all()
+        
+        badges_data = json.loads(serializers.serialize('json', badges))
+        
+        # Modify the image path in the fields section for each event
+        for badge_obj in badges_data:
+            badge_image = badge_obj['fields']['badge_image']
+            if badge_image:
+                filename = badge_image.split('/')[-1]  # Extract the filename
+                badge_obj['fields']['badge_image'] = filename
+            
+        badge_json = json.dumps(badges_data, cls=DjangoJSONEncoder)
+        return HttpResponse(badges_data, content_type="application/json")
+        
+    except Exception as e:
+        return HttpResponse(f'Error: {str(e)}', status=500)
 
 @csrf_exempt
 def create_staffuser(request):
