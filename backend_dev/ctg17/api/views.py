@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.core import serializers
 from django.contrib.auth import login, authenticate
 from .constants import RoleType
-from .models import Application, Event, Profile, ProfileBadge, EmailTemplate
+from .models import Application, Event, Profile, ProfileBadge, EmailTemplate, VolunteerApplication
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 import json
@@ -281,6 +281,14 @@ def get_all_participant_application(request):
         application = Application.objects.all()
         application_json = serializers.serialize('json', application)
         return HttpResponse(application_json, content_type="application/json")
+    except Exception as e:
+        return HttpResponse(f'Error: {str(e)}', status=500)
+
+def get_all_volunteer_application(request):
+    try:
+        volunteer = VolunteerApplication.objects.all()
+        volunteer_json = serializers.serialize('json', volunteer)
+        return HttpResponse(volunteer_json, content_type="application/json")
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
     
