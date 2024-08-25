@@ -17,7 +17,7 @@ export const SITEMAP: Sitemap = [
                 key: 'sign-up-rate',
                 type: 'page',
                 label: 'Sign Up Rate',
-                path: '',
+                path: Path.Analytics.Attendance,
             },
             {
                 key: 'registration',

@@ -29,8 +29,27 @@ export const volunteerApplicationColumns: GridColDef[] = [
       return <Chip label={params.value} color={color} />;
     },
   },
-  { field: 'reason_joining', headerName: 'Reason', width: 200 },
-  { field: 'cv_file', headerName: 'CV', width: 200 },
+  { 
+    field: 'reason_joining', headerName: 'Reason', width: 200 },
+  { 
+    field: 'cv_file', 
+    headerName: 'CV', 
+    width: 200, 
+    renderCell: (params: GridRenderCellParams) => {
+      return (
+        <Chip 
+          label="View CV" 
+          component="a"
+          href={`http://localhost:8000/${params.row.cv_file}`} 
+          clickable 
+          target="_blank" 
+          rel="noopener noreferrer"
+          color="primary"
+          variant="outlined"
+        />
+      );
+    },
+  },
   {
     field: 'menu',
     headerName: 'Menu',

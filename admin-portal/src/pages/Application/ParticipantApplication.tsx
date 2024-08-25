@@ -22,7 +22,6 @@ const ParticipantApplication: React.FC<Props> = ({ isSidebarOpen }) => {
                   id: item.pk,
                   ...item.fields,  
               }));
-              console.log('Rows:', rows);
               setParticipant(rows);
           })
           .catch((error) => console.error('Error fetching data:', error));
