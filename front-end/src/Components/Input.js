@@ -8,12 +8,12 @@ import { CiSearch } from "react-icons/ci";
 
 export const InputForm = ({ children, type, name, onChange }) => {
   return (
-    <div className="bg-grayinput w-full rounded-[6px] flex text-white text-[12px] mb-[16px]">
+    <div className="bg-grayinput w-[320px] rounded-[6px] flex text-white text-[12px] mb-[16px]">
       {children && <p className="p-3 mx-2">{children}</p>}
       <input
         type={type}
         placeholder={name}
-        className="p-2 bg-grayinput text-white text-[14px] placeholder-lightgray w-full"
+        className="p-2 bg-grayinput text-white h-[48px] text-[14px] placeholder-lightgray rounded-[8px] w-[320px]"
         onChange={onChange}
       ></input>
     </div>

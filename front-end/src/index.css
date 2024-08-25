@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+.vl {
+  border-left: 1px solid white;
+  height: 65px;
+  margin-top: 8px;
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -23,7 +28,7 @@ body > #root > div {
   background-color: #25221b !important;
   color: white; /* Change text color to white for better visibility */
   border-radius: 16px;
-  font-family: "Poppins", sans-serif;
+
   font-weight: 200;
 
   padding-right: 2px;
