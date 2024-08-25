@@ -18,8 +18,9 @@ import EventDetails from "./Pages/EventDetails.js";
 import IndividualEventDetail from "./Pages/IndividualEventDetail.js";
 import { CarousellCards } from "./Components/Cards.js";
 import Calendarr from "./Components/Calendar.jsx";
-import { SwipingCard } from "./Components/SwipingCard.js";
+// import { SwipingCard } from "./Components/SwipingCard.js";
 import Profile from "./Components/Profile.js";
+import Distance from "./Components/Distance.js";
 
 const Container = styled.div``;
 
@@ -40,14 +41,13 @@ function App() {
       </div>
       {/* <VolunteerParticipantToggle /> */}
       {/* <RegistrationCard /> */}
-      {/* <Upcoming> </Upcoming> */}
+      <Upcoming> </Upcoming>
       {/* <Calendarr></Calendarr> */}
       {/* <Calendarr></Calendarr> */}
       {/* <EventDetails /> */}
       {/* <EventCard date="12-07-2003" location="Hong Kong" eventPicture="" eventName="Hello World" eventSummary="Hello World Lorem Ipsum" role="Participant" /> */}
-
       {/* <IndividualEventDetail /> */}
-      <HomeView />
+      {/* <HomeView /> */}
       {/* <SwipingCard /> */}
     </Container>
   );

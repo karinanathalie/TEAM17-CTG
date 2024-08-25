@@ -78,16 +78,16 @@ export const InputSearch = React.forwardRef(
 export const InputSearchu = React.forwardRef(
   ({ children, type, name, onChange, value }, ref) => {
     return (
-      <div className={` w-[350px] font-poppins font-white rounded-[8px] flex`}>
-        <div className="ml-[-400px] mt-[6%] z-10">
+      <div className={`w-[310px] font-poppins font-white rounded-[8px] flex bg-[#C4C4C4] px-[24px]`}>
+        <div className="mt-[6%] z-10 ">
           {" "}
-          <CiSearch className="pl-[-400px]" />
+          <CiSearch className="text-black" />
         </div>
 
         <input
           type={type}
           placeholder={name}
-          className="text-[#6A6A6A] z-0 placeholder-[#6A6A6A] ml-[-70px] rounded-lg h-[58px] bg-[#C4C4C4] w-[400px] text-center text-base "
+          className="text-[#6A6A6A] z-0 placeholder-[#6A6A6A] bg-[#C4C4C4] rounded-lg h-[50px]  w-[400px] ml-[12px] text-base "
           onChange={onChange}
           value={value}
           ref={ref}

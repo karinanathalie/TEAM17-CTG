@@ -60,39 +60,40 @@ const Upcoming = () => {
     setDatas(filteredGroup);
   };
   return (
-    <div className="w-full">
-      <div className="w-full">
-        <div className="w-full justify-content">
-        <InputSearchu type={"text"} name={"Search Event..."}></InputSearchu>
-
-        <button className="mr-[12%] mt-[1%] h-[40px] w-[310px] bg-black text-white rounded-xl px-4">
-          View my registrations
-        </button>
+    <div className="font-poppins w-full m-[64px]">
+      <div class="flex justify-between">
+        <div class="flex-1">
+          <input type="text" class="w-[250px] px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Search Event..." />
+        </div>
+        <div class="ml-4">
+          <button class="bg-black text-white px-6 py-2 rounded-md hover:bg-gray-800 transition-colors duration-300">
+            View my registrations
+          </button>
         </div>
       </div>
       
-      <div className="flex">
-        <div className="font-poppins font-semibold text-3xl mt-[3%]">
+      <div className="flex w-full justify-between mt-[28px]">
+        <div className="font-poppins font-semibold text-3xl">
           Upcoming Events
         </div>
-        <div className="mt-[3%] gap-3 ml-[40%] flex w-[300px]">
+        <div className="flex space-x-[8px]">
           <Select
             options={optionsGroup}
             onChange={(values) => filterGroup(values)}
             placeholder="Target Group"
-            className="bg-[#F2F2F2] placeholder-black rounded-2xl mr-[2%] w-[300px] font-poppins   text-black"
+            className="bg-[#F2F2F2] placeholder-black rounded-2xl font-poppins   text-black"
             style={styles}
           ></Select>
           <Select
             options={optionsType}
             onChange={(values) => filterType(values)}
             placeholder="Event Type"
-            className="bg-[#F2F2F2]  w-[300px]   text-black"
+            className="bg-[#F2F2F2] text-black"
             style={styles}
           ></Select>
         </div>
       </div>
-      <div>
+      <div className="w-full h-full">
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 py-6">
         {datas.map((item, index) => (
           <Events item={item} key={index}></Events>
