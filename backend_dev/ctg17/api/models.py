@@ -1,5 +1,6 @@
 import uuid
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import User
 from api.constants import Gender, RoleType, Status
 from django.core import serializers
@@ -157,3 +158,18 @@ class WhatsappTemplate(models.Model):
 
     def __str__(self):
         return self.message
+    
+class Review(models.Model):
+    review = models.TextField()
+    rating = models.FloatField(default=0)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="reviews")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="user_reviews")
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if not 0 <= self.rating <= 5:
+            raise ValueError("Rating must be between 0 and 5")
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"Review by {self.user.username} for {self.event.event_name}"
