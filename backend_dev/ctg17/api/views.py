@@ -775,7 +775,7 @@ def analytics_participants_ratio(response):
             status=500
         )
 
-def pic_show(request, image_filename):
+def file_show(request, path):
     try:
         # Determine the content type based on the file extension
         path = f"static/event_image/{image_filename}"

@@ -44,6 +44,6 @@ urlpatterns = [
 
     path('analytics/demographic/', views.get_demographic_analytics, name="get-demographic-analytics"),
 
-    path('pictures/<str:image_filename>/', views.pic_show, name="pic-show")
+    path('file/<str:path>/', views.file_show, name="file-show")
 
 ]
