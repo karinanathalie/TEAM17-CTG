@@ -528,6 +528,9 @@ def get_all_volunteer_application(request):
                     "cv_file": application.cv_file.url if application.cv_file else None,
                 }
             }
+            if data['fields']['cv_file']:
+                data['fields']['cv_file']=application.cv_file.url.split('/')[-1]
+            
             volunteer_data.append(data)
         
         volunteer_json = json.dumps(volunteer_data, cls=DjangoJSONEncoder)
@@ -543,9 +546,13 @@ def get_all_volunteer_application(request):
 def create_volunteer_application(request):
     if request.method == 'POST':
         try:
-            user_profile_id = request.POST.get('user_profile_id')
-            event_id = request.POST.get('event_id')
-            reason_joining = request.POST.get('reason_joining')
+            body = json.loads(request.body)
+            if request.user.is_authenticated:
+                user_profile_id = request.user.id
+            else:
+                user_profile_id = body['user_profile_id']
+            event_id = body['event_id']
+            reason_joining = body['reason_joining']
             cv_file = request.FILES.get('cv_file')
             print(user_profile_id, event_id)
 
@@ -562,7 +569,7 @@ def create_volunteer_application(request):
             )
             # Save the application to the database
             volunteer_application.save()
-            return HttpResponse(status=201)
+            return HttpResponse("{'Message': 'Registered for event'}", status=201, content_type="application/json")
         except Exception as e:
             return HttpResponse(f'Error: {str(e)}', status=500)
 
@@ -808,11 +815,11 @@ def pic_show(request, image_filename):
 def file_show(request, path):
     try:
         # Determine the content type based on the file extension
-        path = f"cv_files/{path}"
+        x_path = f"cv_files/{path}"
         content_type, _ = mimetypes.guess_type(f"cv_files/{path}")
         
         # Open and return the image
-        with open(path, "rb") as f:
+        with open(x_path, "rb") as f:
             return HttpResponse(f.read(), content_type=content_type or "image/jpeg")
     
     except IOError:
@@ -829,6 +836,7 @@ def get_demographic_analytics(request):
     for event in events:
         event_analytics = calculate_demographic_analytics(event.id)
         if isinstance(event_analytics, dict):
+            print(event_analytics)
             response.append(event_analytics)
     
     responseBody = { "data": response }

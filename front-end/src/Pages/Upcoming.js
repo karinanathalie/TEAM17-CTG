@@ -18,7 +18,7 @@ const Upcoming = () => {
         const json_data = await res.json();
         console.log(json_data);
 
-        const proc_data = json_data.map((event) => {return event.fields});
+        const proc_data = json_data.map((event) => {return {'id': event.pk, ...event.fields}});
         setDatas(proc_data);
       } else {
         alert("Internal Server Error");
