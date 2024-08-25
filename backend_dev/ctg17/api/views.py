@@ -13,6 +13,8 @@ from django.conf import settings
 from django.core.mail import send_mail
 from api.drive.script import DriveAPI
 from twilio.rest import Client
+from django.core.serializers.json import DjangoJSONEncoder
+
 
 
 # Create your views here.
@@ -449,11 +451,24 @@ def create_staff(request):
 # APPLICATION
 def get_all_participant_application(request):
     try:
-        application = Application.objects.all()
-        application_json = serializers.serialize('json', application)
+        applications = Application.objects.select_related('user_profile', 'event').all()
+        
+        application_data = []
+        for application in applications:
+            data = {
+                'id': application.id,
+                'user_profile_name': application.user_profile.name if application.user_profile else None,
+                'event_name': application.event.event_name if application.event else None,
+                'status_code': application.status
+            }
+            application_data.append(data)
+        
+        application_json = json.dumps(application_data, cls=DjangoJSONEncoder)
         return HttpResponse(application_json, content_type="application/json")
+        
     except Exception as e:
-        return HttpResponse(f'Error: {str(e)}', status=500)
+        error_message = json.dumps({'error': str(e)})
+        return HttpResponse(error_message, content_type="application/json", status=500)
     
 def get_volunteer_application(request):
     try:
@@ -463,33 +478,28 @@ def get_volunteer_application(request):
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
 
-def serialize_volunteer_application(volunteer_application):
-    return {
-        "id": str(volunteer_application.id),
-        "reason_joining": volunteer_application.reason_joining,
-        "cv_file": volunteer_application.cv_file.url if volunteer_application.cv_file else None,
-        "user_profile": {
-            "id": str(volunteer_application.user_profile.id),
-            "name": volunteer_application.user_profile.name,
-            "email": volunteer_application.user_profile.email,
-            # Add other fields from the Profile model as needed
-        },
-        "event": {
-            "id": str(volunteer_application.event.id),
-            "event_name": volunteer_application.event.event_name,
-            "event_date": volunteer_application.event.event_date,
-            # Add other fields from the Event model as needed
-        }
-    }
 
 def get_all_volunteer_application(request):
     try:
         volunteer_applications = VolunteerApplication.objects.select_related('user_profile', 'event').all()
-        volunteer_json = [serialize_volunteer_application(vol) for vol in volunteer_applications]
-        return HttpResponse(json.dumps(volunteer_json), content_type="application/json")
+        
+        volunteer_data = list(volunteer_applications.values(
+            'id',
+            'user_profile__name',
+            'event__event_name',
+            'status',
+            'reason_joining',
+            'cv_file'
+        ))
+        volunteer_json = json.dumps(volunteer_data, cls=DjangoJSONEncoder)
+        return HttpResponse(volunteer_json, content_type="application/json")
+        
+    except VolunteerApplication.DoesNotExist:
+        error_message = json.dumps({'error': 'No volunteer applications found.'})
+        return HttpResponse(error_message, content_type="application/json", status=404)
     except Exception as e:
-        return HttpResponse(f'Error: {str(e)}', status=500)
-
+        error_message = json.dumps({'error': str(e)})
+        return HttpResponse(error_message, content_type="application/json", status=500)
 
 @csrf_exempt    
 def create_volunteer_application(request):
