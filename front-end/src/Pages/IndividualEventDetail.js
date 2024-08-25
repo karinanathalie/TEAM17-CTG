@@ -1,39 +1,39 @@
 import React, { useState } from "react";
 import { BackButton, VolunteerParticipantToggle } from '../Components/Button';
-import SideBar from '../Components/SideBar';
 import {
   BrowserRouter as Router,
   Route,
   Switch,
   NavLink,
 } from "react-router-dom";
-import HomeView from './Home';
-import { RegistrationCard } from '../Components/RegistrationCard';
+
+import { RegistrationCard, RegistrationCardPar } from '../Components/RegistrationCard';
 import { IoCalendarOutline, IoLocationOutline, IoPeopleOutline } from 'react-icons/io5';
 import { TrainingCard } from '../Components/Cards';
 
 
 export default function IndividualEventDetail() {
+    
+    const [current_role, setRole] = useState('Volunteer');
+
+    const handleRoleToggle = () => {
+        setRole(prevRole => prevRole === 'Participant' ? 'Volunteer' : 'Participant');
+    };
+
+    const CheckRole = () => {
+        if (current_role === 'Participant') {
+            return <RegistrationCardPar />;
+        } else {
+            return <RegistrationCard />;
+        }
+    }
+
     return (
         <div className="flex w-full h-screen">
-            <div>
-            {/* <Router>
-                <SideBar />
-                <div className="flex flex-col w-full p-4 h-full">
-                    <Switch>
-                        <Route exact path="/" component={HomeView} />
-                        <Route path="/about" component={HomeView} />
-                        <Route path="/profile" component={HomeView} />
-                        <Route path="/training" component={HomeView} />
-                        <Route path="/volunteering" component={HomeView} />
-                    </Switch>
-                </div>
-            </Router> */}
-            </div>
             <div className="w-full m-[28px] font-poppins">
                 <div className="flex justify-between mb-8">
                 <BackButton />
-                <VolunteerParticipantToggle />
+                <VolunteerParticipantToggle onClick={handleRoleToggle}/>
                 </div>
                 <div className="">
                     <img src="http://placehold.it/1200x300"></img>
@@ -69,7 +69,7 @@ export default function IndividualEventDetail() {
                             <TrainingCard />
                         </div>
                         <div className="w-full">
-                            <RegistrationCard />
+                            {CheckRole()}
                         </div>
                     </div>
                     
