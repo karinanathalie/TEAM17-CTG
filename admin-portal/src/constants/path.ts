@@ -2,6 +2,7 @@ export const Path = {
     Root: `/`,
     Analytics: {
         Root: `/analytics`,
+        Attendance: `/analytics/attendance`,
     },
     Operations: {
         Root: `/operations`,

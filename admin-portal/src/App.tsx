@@ -21,6 +21,7 @@ import EmailReminder from './pages/CRM/EmailReminder';
 import EventDetail from './pages/Event/EventDetail';
 import WhatsappCreate from './pages/CRM/WhatsappCreate';
 import WhatsappReminder from './pages/CRM/WhatsappReminder';
+import AttendanceRate from './pages/Analytics/AttendanceRate';
 
 function App() {
   const theme = useTheme();
@@ -41,6 +42,10 @@ function App() {
               </main>
             } 
         />
+          <Route 
+            path={Path.Analytics.Attendance}
+            element={<AttendanceRate />} 
+          />
           <Route 
             path={Path.Operations.Application.Volunteer}
             element={<VolunteerApplication isSidebarOpen={isSidebarOpen}/>} 
