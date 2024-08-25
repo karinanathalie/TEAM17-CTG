@@ -141,4 +141,7 @@ EMAIL_HOST = 'smtp-mail.outlook.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'karanvs@connect.hku.hk'
-EMAIL_HOST_PASSWORD = '<Use .ENV file here>'
+EMAIL_HOST_PASSWORD = '<>'
+
+TWILIO_ACCOUNT_SID = '<>'
+TWILIO_AUTH_TOKEN = '<>'

@@ -1,4 +1,5 @@
-import { GridColDef } from '@mui/x-data-grid';
+import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import EditButton from '../helpers/EditButton';
 
 export const eventColumns: GridColDef[] = [
   { field: 'id', headerName: 'ID', width: 70 },
@@ -27,7 +28,12 @@ export const eventColumns: GridColDef[] = [
       new Date(params);
     }
   },
+  {
+    field: 'edit',
+    headerName: 'Edit',
+    width: 100,
+    renderCell: (params: GridRenderCellParams) => {
+      return <EditButton eventId={params.row.id} />;
+    },
+  },
 ];
-
-
-

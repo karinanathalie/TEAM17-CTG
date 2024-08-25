@@ -1,10 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core import serializers
-from django.contrib.auth import login
-from passlib.hash import django_pbkdf2_sha256 as handler
+from django.contrib.auth import login, authenticate, logout
 from .constants import RoleType
-from .models import Application, Event, Profile, ProfileBadge, EmailTemplate
+from .models import Application, Event, Profile, ProfileBadge, EmailTemplate, VolunteerApplication
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 import json
@@ -12,7 +11,7 @@ from django.contrib.auth.models import User
 from django.conf import settings
 from django.core.mail import send_mail
 from api.drive.script import DriveAPI
-#need to import user
+from twilio.rest import Client
 
 
 # Create your views here.
@@ -25,8 +24,7 @@ def register_user(request):
     try:
         if request.method == "POST":
             data = json.loads(request.body)
-            password = handler.hash(data['password'], rounds=170000, salt_size=11)
-            user = User.objects.create_user(username=data['username'], email=data['email'], password=password)
+            user = User.objects.create_user(username=data['username'], email=data['email'], password=data['password'])
 
             userProfile = Profile()
             userProfile.phone = data['phone']
@@ -64,8 +62,8 @@ def login_user(request):
             password = data.get('password')
 
             # Authenticate the user
-            user = User.objects.get(username=username)
-            if handler.verify(password, user.password):
+            user = authenticate(username=username, password=password)
+            if user is not None:
                 login(request, user)
                 return HttpResponse('{"message": "Login successful"}', status=200, content_type="application/json")
             else:
@@ -75,6 +73,9 @@ def login_user(request):
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
 
+def logout_user(request):
+    logout(request)
+    return HttpResponse('{"Message": "Logged user out"}', status=200, content_type="application/json")
 
 # EVENT
 def get_all_events(request):
@@ -134,6 +135,27 @@ def event_registration_confirmation(request, event_id):
     else:
         return HttpResponse(f'user {user_id} is not registered for {event_name}', status=200)
 
+def unregister_from_event(request, event_id):
+    try:
+        event = Event.objects.get(id=event_id)
+        if request.user.is_authenticated:
+            user = request.user
+
+            removed = False
+            if user in event.registered_participants.all():
+                event.registered_participants.remove(user)
+                removed = True
+            elif user in event.registered_volunteers.all():
+                event.registered_volunteers.remove(user)
+                removed = True
+            if not removed:
+                return HttpResponse('{"Message": "User not registered for event"}', status=400, content_type="application/json")
+            return HttpResponse('{"Message": "User has been un-registered from event"}', status=200, content_type="application/json")
+        else:
+            return HttpResponse('{"Message": "User not logged in!"}', status=400, content_type="application/json")
+    except Exception as e:
+        return HttpResponse(f'Error: {str(e)}', status=500)
+
 @csrf_exempt
 def create_event(request):
     if request.method == "POST":
@@ -165,6 +187,7 @@ def create_event(request):
     }
     return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
 
+@csrf_exempt
 def send_event_reminder(request, event_id=1):
     try:
         event = Event.objects.get(id=event_id)
@@ -274,22 +297,82 @@ def get_all_staff(request):
         return HttpResponse(profile_json, content_type="application/json")
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
-    
+
+@csrf_exempt
+def create_staff(request):
+    if request.method == "POST":
+        try:
+            staffJSON = json.loads(request.body)
+
+            # Check if user already exists
+            if User.objects.filter(username=staffJSON['username']).exists():
+                response_data = {
+                    "status": "error",
+                    "message": "Username already taken"
+                }
+                return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
+
+            # Create User
+            user = User.objects.create_user(
+                username=staffJSON['username'],
+                password=staffJSON['password'],
+                email=staffJSON['email'],
+            )
+
+            # Create Profile
+            newProfile = Profile(
+                user=user,
+                name=staffJSON['name'],
+                age=staffJSON['age'],
+                phone=staffJSON.get('phone', ''),
+                gender=staffJSON['gender'],
+                role_type=RoleType.STAFF.value,
+                nationality=staffJSON.get('nationality', ''),
+                ethnicity=staffJSON.get('ethnicity', ''),
+            )
+            newProfile.save()
+
+            response_data = {
+                "status": "success",
+                "message": "Staff profile created successfully",
+                "profile_id": str(newProfile.id)
+            }
+            return HttpResponse(json.dumps(response_data), content_type="application/json", status=201)
+
+        except KeyError as e:
+            response_data = {
+                "status": "error",
+                "message": f"Missing field: {str(e)}"
+            }
+            return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
+        except Exception as e:
+            response_data = {
+                "status": "error",
+                "message": str(e)
+            }
+            return HttpResponse(json.dumps(response_data), content_type="application/json", status=500)
+
+    response_data = {
+        "status": "error",
+        "message": "Wrong Method"
+    }
+    return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
+
 
 # APPLICATION
-def get_all_volunteer_application(request):
+def get_all_participant_application(request):
     try:
-        application = Application.objects.filter(role_type=RoleType.VOLUNTEER.value)
+        application = Application.objects.all()
         application_json = serializers.serialize('json', application)
         return HttpResponse(application_json, content_type="application/json")
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
 
-def get_all_participant_application(request):
+def get_all_volunteer_application(request):
     try:
-        application = Application.objects.filter(role_type=RoleType.PARTICIPANT.value)
-        application_json = serializers.serialize('json', application)
-        return HttpResponse(application_json, content_type="application/json")
+        volunteer = VolunteerApplication.objects.all()
+        volunteer_json = serializers.serialize('json', volunteer)
+        return HttpResponse(volunteer_json, content_type="application/json")
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
     
@@ -335,12 +418,24 @@ def create_application(request):
         except Exception as e:
             return HttpResponse(f'Error: {str(e)}', status=500)
 
-# Reminder
+# REMINDER
 def get_all_email_templates(request):
     try:
         emailTemplates = EmailTemplate.objects.all()
         emailTemplatesJSON = serializers.serialize('json', emailTemplates)
         return HttpResponse(emailTemplatesJSON, content_type="application/json")
+    except Exception as e:
+        return HttpResponse(f'Error: {str(e)}', status=500)
+
+def send_emails_from_template(request, template_id=1):
+    try:
+        template = EmailTemplate.objects.get(id=template_id)
+        recipient_list = json.loads(template.recipient_list)
+
+        send_email(template.subject, template.body, recipient_list)
+        response = {'Message': f'Email reminders sent to {len(recipient_list)} users!'}
+
+        return HttpResponse(str(response), status=200, content_type="application/json")
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
 
@@ -367,9 +462,8 @@ def send_mass_email(request):
                     print(profile.user.email)
                     recipient_list.append(profile.user.email)
             else:
-                email_addresses = email_addresses_list.split(",")
-                if len(email_addresses):
-                    recipient_list = email_addresses
+                if email_addresses_list and len(email_addresses_list):
+                    recipient_list = email_addresses_list
             
             if not recipient_list:
                 return HttpResponse('{"Response": "No emails specified/found!"}', status=200, content_type="application/json")
@@ -394,3 +488,12 @@ def send_mass_email(request):
 def send_email(subject, message, recipient_list):
     email_from = settings.EMAIL_HOST_USER
     send_mail(subject, message, email_from, recipient_list)
+
+def send_whatsapp(phone='+85252633364', message=''):
+    client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+
+    message = client.messages.create(
+        from_="whatsapp:+14155238886",
+        to=f"whatsapp:{phone}",
+        body=message
+    )
