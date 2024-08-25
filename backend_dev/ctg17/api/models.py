@@ -142,3 +142,15 @@ class EmailTemplate(models.Model):
 
     def __str__(self):
         return self.subject
+    
+class WhatsappTemplate(models.Model):
+    message = models.TextField()
+    receiver_group = models.TextField(
+        choices=RoleType.choices(),
+        blank=True,
+        null=True
+    )
+    recipient_list = models.TextField()
+
+    def __str__(self):
+        return self.message
