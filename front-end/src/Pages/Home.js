@@ -22,15 +22,15 @@ const Wrapper = styled.div``;
 
 export default function HomeView() {
     return (
-        <Container className="font-poppins flex w-full h-screen m-12">
+        <Container className="font-poppins flex w-full h-screen m-10">
             <Wrapper className='flex flex-col mt-4 w-full'>
-                <Wrapper>
+                <Wrapper className="w-full">
                     <Wrapper className="text-[32px] font-medium">
                         Welcome Back! 👋🏻
                     </Wrapper>
-                    <Wrapper className="mt-4">
+                    <Wrapper className="mt-4 w-full">
                         <Achievements />
-                        <Wrapper className="flex space-x-4 mt-4">
+                        <Wrapper className="flex space-x-4 mt-4 w-full">
                             <Calendarr />
                             <Wrapper className="space-y-2">
                                 <Wrapper className="text-[28px] font-medium">
