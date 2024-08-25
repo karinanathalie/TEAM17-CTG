@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useTheme } from "../../theme";
 import { useNavigate } from 'react-router-dom';
 import { Path } from "../../constants/path";
-import { participantColumns } from "../../gridColDef/participant";
+import { staffColumns } from "../../gridColDef/staff";
 
 interface EventProps {
     isSidebarOpen: boolean;
@@ -56,7 +56,7 @@ const Staff: React.FC<EventProps> = ({ isSidebarOpen }) => {
                 <div style={{ height: 680 }}>
                     <DataGrid
                         rows={staff} 
-                        columns={participantColumns}  
+                        columns={staffColumns}  
                         getRowId={(row) => row.id} 
                         initialState={{
                             pagination: {

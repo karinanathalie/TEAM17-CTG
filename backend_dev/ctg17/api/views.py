@@ -111,16 +111,43 @@ def logout_user(request):
 def get_all_events(request):
     try:
         events = Event.objects.all()
-        events_json = serializers.serialize('json', events)
+        
+        events_data = json.loads(serializers.serialize('json', events))
+        
+        # Modify the image path in the fields section for each event
+        for event_obj in events_data:
+            event_image = event_obj['fields']['event_image']
+            if event_image:
+                filename = event_image.split('/')[-1]  # Extract the filename
+                new_path = f"{settings.BASE_DIR}/static/event_image/{filename}"
+                event_obj['fields']['event_image'] = new_path
+        
+        events_json = json.dumps(events_data, cls=DjangoJSONEncoder)
         return HttpResponse(events_json, content_type="application/json")
+        
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
 
 def get_event_details(request, event_id=1):
     try:
         event = Event.objects.filter(id=event_id)
-        event_json = serializers.serialize('json', event)
+        
+        if not event.exists():
+            return HttpResponse(json.dumps({'error': 'Event not found.'}), content_type="application/json", status=404)
+        
+        event_data = json.loads(serializers.serialize('json', event))
+        
+        # Modify the image path in the fields section
+        for event_obj in event_data:
+            event_image = event_obj['fields']['event_image']
+            if event_image:
+                filename = event_image.split('/')[-1]  # Extract the filename
+                new_path = f"TEAM17-CTG/backend_dev/ctg17/static/event_image/{filename}"
+                event_obj['fields']['event_image'] = new_path
+        
+        event_json = json.dumps(event_data, cls=DjangoJSONEncoder)
         return HttpResponse(event_json, content_type="application/json")
+        
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
 

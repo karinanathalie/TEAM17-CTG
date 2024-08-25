@@ -5,6 +5,7 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
+import Logo from "../img/zubin.png";
 import {
   HomeIcon,
   ChartBarIcon,
@@ -26,8 +27,10 @@ export default function SideBar({ children }) {
     <div className="fixed top-0 font-poppins flex flex-row rounded-full h-screen">
       <div className="bg-darkgray rounded-r-2xl h-full">
         <div className=" mx-[30px] mt-[40px] sidebar w-[250px] text-white">
-          <div className="my-[5px] mb-[20px]">
-            <img src="http://placehold.it/250x80"></img>
+          <div className="my-[5px] mb-[20px] flex">
+            <img src={Logo} className="w-20 h-20" />
+            <div className="font-semibold ml-[16px] text-[20px] mt-[10px]"> The Zubin Foundation </div>
+            
           </div>
           <nav>
             <ul>
