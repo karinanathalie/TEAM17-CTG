@@ -805,11 +805,11 @@ def pic_show(request, image_filename):
         red.save(response, "JPEG")
         return response
     
-def file_show(request, path):
+def file_show(request, file_path):
     try:
         # Determine the content type based on the file extension
-        path = f"cv_files/{path}"
-        content_type, _ = mimetypes.guess_type(f"cv_files/{path}")
+        path = f"cv_files/{file_path}"
+        content_type, _ = mimetypes.guess_type(f"cv_files/{file_path}")
         
         # Open and return the image
         with open(path, "rb") as f:
@@ -829,6 +829,7 @@ def get_demographic_analytics(request):
     for event in events:
         event_analytics = calculate_demographic_analytics(event.id)
         if isinstance(event_analytics, dict):
+            print(event_analytics)
             response.append(event_analytics)
     
     responseBody = { "data": response }
