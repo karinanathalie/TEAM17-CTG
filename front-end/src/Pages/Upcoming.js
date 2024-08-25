@@ -1,10 +1,32 @@
-import { React, useState } from "react";
-import { data } from "../Components/data.js";
+import { React, useEffect, useState } from "react";
+// import { data } from "../Components/data.js";
 import Events from "../Components/Events.js";
 import { useHistory } from 'react-router-dom';
 import Select from "react-dropdown-select";
 
 const Upcoming = () => {
+
+  useEffect(() => {
+    let backend_base = "http://localhost:8000/";
+    fetch(backend_base + "api/events", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then(async (res) => {
+      if (res.status == 200) {
+        const json_data = await res.json();
+        console.log(json_data);
+
+        const proc_data = json_data.map((event) => {return event.fields});
+        setDatas(proc_data);
+      } else {
+        alert("Internal Server Error");
+      }
+    });
+  }, []);
+
+
   const styles = {
     fontSize: 14,
     border: "none",
@@ -50,7 +72,7 @@ const Upcoming = () => {
   const handleButtonClick = () => {
     history.push('/myregistration');
   };
-
+  const [data, setData] = useState([]);
   const [datas, setDatas] = useState(data);
   const filterType = (type) => {
     const filteredData = data.filter((item) => {

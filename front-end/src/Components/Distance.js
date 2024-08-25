@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import DistanceCalculator from "./kilo";
 
 const API_KEY = "AIzaSyA-MRj2eDVgcHiGggfhYFGRD_gGdnGqo3A"; // Replace with your API key
 
@@ -13,6 +14,9 @@ const LocationComponent = () => {
       setError("Geolocation is not supported by this browser.");
     }
   };
+  useEffect(() => {
+    getLocation();
+  }, []);
 
   const showPosition = (position) => {
     const lat = position.coords.latitude;
@@ -59,17 +63,10 @@ const LocationComponent = () => {
   return (
     <div>
       <h1>Your Location</h1>
-      <button onClick={getLocation}>Get Location</button>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {location.lat && (
-        <p>
-          Latitude: {location.lat}
-          <br />
-          Longitude: {location.lon}
-          <br />
-          Location: {location.name}
-        </p>
-      )}
+      <DistanceCalculator
+        lat={location.lat}
+        lon={location.lon}
+      ></DistanceCalculator>
     </div>
   );
 };

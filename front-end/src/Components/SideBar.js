@@ -1,16 +1,11 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import Logo from "../img/zubin.png";
 import {
   HomeIcon,
   ChartBarIcon,
   InformationCircleIcon,
-  UserIcon,
 } from "@heroicons/react/outline";
 
 export default function SideBar({ children }) {
@@ -18,7 +13,6 @@ export default function SideBar({ children }) {
 
   const [active_link, set_active_link] = useState("home");
   useEffect(() => {
-    console.log("hello");
     const pathname = window.location.pathname.split("/")[1];
     set_active_link(pathname);
   }, []);
