@@ -32,6 +32,7 @@ export const SwipingCard = ({ distance }) => {
         });
       }, []);
     
+        console.log(list_of_events);
 
     const [curr_index, setIndex] = useState(0);
 
@@ -44,6 +45,7 @@ export const SwipingCard = ({ distance }) => {
     };
 
     let current_event = list_of_events[curr_index];
+
 
     return (
         <div className="p-[34px] flex flex-col w-[450px] h-[700px] rounded-[16px] justify-center font-poppins bg-darkgray text-gray">
