@@ -21,11 +21,14 @@ export const Path = {
     Event: {
         Root: `/event`,
         Create: `/event/create`,
+        Edit: `/event/edit/:id`,
         Type: `/event/type`,
+        Calendar: `/event/calendar`,
     },
     CRM: {
         Email: `/email`,
         CreateEmail: `/email/create`,
+        ReminderEmail: `/email/reminder`,
         Whatsapp: `/whatsapp`,
     },
     Services: {

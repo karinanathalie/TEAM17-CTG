@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, Chip, TextField, Typography, Autocomplete } from '@mui/material';
+import { Box, Button, Chip, TextField, Typography, Autocomplete, FormControlLabel, Checkbox } from '@mui/material';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
@@ -9,7 +9,11 @@ import { Path } from '../../constants/path';
 const validationSchema = Yup.object({
     subject: Yup.string().required('Subject is required'),
     body: Yup.string().required('Body is required'),
+    recipientGroup: Yup.object().nullable().notRequired(),
+    emailInput: Yup.string().email('Invalid email address').nullable().notRequired(),
+    saveTemplate: Yup.boolean().notRequired(),
 });
+
 
 const predefinedOptions = [
     { label: 'All Volunteers', value: 'all_volunteers' },
@@ -51,7 +55,7 @@ const EmailCreate: React.FC<Props> = ({ isSidebarOpen }) => {
                 recipients.push(values.recipientGroup.value); // Add the group value
             }
 
-            const response = await fetch('http://0.0.0.0:8000/api/email/send/', {
+            const response = await fetch('http://0.0.0.0:8000/api/reminder/sendemail', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -59,7 +63,9 @@ const EmailCreate: React.FC<Props> = ({ isSidebarOpen }) => {
                 body: JSON.stringify({
                     subject: values.subject,
                     body: values.body,
-                    recipients, // Send both individual emails and group options
+                    save_as_template: values.saveTemplate,  
+                    email_addresses: recipients.length > 0 ? recipients : [],  
+                    group: values.recipientGroup ? values.recipientGroup.value : null, 
                 }),
             });
 
@@ -81,6 +87,7 @@ const EmailCreate: React.FC<Props> = ({ isSidebarOpen }) => {
                 body: '',
                 recipientGroup: null,
                 emailInput: '',
+                saveTemplate: false,
             }}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
@@ -171,6 +178,23 @@ const EmailCreate: React.FC<Props> = ({ isSidebarOpen }) => {
                         )}
                         style={{
                             marginTop: '5px',
+                        }}
+                    />
+
+                    <Field
+                        as={FormControlLabel}
+                        control={
+                            <Checkbox
+                                name="saveTemplate"
+                                color="primary"
+                                checked={values.saveTemplate}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                            />
+                        }
+                        label="Save as email template"
+                        style={{
+                            marginTop: '10px',
                         }}
                     />
 
