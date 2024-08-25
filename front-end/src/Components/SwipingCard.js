@@ -1,13 +1,5 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import {
-    motion,
-    useMotionValue,
-    useTransform,
-    useAnimation,
-  } from "framer-motion";
-import { useNavigate } from "react-router-dom";
-
 import { CarousellCard } from "./Cards";
 
 
