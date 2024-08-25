@@ -8,39 +8,33 @@ import {
   NavLink,
 } from "react-router-dom";
 import HomeView from './Home';
-import { RegistrationCard } from '../Components/RegistrationCard';
+import { RegistrationCard, RegistrationCardPar } from '../Components/RegistrationCard';
 import { IoCalendarOutline, IoLocationOutline, IoPeopleOutline } from 'react-icons/io5';
 import { TrainingCard } from '../Components/Cards';
 
 
-export default function IndividualEventDetail() {
+export default function IndividualEventDetailPar() {
+    const [current_role, setRole] = useState('Participant');
+
+    const handleRoleToggle = () => {
+        setRole(prevRole => prevRole === 'Participant' ? 'Volunteer' : 'Participant');
+    };
+
     return (
         <div className="flex w-full h-screen">
             <div>
-            {/* <Router>
-                <SideBar />
-                <div className="flex flex-col w-full p-4 h-full">
-                    <Switch>
-                        <Route exact path="/" component={HomeView} />
-                        <Route path="/about" component={HomeView} />
-                        <Route path="/profile" component={HomeView} />
-                        <Route path="/training" component={HomeView} />
-                        <Route path="/volunteering" component={HomeView} />
-                    </Switch>
-                </div>
-            </Router> */}
             </div>
             <div className="w-full m-[28px] font-poppins">
                 <div className="flex justify-between mb-8">
                 <BackButton />
-                <VolunteerParticipantToggle />
+                <VolunteerParticipantToggle onClick={handleRoleToggle} Checked/>
                 </div>
                 <div className="">
                     <img src="http://placehold.it/1200x300"></img>
                     <div className="flex mt-[16px] justify-between space-x-8">
                         <div className="text-[32px] font-semibold">
                             Online Training Academy
-                            <div className="text-[14px] font-medium mb-4 text-darkgray space-y-1">
+                            <div className="mt-2 text-[14px] font-medium mb-4 text-darkgray space-y-1">
                                  <div className="flex">
                                     <IoCalendarOutline className="h-5 w-5 mr-4" />
                                     Friday, 23 August 2024
@@ -55,7 +49,7 @@ export default function IndividualEventDetail() {
                                 </div>
                             </div>
 
-                             <div className="text-[20px] font-semibold">
+                             <div className="mt-4 text-[20px] font-semibold">
                                  Details
                             </div>
 
@@ -66,10 +60,10 @@ export default function IndividualEventDetail() {
                             <div className="mt-[16px]">
                                 <img src="http://placehold.it/700x300"></img>
                             </div>
-                            <TrainingCard />
+         
                         </div>
                         <div className="w-full">
-                            <RegistrationCard />
+                            <RegistrationCardPar />
                         </div>
                     </div>
                     

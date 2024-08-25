@@ -44,6 +44,19 @@ export const ButtonYellow = ({ onClick, children}) => {
   );
 };
 
+export const ButtonBlue = ({ onClick, children}) => {
+  return (
+    <div className="flex justify-center w-[146px] h-[36px] rounded-[8px] bg-blue hover:bg-buttonblackhover hover:drop-shadow-lg active:drop-shadow-none">
+      <button
+        className="w-full h-full text-black text-[15px] font-poppins font-semibold hover:cursor-pointer"
+        onClick={onClick}
+      >
+        {children}
+      </button>
+    </div>
+  );
+};
+
 
 export const ButtonFull2 = ({ onClick, children }) => {
   return (
@@ -82,7 +95,7 @@ export const BackButton = ({ onClick }) => {
 };
 
 
-export const VolunteerParticipantToggle = ({ onChecked }) => {
+export const VolunteerParticipantToggle = ({ onClick }) => {
   // Using checkbox, if not checked, volunteer. Else, participants.
   return (
     <label className="font-poppins relative flex justify-center items-center w-[289px] h-[50px] rounded-[8px] cursor-pointer peer">
