@@ -111,16 +111,43 @@ def logout_user(request):
 def get_all_events(request):
     try:
         events = Event.objects.all()
-        events_json = serializers.serialize('json', events)
+        
+        events_data = json.loads(serializers.serialize('json', events))
+        
+        # Modify the image path in the fields section for each event
+        for event_obj in events_data:
+            event_image = event_obj['fields']['event_image']
+            if event_image:
+                filename = event_image.split('/')[-1]  # Extract the filename
+                new_path = f"TEAM17-CTG/backend_dev/ctg17/static/event_image/{filename}"
+                event_obj['fields']['event_image'] = new_path
+        
+        events_json = json.dumps(events_data, cls=DjangoJSONEncoder)
         return HttpResponse(events_json, content_type="application/json")
+        
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
 
 def get_event_details(request, event_id=1):
     try:
         event = Event.objects.filter(id=event_id)
-        event_json = serializers.serialize('json', event)
+        
+        if not event.exists():
+            return HttpResponse(json.dumps({'error': 'Event not found.'}), content_type="application/json", status=404)
+        
+        event_data = json.loads(serializers.serialize('json', event))
+        
+        # Modify the image path in the fields section
+        for event_obj in event_data:
+            event_image = event_obj['fields']['event_image']
+            if event_image:
+                filename = event_image.split('/')[-1]  # Extract the filename
+                new_path = f"TEAM17-CTG/backend_dev/ctg17/static/event_image/{filename}"
+                event_obj['fields']['event_image'] = new_path
+        
+        event_json = json.dumps(event_data, cls=DjangoJSONEncoder)
         return HttpResponse(event_json, content_type="application/json")
+        
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
 
@@ -456,10 +483,14 @@ def get_all_participant_application(request):
         application_data = []
         for application in applications:
             data = {
-                'id': application.id,
-                'user_profile_name': application.user_profile.name if application.user_profile else None,
-                'event_name': application.event.event_name if application.event else None,
-                'status_code': application.status
+                "model": "api.application",  # Adjust the model name according to your app structure
+                "pk": str(application.id),
+                "fields": {
+                    "user_profile_id": str(application.user_profile.id) if application.user_profile else None,
+                    "user_profile_name": application.user_profile.name if application.user_profile else None,
+                    "event_name": application.event.event_name if application.event else None,
+                    "status": application.get_status_display(),
+                }
             }
             application_data.append(data)
         
@@ -469,7 +500,7 @@ def get_all_participant_application(request):
     except Exception as e:
         error_message = json.dumps({'error': str(e)})
         return HttpResponse(error_message, content_type="application/json", status=500)
-    
+     
 def get_volunteer_application(request):
     try:
         application = Application.objects.all()
@@ -478,19 +509,26 @@ def get_volunteer_application(request):
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
 
-
 def get_all_volunteer_application(request):
     try:
         volunteer_applications = VolunteerApplication.objects.select_related('user_profile', 'event').all()
         
-        volunteer_data = list(volunteer_applications.values(
-            'id',
-            'user_profile__name',
-            'event__event_name',
-            'status',
-            'reason_joining',
-            'cv_file'
-        ))
+        volunteer_data = []
+        for application in volunteer_applications:
+            data = {
+                "model": "api.volunteerapplication",  # Adjust the model name according to your app structure
+                "pk": str(application.id),
+                "fields": {
+                    "user_profile_id": str(application.user_profile.id) if application.user_profile else None,
+                    "user_profile_name": application.user_profile.name if application.user_profile else None,
+                    "event_name": application.event.event_name if application.event else None,
+                    "status": application.get_status_display(),
+                    "reason_joining": application.reason_joining,
+                    "cv_file": application.cv_file.url if application.cv_file else None,
+                }
+            }
+            volunteer_data.append(data)
+        
         volunteer_json = json.dumps(volunteer_data, cls=DjangoJSONEncoder)
         return HttpResponse(volunteer_json, content_type="application/json")
         
@@ -500,7 +538,6 @@ def get_all_volunteer_application(request):
     except Exception as e:
         error_message = json.dumps({'error': str(e)})
         return HttpResponse(error_message, content_type="application/json", status=500)
-
 @csrf_exempt    
 def create_volunteer_application(request):
     if request.method == 'POST':
