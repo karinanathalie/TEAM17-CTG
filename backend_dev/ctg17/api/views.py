@@ -119,7 +119,7 @@ def get_all_events(request):
             event_image = event_obj['fields']['event_image']
             if event_image:
                 filename = event_image.split('/')[-1]  # Extract the filename
-                new_path = f"TEAM17-CTG/backend_dev/ctg17/static/event_image/{filename}"
+                new_path = f"{settings.BASE_DIR}/static/event_image/{filename}"
                 event_obj['fields']['event_image'] = new_path
         
         events_json = json.dumps(events_data, cls=DjangoJSONEncoder)
