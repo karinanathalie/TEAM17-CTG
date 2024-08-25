@@ -29,7 +29,7 @@ const Container = styled.div``;
 function App() {
   return (
     <Container className="w-screen h-screen flex">
-      {/* <div className="w-[400px]">
+      <div className="w-[400px]">
         <Router>
           <SideBar>
             <Switch>
@@ -41,8 +41,7 @@ function App() {
             </Switch>
           </SideBar>
         </Router>
-      </div> */}
-      <DistanceCalculator></DistanceCalculator>
+      </div>
     </Container>
   );
 }

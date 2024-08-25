@@ -2,17 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-
 df-messenger {
-          z-index: 999;
-          position: fixed;
-          --df-messenger-font-color: #000;
-          --df-messenger-font-family: 'Google Sans';
-          --df-messenger-chat-background: #f3f6fc;
-          --df-messenger-message-user-background: #d3e3fd;
-          --df-messenger-message-bot-background: #fff;
-          bottom: 16px;
-          right: 16px;
+  z-index: 999;
+  position: fixed;
+  --df-messenger-font-color: #000;
+  --df-messenger-font-family: "Google Sans";
+  --df-messenger-chat-background: #f3f6fc;
+  --df-messenger-message-user-background: #d3e3fd;
+  --df-messenger-message-bot-background: #fff;
+  bottom: 16px;
+  right: 16px;
 }
 
 .vl {
@@ -41,7 +40,7 @@ body > #root > div {
   background-color: #25221b !important;
   color: white; /* Change text color to white for better visibility */
   border-radius: 16px;
-
+  font-family: "Poppins", sans-serif !important;
   font-weight: 200;
 
   padding-right: 2px;
