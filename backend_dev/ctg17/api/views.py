@@ -812,14 +812,14 @@ def pic_show(request, image_filename):
         red.save(response, "JPEG")
         return response
     
-def file_show(request, file_path):
+def file_show(request, path):
     try:
         # Determine the content type based on the file extension
-        path = f"cv_files/{file_path}"
-        content_type, _ = mimetypes.guess_type(f"cv_files/{file_path}")
+        x_path = f"cv_files/{path}"
+        content_type, _ = mimetypes.guess_type(f"cv_files/{path}")
         
         # Open and return the image
-        with open(path, "rb") as f:
+        with open(x_path, "rb") as f:
             return HttpResponse(f.read(), content_type=content_type or "image/jpeg")
     
     except IOError:
