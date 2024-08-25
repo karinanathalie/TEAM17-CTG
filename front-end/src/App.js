@@ -21,11 +21,8 @@ import Calendarr from "./Components/Calendar.jsx";
 // import { SwipingCard } from "./Components/SwipingCard.js";
 import Profile from "./Components/Profile.js";
 import Distance from "./Components/Distance.js";
-<<<<<<< Updated upstream
 import DistanceCalculator from "./Components/kilo.js";
-=======
 import Login from "./Pages/Login.js";
->>>>>>> Stashed changes
 
 const Container = styled.div``;
 
