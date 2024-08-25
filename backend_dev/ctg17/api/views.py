@@ -528,7 +528,8 @@ def get_all_volunteer_application(request):
                     "cv_file": application.cv_file.url if application.cv_file else None,
                 }
             }
-            volunteer_data.append(data)
+            if data['cv_file']:
+                data['cv_file']=application.cv_file.url.split('/')[-1]
         
         volunteer_json = json.dumps(volunteer_data, cls=DjangoJSONEncoder)
         return HttpResponse(volunteer_json, content_type="application/json")
@@ -808,8 +809,8 @@ def pic_show(request, image_filename):
 def file_show(request, file_path):
     try:
         # Determine the content type based on the file extension
-        path = f"{file_path}"
-        content_type, _ = mimetypes.guess_type(f"{file_path}")
+        path = f"cv_files/{file_path}"
+        content_type, _ = mimetypes.guess_type(f"cv_files/{file_path}")
         
         # Open and return the image
         with open(path, "rb") as f:
