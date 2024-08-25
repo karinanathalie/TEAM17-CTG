@@ -797,7 +797,7 @@ def participants_ratio(participants_count, volunteers_count):
 def pic_show(request, image_filename):
     try:
         # Determine the content type based on the file extension
-        path = f"static/event_image/{path}"
+        path = f"static/event_image/{image_filename}"
         content_type, _ = mimetypes.guess_type(f"static/event_image/{path}")
         
         # Open and return the image
