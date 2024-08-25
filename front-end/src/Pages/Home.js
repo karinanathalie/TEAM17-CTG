@@ -12,7 +12,7 @@ import axios from "axios";
 import { ScheduleCard, CarousellCard, EventCard } from "../Components/Cards.js";
 import { ButtonAccount, ButtonFull } from "../Components/Button.js";
 import SideBar from "../Components/SideBar.js";
-import {FeedBackForm} from "../Components/Feedbackform.js";
+// import Feedbackform from "../Components/Feedbackform.js";
 import Calendarr from "../Components/Calendar.jsx";
 import Achievements from "../Components/Achievements.js";
 import { SwipingCard } from "../Components/SwipingCard.js";
@@ -84,6 +84,14 @@ export default function HomeView() {
         setError("An error occurred.");
     }
   };
+  const truncateLocationName = (locationName, maxWords) => {
+    const words = locationName.split(" "); // Split the string into words
+    if (words.length <= maxWords) return locationName; // Return original if within limit
+    return words.slice(0, maxWords);
+  };
+  const truncatedName = truncateLocationName(location.name, 5);
+  console.log(truncatedName);
+
   const [distance, setDistance] = useState(0);
 
   useEffect(() => {
@@ -146,15 +154,18 @@ export default function HomeView() {
               </Wrapper>
             </Wrapper>
           </Wrapper>
-          <Wrapper className="mt-[20px] h-[190px] rounded-[8px] w-[670px]">
-            <FeedBackForm />
-          </Wrapper>
+          {/* <Wrapper className="border border-black h-[240px] rounded-[8px] w-[670px]">
+            <Feedbackform />
+          </Wrapper> */}
         </Wrapper>
       </Wrapper>
       <Wrapper>
         {!showProfile && (
           <>
-            <ButtonAccount location={location} onClick={handleProfileClick} />
+            <ButtonAccount
+              location={truncatedName}
+              onClick={handleProfileClick}
+            />
             <div className="hidden sm:block">
               <SwipingCard />
             </div>
