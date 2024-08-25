@@ -2,7 +2,7 @@ import { React, useState, useMemo, useRef } from "react";
 import { ButtonFull, ButtonFull2, ButtonFullRoleBased } from "./Button";
 import { CiCalendarDate, CiLocationOn } from "react-icons/ci";
 import im1 from "../Components/event.png";
-import TinderCard from "react-tinder-card";
+
 export const ScheduleCard = ({ date, eventName, eventSummary }) => {
   const SplittedDate = date.split("-");
   const months = [
@@ -98,133 +98,6 @@ export const CarousellCard = ({ date, location, eventPicture, eventName }) => {
         <ButtonFull2>Other Event</ButtonFull2>
         <ButtonFull>Register</ButtonFull>
       </div>
-    </div>
-  );
-};
-
-export const CarousellCards = () => {
-  const cards = [
-    {
-      id: 1,
-      image: im1,
-      date: "12-07-2003",
-      location: "Hong Kong",
-      eventName: "Hello World",
-      eventSummary: "Hello World Lorem Ipsum",
-    },
-    {
-      id: 2,
-      image: im1,
-      date: "14-07-2003",
-      location: "Hong Kong",
-      eventName: "Hello World",
-      eventSummary: "Hello World Lorem Ipsum",
-    },
-    {
-      id: 3,
-      image: im1,
-      date: "13-07-2003",
-      location: "Hong Kong",
-      eventName: "Hello World",
-      eventSummary: "Hello World Lorem Ipsum",
-    },
-    {
-      id: 4,
-      image: im1,
-      date: "15-07-2003",
-      location: "Hong Kong",
-      eventName: "Hello World",
-      eventSummary: "Hello World Lorem Ipsum",
-    },
-  ];
-  const [lastDirection, setLastDirection] = useState();
-  const cardRefs = useRef([]);
-
-  const swiped = (direction, nameToDelete) => {
-    console.log("removing: " + nameToDelete);
-    setLastDirection(direction);
-  };
-
-  const outOfFrame = (name) => {
-    console.log(name + " left the screen!");
-  };
-
-  const handleSwipeLeft = (index) => {
-    if (cardRefs.current[index]) {
-      cardRefs.current[index].swipe("left");
-    }
-  };
-
-  return (
-    <div className="h-[500px] w-[400px] relative overflow-hidden">
-      {cards.map((card, index) => {
-        const SplittedDate = card.date.split("-");
-        const months = [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-          "Oct",
-          "Nov",
-          "Dec",
-        ];
-        const monthIndex = parseInt(SplittedDate[1], 10) - 1;
-        const month = months[monthIndex];
-        const day = SplittedDate[0];
-        const dayname = new Date(card.date).toLocaleString("en-us", {
-          weekday: "long",
-        });
-        const year = SplittedDate[2];
-
-        return (
-          <TinderCard
-            className="swipe"
-            key={card.id}
-            onSwipe={(dir) => swiped(dir, card.id)}
-            onCardLeftScreen={() => outOfFrame(card.id)}
-          >
-            <div className="ml-[4%] flex flex-col w-[342px] h-[469px] rounded-[16px] p-[24px] bg-white">
-              <div className="flex w-[302px] h-[249px] rounded-[16px] bg-lightgray">
-                <img
-                  src={card.image}
-                  alt="event"
-                  className="w-full h-full object-cover rounded-t-[16px]"
-                />
-              </div>
-              <div className="py-[30px]">
-                <div className="font-semibold text-[16px]">
-                  {card.eventName}
-                </div>
-                <div className="flex space-x-[12px] font-medium text-[15px] text-mediumgray">
-                  <div className="flex flex-col justify-center">
-                    <CiCalendarDate />
-                  </div>
-                  <div>
-                    {dayname}, {day} {month} {year}
-                  </div>
-                </div>
-                <div className="flex space-x-[12px] font-medium text-[15px] text-mediumgray">
-                  <div className="flex flex-col justify-center">
-                    <CiLocationOn />
-                  </div>
-                  <div>{card.location}</div>
-                </div>
-              </div>
-              <div className="flex space-x-[10px]">
-                <button onClick={() => handleSwipeLeft(index)}>
-                  Other Event
-                </button>
-                <ButtonFull>Register</ButtonFull>
-              </div>
-            </div>
-          </TinderCard>
-        );
-      })}
     </div>
   );
 };

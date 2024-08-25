@@ -22,8 +22,8 @@ const Container = styled.div``;
 
 function App() {
   return (
-    <Container>
-      {/* <Router>
+    <Container className="w-full h-full flex">
+      <Router>
       <SideBar>
         <Switch>
           <Route exact path="/" component={HomeView} />
@@ -33,7 +33,7 @@ function App() {
           <Route path="/volunteering" component={HomeView} />
         </Switch>
       </SideBar>
-    </Router>  */}
+    </Router> 
       {/* <VolunteerParticipantToggle /> */}
       {/* <RegistrationCard /> */}
       {/* <Upcoming> </Upcoming> */}
