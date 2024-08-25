@@ -23,18 +23,18 @@ const Container = styled.div``;
 
 function App() {
   return (
-    <Container>
-      {/* <Router>
-      <SideBar>
-        <Switch>
-          <Route exact path="/" component={HomeView} />
-          <Route path="/about" component={HomeView} />
-          <Route path="/profile" component={HomeView} />
-          <Route path="/training" component={HomeView} />
-          <Route path="/volunteering" component={HomeView} />
-        </Switch>
-      </SideBar>
-    </Router>  */}
+    <Container className="flex">
+      <Router>
+        <SideBar>
+          <Switch>
+            <Route exact path="/" component={HomeView} />
+            <Route path="/about" component={HomeView} />
+            <Route path="/profile" component={HomeView} />
+            <Route path="/training" component={HomeView} />
+            <Route path="/volunteering" component={HomeView} />
+          </Switch>
+        </SideBar>
+      </Router> 
 
       {/* <VolunteerParticipantToggle /> */}
       {/* <RegistrationCard /> */}
