@@ -159,34 +159,69 @@ def unregister_from_event(request, event_id):
 @csrf_exempt
 def create_event(request):
     if request.method == "POST":
-        eventJSON= json.loads(request.body)
-        print(eventJSON)
+        try:
+            # Parse form data including files
+            if request.content_type.startswith('multipart/form-data'):
+                form_data = request.POST
+                files = request.FILES
+            else:
+                form_data = json.loads(request.body.decode('utf-8'))
+                files = None
 
-        newEvent = Event()
-        newEvent.event_name = eventJSON['event_name']
-        newEvent.event_description = eventJSON['event_description']
-        newEvent.event_date = eventJSON['event_date']
-        newEvent.event_location = eventJSON['event_location']
-        newEvent.target_population = eventJSON['target_population']
-        newEvent.skillset = eventJSON['skillset']
-        newEvent.participant_quota = eventJSON['participant_quota']
-        newEvent.volunteer_quota = eventJSON['volunteer_quota']
-        newEvent.deadline = eventJSON['deadline']
-        newEvent.save()
+            # Create a new Event instance and populate it with the data from the request
+            newEvent = Event()
+            newEvent.event_name = form_data['event_name']
+            newEvent.event_description = form_data['event_description']
+            newEvent.event_date = form_data['event_date']
+            newEvent.event_location = form_data['event_location']
+            newEvent.target_population = form_data['target_population']
+            newEvent.skillset = form_data.get('skillset', None)
+            newEvent.participant_quota = form_data['participant_quota']
+            newEvent.volunteer_quota = form_data['volunteer_quota']
+            newEvent.deadline = form_data['deadline']
 
-        response_data = {
-            "status": "success",
-            "message": "Event added successfully",
-            "event_id": newEvent.id
-        }
-        return HttpResponse(json.dumps(response_data), content_type="application/json")
-    
+            # Handle file upload
+            if files and 'event_image' in files:
+                newEvent.event_image = files['event_image']
+
+            newEvent.save()
+
+            # Prepare a response with success status
+            response_data = {
+                "status": "success",
+                "message": "Event added successfully",
+                "event_id": newEvent.id
+            }
+            return HttpResponse(json.dumps(response_data), content_type="application/json")
+        
+        except json.JSONDecodeError:
+            # Handle JSON decoding error
+            response_data = {
+                "status": "error",
+                "message": "Invalid JSON data"
+            }
+            return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
+        except KeyError as e:
+            # Handle missing key error
+            response_data = {
+                "status": "error",
+                "message": f"Missing key in data: {str(e)}"
+            }
+            return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
+        except Exception as e:
+            # Handle any other exception
+            response_data = {
+                "status": "error",
+                "message": str(e)
+            }
+            return HttpResponse(json.dumps(response_data), content_type="application/json", status=500)
+
+    # If the request method is not POST, return an error response
     response_data = {
         "status": "error",
         "message": 'Wrong Method'
     }
     return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
-
 @csrf_exempt
 def send_event_reminder(request, event_id=1):
     try:
