@@ -128,25 +128,57 @@ export const ButtonSocial = ({ icon, text }) => {
   );
 };
 
-export const ButtonAccount = ({ text, location }) => {
+export const ButtonAccount = ({ onClick, location, name, image}) => {
   return (
     <div className="w-full flex flex-row-reverse h-auto">
-      <div className="mb-4 flex bg-lightgray h-[80px] rounded-[16px] w-[350px]">
+      <button className="mb-4 flex bg-lightgray h-[80px] rounded-[16px] w-[350px] hover:shadow-lg active:shadow-none" onClick={onClick}>
         <div className="flex p-4 text-[18px] font-semibold">
           <div className="w-10 h-10 bg-gray rounded-full flex items-center justify-center text-white font-bold">
             IMG
           </div>
-          <div className="ml-4">
+          <div className="text-left ml-[20px]">
             <div> Vanessa Laurel </div>
             {location.lat && (
-              <div className="flex text-[12px] w-[90%] font-medium text-darkgray">
-                <CiLocationOn className="h-6 w-6 mr-2" />
-                {location.name}
+              <div className="flex justify-start mt-[-5px] text-[12px] w-[250px] h-[30px] overflow-hidden font-medium text-darkgray">
+                <div className="flex flex-col justify-end">
+                  <CiLocationOn className="h-6 w-6 mr-2" />
+                </div>
+                <div className="flex flex-col justify-end">
+                  {location.name}
+                </div>
               </div>
             )}
           </div>
         </div>
-      </div>
+      </button>
     </div>
   );
 };
+
+
+export const XButton = ({ onClick }) => {
+  return (
+    <button
+      className="absolute right-[70px] top-[50px] text-white rounded-full text-xl font-poppins font-semibold"
+      onClick={onClick}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth="2"
+        stroke="currentColor"
+        className="w-8 h-8"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M6 18L18 6M6 6l12 12"
+        />
+      </svg>
+    </button>
+  );
+};
+
+
+

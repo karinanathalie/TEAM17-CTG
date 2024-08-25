@@ -30,6 +30,12 @@ export default function HomeView() {
   });
   const [error, setError] = useState("");
 
+  const [showProfile, setshowprofile] = useState(false);
+  const handleProfileClick = () => {
+    setshowprofile(!showProfile);
+    console.log(showProfile);
+  };
+
   const getLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(showPosition, showError);
@@ -144,8 +150,20 @@ export default function HomeView() {
         </Wrapper>
       </Wrapper>
       <Wrapper>
-        <ButtonAccount location={location} />
-        <SwipingCard distance={distance} />
+        {!showProfile && (
+          <>
+            <ButtonAccount location={location} onClick={handleProfileClick} />
+            <div className="hidden sm:block">
+              <SwipingCard />
+            </div>
+          </>
+        )}
+
+        {showProfile && (
+          <div className="hidden sm:block">
+            <Profile onClick={handleProfileClick} />
+          </div>
+        )}
       </Wrapper>
     </Container>
   );

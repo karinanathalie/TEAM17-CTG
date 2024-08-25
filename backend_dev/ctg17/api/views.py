@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.core import serializers
 from django.contrib.auth import login, authenticate, logout
-from .constants import RoleType
+from .constants import RoleType, Status
 from .models import Badge, Application, Event, Profile, ProfileBadge, EmailTemplate, VolunteerApplication, WhatsappTemplate
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
@@ -744,7 +744,8 @@ def get_attendance_analytics(request):
         if isinstance(event_analytics, dict):
             response.append(event_analytics)
     
-    return HttpResponse(str(response), status=200, content_type="application/json")
+    responseBody = { "data": response }
+    return HttpResponse(json.dumps(responseBody), status=200, content_type="application/json")
 
 def analytics_participants_ratio(event_id):
     try:
@@ -770,13 +771,6 @@ def analytics_participants_ratio(event_id):
             "volunteers_count": volunteers_count,
             "data": data
         }
-
-        # Return the ratio as a response
-        # return HttpResponse(
-        #     json.dumps(response_data), 
-        #     content_type="application/json",
-        #     status=200
-        # )
         return response_data
         
     except Exception as e:
@@ -837,7 +831,8 @@ def get_demographic_analytics(request):
         if isinstance(event_analytics, dict):
             response.append(event_analytics)
     
-    return HttpResponse(str(response), status=200, content_type="application/json")
+    responseBody = { "data": response }
+    return HttpResponse(json.dumps(responseBody), status=200, content_type="application/json")
 
 def calculate_demographic_analytics(event_id):
     try:
@@ -875,3 +870,78 @@ def calculate_demographic_analytics(event_id):
     except Exception as e:
         print(e)
         return f"Error: {e}"
+    
+@csrf_exempt  
+def update_application(request):
+    if request.method == 'POST':
+        try:
+            body = json.loads(request.body)
+            # Parse the body of the PATCH request
+            application_id = body['application_id']
+            new_status = body['status']
+
+            # Validate that the status is one of the enum values
+            valid_status_values = [status.value for status in Status]
+            print(valid_status_values, new_status)
+            if new_status not in valid_status_values:
+                return HttpResponse('Invalid status value', status=400)
+
+            # Fetch the application by ID
+            application = get_object_or_404(Application, id=application_id)
+
+            # Update the status
+            application.status = new_status
+            application.save()
+
+            return HttpResponse(status=200)
+        except json.JSONDecodeError:
+            return HttpResponse('Invalid JSON format', status=400)
+        except Exception as e:
+            return HttpResponse(f'Error: {str(e)}', status=500)
+
+    return HttpResponse("Invalid request method", status=400)
+
+def get_quota_analytics(request):
+    events = Event.objects.all()
+    response = []
+
+    for event in events:
+        event_analytics = calculate_quota_analytics(event.id)
+        if isinstance(event_analytics, dict):
+            response.append(event_analytics)
+
+    return HttpResponse(str(response), status=200, content_type="application/json")
+
+def calculate_quota_analytics(event_id):
+    try:
+        event = Event.objects.get(id=event_id)
+
+        participants_quota = event.get('participant_quota')
+        volunteers_quota = event.get('volunteer_quota')
+        participants_count = event.registered_participants.count()
+        volunteers_count = event.registered_volunteers.count()
+
+        data = quota_analytics(participants_quota, volunteers_quota, participants_count, volunteers_count)
+        response_data = {
+            "event_name": event.event_name,
+            "participants_quota": participants_quota,
+            "volunteers_quota":volunteers_quota,
+            "participants_count": participants_count,
+            "volunteers_count": volunteers_count,
+            "data": data
+        }
+        return response_data
+    except Exception as e:
+            return HttpResponse(
+                json.dumps({"error": f"Error: {str(e)}"}), 
+                content_type="application/json",
+                status=500
+            )
+
+# Creates the JSON for pie chart representation of participants/volunteers
+def quota_analytics(participants_quota, volunteers_quota,participants_count, volunteers_count):
+    if participants_quota == 0 and volunteers_quota == 0: return {}
+    return {[
+            { "data": [participants_quota-participants_count,participants_count ], "stack": 'A', "label": 'Participants' },
+            { "data": [volunteers_quota-volunteers_count, volunteers_count], "stack": 'A', "label": 'Volunteers' }
+            ]}
