@@ -7,7 +7,6 @@ import {
   useAnimation,
 } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-
 import { CarousellCard } from "./Cards";
 
 export const SwipingCard = ({ distance }) => {

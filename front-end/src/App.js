@@ -21,13 +21,14 @@ import Calendarr from "./Components/Calendar.jsx";
 // import { SwipingCard } from "./Components/SwipingCard.js";
 import Profile from "./Components/Profile.js";
 import Distance from "./Components/Distance.js";
+import DistanceCalculator from "./Components/kilo.js";
 
 const Container = styled.div``;
 
 function App() {
   return (
     <Container className="w-screen h-screen flex">
-      <div className="w-[400px]">
+      {/* <div className="w-[400px]">
         <Router>
           <SideBar>
             <Switch>
@@ -37,7 +38,8 @@ function App() {
             </Switch>
           </SideBar>
         </Router>
-      </div>
+      </div> */}
+      <DistanceCalculator></DistanceCalculator>
     </Container>
   );
 }

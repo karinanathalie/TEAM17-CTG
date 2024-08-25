@@ -7,6 +7,7 @@ import {
   NavLink,
 } from "react-router-dom";
 import LocationComponent from "../Components/Distance.js";
+import axios from "axios";
 
 import { ScheduleCard, CarousellCard, EventCard } from "../Components/Cards.js";
 import { ButtonAccount, ButtonFull } from "../Components/Button.js";
@@ -15,6 +16,7 @@ import Calendarr from "../Components/Calendar.jsx";
 import Achievements from "../Components/Achievements.js";
 import { SwipingCard } from "../Components/SwipingCard.js";
 import Events from "../Components/Events.js";
+import DistanceCalculator from "../Components/kilo.js";
 
 const Container = styled.div``;
 const Wrapper = styled.div``;
@@ -22,8 +24,8 @@ const Wrapper = styled.div``;
 export default function HomeView() {
   const API_KEY = "AIzaSyA-MRj2eDVgcHiGggfhYFGRD_gGdnGqo3A";
   const [location, setLocation] = useState({
-    lat: null,
-    lon: null,
+    lat: 0,
+    lon: 0,
     name: "",
   });
   const [error, setError] = useState("");
@@ -67,17 +69,33 @@ export default function HomeView() {
       case error.PERMISSION_DENIED:
         setError("User denied the request for Geolocation.");
         break;
-      case error.POSITION_UNAVAILABLE:
-        setError("Location information is unavailable.");
-        break;
-      case error.TIMEOUT:
-        setError("The request to get user location timed out.");
-        break;
       case error.UNKNOWN_ERROR:
         setError("An unknown error occurred.");
         break;
       default:
         setError("An error occurred.");
+    }
+  };
+  const [distance, setDistance] = useState(0);
+
+  useEffect(() => {
+    calculateDistance(); // Call the function if lat and lon are available
+  }, [location.lat, location.lon]);
+
+  const calculateDistance = async () => {
+    const API_KEY = "AIzaSyA-MRj2eDVgcHiGggfhYFGRD_gGdnGqo3A";
+    const origin = `${location.lat},${location.lon}`;
+    const destination = "34.0522,-118.2437"; // Los Angeles
+
+    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origin}&destinations=${destination}&key=${API_KEY}`;
+
+    try {
+      const response = await axios.get(url);
+      const result = response.data;
+      const distanceInMeters = result.rows[0].elements[0].distance.value;
+      setDistance(distanceInMeters);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
     }
   };
   return (
@@ -127,7 +145,7 @@ export default function HomeView() {
       </Wrapper>
       <Wrapper>
         <ButtonAccount location={location} />
-        <SwipingCard />
+        <SwipingCard distance={distance} />
       </Wrapper>
     </Container>
   );
