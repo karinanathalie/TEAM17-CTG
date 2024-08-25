@@ -128,33 +128,32 @@ export const ButtonSocial = ({ icon, text }) => {
   );
 };
 
-export const ButtonAccount = ({ onClick, location, name, image}) => {
+export const ButtonAccount = ({ onClick, location, name, image }) => {
   return (
     <div className="w-full flex flex-row-reverse h-auto">
-      <button className="mb-4 flex bg-lightgray h-[80px] rounded-[16px] w-[350px] hover:shadow-lg active:shadow-none" onClick={onClick}>
+      <button
+        className="mb-4 flex bg-lightgray h-[80px] rounded-[16px] w-[350px] hover:shadow-lg active:shadow-none"
+        onClick={onClick}
+      >
         <div className="flex p-4 text-[18px] font-semibold">
           <div className="w-10 h-10 bg-gray rounded-full flex items-center justify-center text-white font-bold">
             IMG
           </div>
           <div className="text-left ml-[20px]">
             <div> Vanessa Laurel </div>
-            {location.lat && (
-              <div className="flex justify-start mt-[-5px] text-[12px] w-[250px] h-[30px] overflow-hidden font-medium text-darkgray">
-                <div className="flex flex-col justify-end">
-                  <CiLocationOn className="h-6 w-6 mr-2" />
-                </div>
-                <div className="flex flex-col justify-end">
-                  {location.name}
-                </div>
+
+            <div className="flex justify-start mt-[-5px] text-[12px] w-[250px] h-[30px] overflow-hidden font-medium text-darkgray">
+              <div className="flex flex-col justify-end">
+                <CiLocationOn className="h-6 w-6 mr-2" />
               </div>
-            )}
+              <div className="flex flex-col justify-end">{location}</div>
+            </div>
           </div>
         </div>
       </button>
     </div>
   );
 };
-
 
 export const XButton = ({ onClick }) => {
   return (
@@ -179,6 +178,3 @@ export const XButton = ({ onClick }) => {
     </button>
   );
 };
-
-
-

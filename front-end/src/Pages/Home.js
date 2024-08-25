@@ -84,6 +84,14 @@ export default function HomeView() {
         setError("An error occurred.");
     }
   };
+  const truncateLocationName = (locationName, maxWords) => {
+    const words = locationName.split(" "); // Split the string into words
+    if (words.length <= maxWords) return locationName; // Return original if within limit
+    return words.slice(0, maxWords);
+  };
+  const truncatedName = truncateLocationName(location.name, 5);
+  console.log(truncatedName);
+
   const [distance, setDistance] = useState(0);
 
   useEffect(() => {
@@ -154,7 +162,10 @@ export default function HomeView() {
       <Wrapper>
         {!showProfile && (
           <>
-            <ButtonAccount location={location} onClick={handleProfileClick} />
+            <ButtonAccount
+              location={truncatedName}
+              onClick={handleProfileClick}
+            />
             <div className="hidden sm:block">
               <SwipingCard />
             </div>
