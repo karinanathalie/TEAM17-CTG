@@ -5,7 +5,6 @@ import { BackButton, VolunteerParticipantToggle } from '../Components/Button';
 import { EventCard } from "../Components/Cards";
 
 const Container = styled.div``;
-const SideBarWrapper = styled.div``;
 const ContentWrapper = styled.div``;
 const EventListWrapper = styled.div``;
 
