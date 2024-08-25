@@ -107,7 +107,7 @@ export default function HomeView() {
     }
   };
   return (
-    <Container className="font-poppins flex w-full h-screen m-[29px]">
+    <Container className="font-poppins flex w-full h-screen m-[29px] overflow-y-scroll">
       <Wrapper className="flex flex-col mt-4 w-full">
         <Wrapper className="w-full">
           <Wrapper className="text-[32px] font-medium">
