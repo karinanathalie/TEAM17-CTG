@@ -15,8 +15,6 @@ import Calendarr from '../Components/Calendar.jsx';
 import Achievements from '../Components/Achievements.js';
 import { SwipingCard } from '../Components/SwipingCard.js';
 import Events from '../Components/Events.js';
-import DialogflowChatbot from '../Components/DialogChatBot.jsx';
-import HTMLContainer from '../Components/DialogChatBot.jsx';
 
 const Container = styled.div``;
 const Wrapper = styled.div``;
@@ -46,7 +44,7 @@ export default function HomeView() {
                         </Wrapper>
                     </Wrapper>
                     <Wrapper className="border border-black h-[240px] rounded-[8px] w-[670px]">
-                        <DialogflowChatbot />
+
                     </Wrapper>
                 </Wrapper>
             </Wrapper> 
