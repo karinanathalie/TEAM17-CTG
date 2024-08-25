@@ -41,13 +41,13 @@ function App() {
       </div>
       {/* <VolunteerParticipantToggle /> */}
       {/* <RegistrationCard /> */}
-      {/* <Upcoming> </Upcoming> */}
+      <Upcoming> </Upcoming>
       {/* <Calendarr></Calendarr> */}
       {/* <Calendarr></Calendarr> */}
       {/* <EventDetails /> */}
       {/* <EventCard date="12-07-2003" location="Hong Kong" eventPicture="" eventName="Hello World" eventSummary="Hello World Lorem Ipsum" role="Participant" /> */}
       {/* <IndividualEventDetail /> */}
-      <HomeView />
+      {/* <HomeView /> */}
       {/* <SwipingCard /> */}
     </Container>
   );
