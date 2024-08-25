@@ -35,10 +35,10 @@ export const RegistrationCard = (event_id) => {
     return(
         <div className="font-poppins p-[32px] h-[54px] rounded-[8px] bg-black text-white w-[400px] h-auto">
          <form onSubmit={handleRegistration} id="volunteer-reg-form">
-            <div className="font-[500] text-[20px] w-full">
+            <div className="font-[500] text-[20px]">
                 Volunteer Registration
                
-                 <div className="w-full mt-4">
+                 <div className=" mt-4">
             
                     <InputForm type="text" name="Phone Number" placeholder="Phone Number" > <BsTelephone className="w-4 h-4"/> </InputForm>
                     <InputForm type="text" name="Ethinicity" placeholder="Ethnicity" > <GiWorld className="w-5 h-5" /> </InputForm>
