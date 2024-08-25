@@ -41,7 +41,7 @@ function App() {
       {/* <Upcoming> </Upcoming> */}
       {/* <EventCard date="12-07-2003" location="Hong Kong" eventPicture="" eventName="Hello World" eventSummary="Hello World Lorem Ipsum" role="Participant" /> */}
       
-      <HomePage />
+      <EventDetails />
       
     </Container>
   );
