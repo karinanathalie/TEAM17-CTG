@@ -528,8 +528,10 @@ def get_all_volunteer_application(request):
                     "cv_file": application.cv_file.url if application.cv_file else None,
                 }
             }
-            if data['cv_file']:
-                data['cv_file']=application.cv_file.url.split('/')[-1]
+            if data['fields']['cv_file']:
+                data['fields']['cv_file']=application.cv_file.url.split('/')[-1]
+            
+            volunteer_data.append(data)
         
         volunteer_json = json.dumps(volunteer_data, cls=DjangoJSONEncoder)
         return HttpResponse(volunteer_json, content_type="application/json")
