@@ -183,7 +183,7 @@ const EventForm: React.FC<EventFormProps> = ({ initialValues, onSubmit, isUpdate
                             }}
                         >
                             <img
-                                src={`http://localhost:3000/static/media/zubin.e2a534741a9c3d582cc6.png`}
+                                src={`http://localhost:8000/api/pic/${values.eventImage}`}
                                 alt="Event"
                                 style={{ width: '100%', height: 'auto', borderRadius: '8px' }} 
                             />
