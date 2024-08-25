@@ -31,7 +31,7 @@ export const SwipingCard = () => {
                 Find the most suitable events <span className="text-pastelyellow"> near you! </span>
             </div>
             <div className="flex justify-center">
-                <CarousellCard onClickOther={SkipEvent} onClickRegis={RoutetoIndividualEvent} date="12-07-2003" location="Hong Kong" eventPicture="" eventName="Hello World" />
+                <CarousellCard onClickOther={SkipEvent} onClickRegis={RoutetoIndividualEvent} date="12-07-2003" location="Hong Kong" distance={4} eventPicture="" eventName="Hello World" />
             </div>
         </div>
     )

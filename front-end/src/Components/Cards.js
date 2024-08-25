@@ -1,6 +1,8 @@
 import { React, useState, useMemo, useRef } from "react";
 import { ButtonFull, ButtonFull2, ButtonFullRoleBased } from "./Button";
 import { CiCalendarDate, CiLocationOn } from "react-icons/ci";
+import { GiPathDistance } from "react-icons/gi";
+
 import im1 from "../Components/event.png";
 
 export const ScheduleCard = ({ date, eventName, eventSummary }) => {
@@ -43,7 +45,7 @@ export const ScheduleCard = ({ date, eventName, eventSummary }) => {
   );
 };
 
-export const CarousellCard = ({onClickOther, onClickRegis, date, location, eventPicture, eventName }) => {
+export const CarousellCard = ({onClickOther, onClickRegis, date, location, distance, eventPicture, eventName }) => {
   const SplittedDate = date.split("-");
   const months = [
     "Jan",
@@ -89,6 +91,12 @@ export const CarousellCard = ({onClickOther, onClickRegis, date, location, event
             <CiLocationOn />
           </div>
           <div>{location}</div>
+        </div>
+        <div className="flex space-x-[12px] font-medium text-[15px] text-mediumgray">
+          <div className="flex flex-col justify-center">
+            <GiPathDistance />
+          </div>
+          <div>{distance}</div>
         </div>
       </div>
       <div className="flex space-x-[10px]">
