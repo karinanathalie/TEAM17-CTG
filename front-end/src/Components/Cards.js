@@ -144,17 +144,23 @@ export const EventCard = ({
         className="w-full h-[197px] rounded-[8px]"
       /> 
       </div>
-      <div className="flex flex-col pl-[41px]">
-        <div className="h-[150px] w-[600px]">
-          <div className="font-semibold text-[24px]">{eventName}</div>
-          <div className="pt-[1px] font-medium text-[14px] text-mediumgray">
+      <div className="flex flex-col pl-[41px] m-[8px]">
+        <div className="h-[150px] w-[600px] ">
+          <div className="font-semibold text-[20px]">{eventName}</div>
+          <div className="pt-[1px] font-medium text-[12px] text-mediumgray">
             {eventDescription}
           </div>
-          <div className="pt-[1px] flex font-semibold text-[16px] text-mediumgray mt-2">
+          <div className="pt-[1px] flex font-semibold text-[14px] text-mediumgray mt-2">
             <div className="flex flex-col justify-center">
               <CiLocationOn />
             </div>
-            <div className="pl-[12px]">{location}</div>
+            <div className="pl-[12px] font-medium">{location}</div>
+          </div>
+          <div className="pt-[1px] flex font-semibold text-[16px] text-mediumgray mt-2">
+            <div className="flex flex-col justify-center">
+              <CiCalendarDate />
+            </div>
+            <div className="pl-[12px] font-medium">{date}</div>
           </div>
         </div>
         <div className="flex justify-end pt-[37px]">
