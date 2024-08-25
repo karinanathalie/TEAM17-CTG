@@ -20,11 +20,19 @@ export default function IndividualEventDetail() {
         setRole(prevRole => prevRole === 'Participant' ? 'Volunteer' : 'Participant');
     };
 
-    const CheckRole = () => {
+    const CheckRoleRegistration = () => {
         if (current_role === 'Participant') {
             return <RegistrationCardPar />;
         } else {
             return <RegistrationCard />;
+        }
+    }
+
+    const CheckRoleTraining = () => {
+        if (current_role === 'Participant') {
+            return <div></div>
+        } else {
+            return <TrainingCard />;
         }
     }
 
@@ -66,10 +74,12 @@ export default function IndividualEventDetail() {
                             <div className="mt-[16px]">
                                 <img src="http://placehold.it/700x300"></img>
                             </div>
-                            <TrainingCard />
+                            <div>
+                                {CheckRoleTraining()}
+                            </div>
                         </div>
                         <div className="w-full">
-                            {CheckRole()}
+                            {CheckRoleRegistration()}
                         </div>
                     </div>
                     

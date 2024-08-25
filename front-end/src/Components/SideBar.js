@@ -23,7 +23,7 @@ export default function SideBar({ children }) {
   }, []);
 
   return (
-    <div className="font-poppins flex flex-row rounded-full h-screen">
+    <div className="fixed top-0 font-poppins flex flex-row rounded-full h-screen">
       <div className="bg-darkgray rounded-r-2xl h-full">
         <div className=" mx-[30px] mt-[40px] sidebar w-[250px] text-white">
           <div className="my-[5px] mb-[20px]">
