@@ -40,5 +40,7 @@ urlpatterns = [
     path('reminder/emailtemplate/<int:template_id>', views.send_emails_from_template, name="send-email-from-template"),
     path('reminder/whatsapptemplates', views.get_all_whatsapp_templates, name="get-all-whatsapp-templates"),
     path('reminder/sendwhatsapp', views.send_mass_whatsapp, name="send-mass-whatsapp"),
-    path('reminder/whatsapptemplate/<int:template_id>', views.send_whatsapp_from_template, name="send-whatsapp-from-template")
+    path('reminder/whatsapptemplate/<int:template_id>', views.send_whatsapp_from_template, name="send-whatsapp-from-template"),
+
+    path('analytics/demographic', views.get_demographic_analytics, name="get-demographic-analytics")
 ]

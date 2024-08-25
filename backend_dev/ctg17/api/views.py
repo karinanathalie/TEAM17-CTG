@@ -1,3 +1,4 @@
+import collections
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core import serializers
@@ -705,4 +706,42 @@ def analytics_participants_ratio(response):
             content_type="application/json",
             status=500
         )
+
+def get_demographic_analytics(request):
+    events = Event.objects.all()
+    response = []
+
+    for event in events:
+        event_analytics = calculate_demographic_analytics(event.id)
+        if isinstance(event_analytics, dict):
+            response.append(event_analytics)
     
+    return HttpResponse(str(response), status=200, content_type="application/json")
+
+def calculate_demographic_analytics(event_id):
+    try:
+        event = Event.objects.get(id=event_id)
+
+        ethnicityCount = collections.defaultdict(int)
+        avgAge, count = 0, 0
+
+        for user in event.registered_participants.all():
+            profile = Profile.objects.get(user=user)
+            ethnicityCount[profile.ethnicity] += 1
+            avgAge += profile.age
+            count += 1
+        if count != 0:
+            avgAge = avgAge / count
+
+        response = {
+            'event_id': event.id,
+            'event_name': event.event_name,
+            'average_age': avgAge,
+            'xLabels': list(ethnicityCount.keys()),
+            'yData': list(ethnicityCount.values())
+        }
+
+        return response
+    except Exception as e:
+        print(e)
+        return f"Error: {e}"
