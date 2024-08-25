@@ -1,7 +1,14 @@
 import React from "react";
 import im1 from "./event.png";
+import { useHistory } from 'react-router-dom';
 
 const Events = ({ item }) => {
+
+  const history = useHistory();
+  const handleButtonClick = () => {
+    history.push('/event-detail', item.id);
+  };
+
   console.log(item);
   const dateObj = new Date(item.event_date);
   const day = dateObj.getDate();
@@ -16,7 +23,7 @@ const Events = ({ item }) => {
   const month = monthNames[monthNumber];
 
   return (
-    <div className="font-poppins">
+    <div className="font-poppins" onClick={handleButtonClick}>
       <div className="rounded-3xl shadow-md h-[350px] w-[340px]  items-center">
        <img
         src={`http://localhost:8000/api/pic/${item.event_image}`}

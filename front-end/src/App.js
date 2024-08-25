@@ -21,7 +21,11 @@ import Calendarr from "./Components/Calendar.jsx";
 // import { SwipingCard } from "./Components/SwipingCard.js";
 import Profile from "./Components/Profile.js";
 import Distance from "./Components/Distance.js";
+<<<<<<< Updated upstream
 import DistanceCalculator from "./Components/kilo.js";
+=======
+import Login from "./Pages/Login.js";
+>>>>>>> Stashed changes
 
 const Container = styled.div``;
 
@@ -35,6 +39,8 @@ function App() {
               <Route exact path="/home" component={HomeView} />
               <Route path="/events" component={Upcoming} />
               <Route path="/myregistration" component={EventDetails} />
+              <Route path="/event-detail" component={IndividualEventDetail} />
+              <Route path="/login" component={Login} />
             </Switch>
           </SideBar>
         </Router>
