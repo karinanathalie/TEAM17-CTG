@@ -1,5 +1,4 @@
 // npm install @material-ui/core @material-ui/icons react-router-dom@5
-
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -38,9 +37,17 @@ function App() {
       {/* <VolunteerParticipantToggle /> */}
       {/* <RegistrationCard /> */}
       {/* <Upcoming> </Upcoming> */}
+<<<<<<< Updated upstream
       \
       <CarousellCards />
       {/* <EventDetails /> */}
+=======
+      {/* <EventCard date="12-07-2003" location="Hong Kong" eventPicture="" eventName="Hello World" eventSummary="Hello World Lorem Ipsum" role="Participant" /> */}
+      
+      {/* <EventDetails /> */}
+      <HomeView />
+      
+>>>>>>> Stashed changes
     </Container>
   );
 }
