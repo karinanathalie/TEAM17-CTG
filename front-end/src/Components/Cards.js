@@ -19,7 +19,6 @@ export const ScheduleCard = ({ date, eventName, eventSummary }) => {
     "Nov",
     "Dec",
   ];
-  const colours = ["pastelyellow", "lightgreen", "lightblue"];
   const monthIndex = parseInt(SplittedDate[1], 10) - 1;
   const month = months[monthIndex];
   const day = SplittedDate[0];
@@ -44,7 +43,7 @@ export const ScheduleCard = ({ date, eventName, eventSummary }) => {
   );
 };
 
-export const CarousellCard = ({ date, location, eventPicture, eventName }) => {
+export const CarousellCard = ({onClickOther, onClickRegis, date, location, eventPicture, eventName }) => {
   const SplittedDate = date.split("-");
   const months = [
     "Jan",
@@ -93,8 +92,8 @@ export const CarousellCard = ({ date, location, eventPicture, eventName }) => {
         </div>
       </div>
       <div className="flex space-x-[10px]">
-        <ButtonFull2>Other Event</ButtonFull2>
-        <ButtonFull>Register</ButtonFull>
+        <ButtonFull2 onClick={onClickOther}>Other Event</ButtonFull2>
+        <ButtonFull onClick={onClickRegis}>Register</ButtonFull>
       </div>
     </div>
   );
