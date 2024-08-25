@@ -15,7 +15,8 @@ urlpatterns = [
     path('event/<int:event_id>/register', views.event_registration, name = "event-registration"),
     path('event/<int:event_id>/register/confirmation', views.event_registration_confirmation, name = "event-registration-confirm"),
     path('event/<int:event_id>/unregister', views.unregister_from_event, name="unregister-from-event"),
-    path('event/<int:event_id>/sendreminder', views.send_event_reminder, name="send-event-reminder"),
+    path('event/<int:event_id>/sendreminder-email', views.send_event_reminder_email, name="send-event-reminder-email"),
+    path('event/<int:event_id>/sendreminder-whatsapp', views.send_event_reminder_whatsapp, name="send-event-reminder-whatsapp"),
     
     path('user/<int:user_id>/', views.get_user_details, name="user-detail"),
     path('user/<int:user_id>/registrations', views.get_user_registrations, name="user-registrations"),
@@ -34,5 +35,8 @@ urlpatterns = [
 
     path('reminder/emailtemplates', views.get_all_email_templates, name="get-all-email-templates"),
     path('reminder/sendemail', views.send_mass_email, name="send-mass-email"),
-    path('reminder/emailtemplate/<int:template_id>', views.send_emails_from_template, name="send-email-from-template")
+    path('reminder/emailtemplate/<int:template_id>', views.send_emails_from_template, name="send-email-from-template"),
+    path('reminder/whatsapptemplates', views.get_all_whatsapp_templates, name="get-all-whatsapp-templates"),
+    path('reminder/sendwhatsapp', views.send_mass_whatsapp, name="send-mass-whatsapp"),
+    path('reminder/whatsapptemplate/<int:template_id>', views.send_whatsapp_from_template, name="send-whatsapp-from-template")
 ]

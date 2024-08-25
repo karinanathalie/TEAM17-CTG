@@ -5,6 +5,8 @@ from api.constants import Gender, RoleType
 from django.core import serializers
 from django.utils import timezone
 from datetime import datetime
+import random
+import string
 
 
 class Badge(models.Model):
@@ -24,11 +26,15 @@ class Training(models.Model):
     def __str__(self):
         return self.training_name
 
-    
+
+def generate_random_id():
+    return ''.join(random.choices(string.ascii_letters + string.digits, k=10))
+
 class Profile(models.Model):
-    id = models.UUIDField(
+    id = models.CharField(
         primary_key=True,
-        default=uuid.uuid4,
+        default=generate_random_id,
+        max_length=10,
         editable=False,
     )
     name = models.CharField(max_length=225)
@@ -101,7 +107,7 @@ class Event(models.Model):
     event_description = models.TextField()
     event_date = models.DateTimeField()
     event_location = models.CharField(max_length=255)
-    event_image = models.FileField(null=True, blank=True)
+    event_image = models.FileField(upload_to='static/event_image/',null=True, blank=True)
 
     # To enfore validation for event demographics
     target_population = models.CharField(max_length=255, null=True, blank=True)
@@ -136,3 +142,15 @@ class EmailTemplate(models.Model):
 
     def __str__(self):
         return self.subject
+    
+class WhatsappTemplate(models.Model):
+    message = models.TextField()
+    receiver_group = models.TextField(
+        choices=RoleType.choices(),
+        blank=True,
+        null=True
+    )
+    recipient_list = models.TextField()
+
+    def __str__(self):
+        return self.message

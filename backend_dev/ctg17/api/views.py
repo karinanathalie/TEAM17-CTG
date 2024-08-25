@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.core import serializers
 from django.contrib.auth import login, authenticate, logout
 from .constants import RoleType
-from .models import Application, Event, Profile, ProfileBadge, EmailTemplate, VolunteerApplication
+from .models import Application, Event, Profile, ProfileBadge, EmailTemplate, VolunteerApplication, WhatsappTemplate
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 import json
@@ -159,36 +159,71 @@ def unregister_from_event(request, event_id):
 @csrf_exempt
 def create_event(request):
     if request.method == "POST":
-        eventJSON= json.loads(request.body)
-        print(eventJSON)
+        try:
+            # Parse form data including files
+            if request.content_type.startswith('multipart/form-data'):
+                form_data = request.POST
+                files = request.FILES
+            else:
+                form_data = json.loads(request.body.decode('utf-8'))
+                files = None
 
-        newEvent = Event()
-        newEvent.event_name = eventJSON['event_name']
-        newEvent.event_description = eventJSON['event_description']
-        newEvent.event_date = eventJSON['event_date']
-        newEvent.event_location = eventJSON['event_location']
-        newEvent.target_population = eventJSON['target_population']
-        newEvent.skillset = eventJSON['skillset']
-        newEvent.participant_quota = eventJSON['participant_quota']
-        newEvent.volunteer_quota = eventJSON['volunteer_quota']
-        newEvent.deadline = eventJSON['deadline']
-        newEvent.save()
+            # Create a new Event instance and populate it with the data from the request
+            newEvent = Event()
+            newEvent.event_name = form_data['event_name']
+            newEvent.event_description = form_data['event_description']
+            newEvent.event_date = form_data['event_date']
+            newEvent.event_location = form_data['event_location']
+            newEvent.target_population = form_data['target_population']
+            newEvent.skillset = form_data.get('skillset', None)
+            newEvent.participant_quota = form_data['participant_quota']
+            newEvent.volunteer_quota = form_data['volunteer_quota']
+            newEvent.deadline = form_data['deadline']
 
-        response_data = {
-            "status": "success",
-            "message": "Event added successfully",
-            "event_id": newEvent.id
-        }
-        return HttpResponse(json.dumps(response_data), content_type="application/json")
-    
+            # Handle file upload
+            if files and 'event_image' in files:
+                newEvent.event_image = files['event_image']
+
+            newEvent.save()
+
+            # Prepare a response with success status
+            response_data = {
+                "status": "success",
+                "message": "Event added successfully",
+                "event_id": newEvent.id
+            }
+            return HttpResponse(json.dumps(response_data), content_type="application/json")
+        
+        except json.JSONDecodeError:
+            # Handle JSON decoding error
+            response_data = {
+                "status": "error",
+                "message": "Invalid JSON data"
+            }
+            return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
+        except KeyError as e:
+            # Handle missing key error
+            response_data = {
+                "status": "error",
+                "message": f"Missing key in data: {str(e)}"
+            }
+            return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
+        except Exception as e:
+            # Handle any other exception
+            response_data = {
+                "status": "error",
+                "message": str(e)
+            }
+            return HttpResponse(json.dumps(response_data), content_type="application/json", status=500)
+
+    # If the request method is not POST, return an error response
     response_data = {
         "status": "error",
         "message": 'Wrong Method'
     }
     return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
-
 @csrf_exempt
-def send_event_reminder(request, event_id=1):
+def send_event_reminder_email(request, event_id=1):
     try:
         event = Event.objects.get(id=event_id)
         recipient_list = []
@@ -205,6 +240,29 @@ def send_event_reminder(request, event_id=1):
         message = f"Hi! This is a friendly reminder for the upcoming event: {event}\nDate: {event.event_date}\nLocation: {event.event_location}\nWe hope to see you there!"
         send_email(subject, message, recipient_list)
         return HttpResponse('{"Response": "Email reminders sent!"}', status=200, content_type="application/json")
+    except Exception as e:
+        return HttpResponse(f'Error: {str(e)}', status=500)
+
+@csrf_exempt
+def send_event_reminder_whatsapp(request, event_id=1):
+    try:
+        event = Event.objects.get(id=event_id)
+        recipient_list = []
+
+        for user in event.registered_participants.all():
+            profile = Profile.objects.get(user=user)
+            recipient_list.append(profile.phone)
+        for user in event.registered_volunteers.all():
+            profile = Profile.objects.get(user=user)
+            recipient_list.append(profile.phone)
+        
+        if not recipient_list:
+            return HttpResponse('{"Response": "No registered participants/volunteers!"}', status=200, content_type="application/json")
+
+        message = f"Hi! This is a friendly reminder for the upcoming event: {event}\nDate: {event.event_date}\nLocation: {event.event_location}\nWe hope to see you there!"
+        for phone in recipient_list:
+            send_whatsapp(phone, message)
+        return HttpResponse('{"Response": "Whatsapp reminders sent!"}', status=200, content_type="application/json")
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
 
@@ -367,6 +425,14 @@ def get_all_participant_application(request):
         return HttpResponse(application_json, content_type="application/json")
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
+    
+def get_volunteer_application(request):
+    try:
+        application = Application.objects.all()
+        application_json = serializers.serialize('json', application)
+        return HttpResponse(application_json, content_type="application/json")
+    except Exception as e:
+        return HttpResponse(f'Error: {str(e)}', status=500)
 
 def get_all_volunteer_application(request):
     try:
@@ -375,7 +441,8 @@ def get_all_volunteer_application(request):
         return HttpResponse(volunteer_json, content_type="application/json")
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
-    
+
+@csrf_exempt    
 def create_volunteer_application(request):
     if request.method == 'POST':
         try:
@@ -383,9 +450,10 @@ def create_volunteer_application(request):
             event_id = request.POST.get('event_id')
             reason_joining = request.POST.get('reason_joining')
             cv_file = request.FILES.get('cv_file')
+            print(user_profile_id, event_id)
 
             # Get the user profile and event objects
-            user_profile = get_object_or_404(Profile, id=user_profile_id)
+            user_profile = get_object_or_404(Profile, user_id=user_profile_id)
             event = get_object_or_404(Event, id=event_id)
 
             # Create the VolunteerApplication object
@@ -419,6 +487,7 @@ def create_application(request):
             return HttpResponse(f'Error: {str(e)}', status=500)
 
 # REMINDER
+# Email Section
 def get_all_email_templates(request):
     try:
         emailTemplates = EmailTemplate.objects.all()
@@ -485,11 +554,81 @@ def send_mass_email(request):
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
 
+# WhatsApp Section
+def send_whatsapp_from_template(request, template_id=1):
+    try:
+        template = WhatsappTemplate.objects.get(id=template_id)
+        recipient_list = json.loads(template.recipient_list)
+
+        for phone in recipient_list:
+            send_whatsapp(phone, template.message)
+        response = {'Message': f'Whatsapp reminders sent to {len(recipient_list)} users!'}
+
+        return HttpResponse(str(response), status=200, content_type="application/json")
+    except Exception as e:
+        return HttpResponse(f'Error: {str(e)}', status=500)
+
+def get_all_whatsapp_templates(request):
+    try:
+        whatsappTemplates = WhatsappTemplate.objects.all()
+        whatsappTemplatesJSON = serializers.serialize('json', whatsappTemplates)
+        return HttpResponse(whatsappTemplatesJSON, content_type="application/json")
+    except Exception as e:
+        return HttpResponse(f'Error: {str(e)}', status=500)
+
+@csrf_exempt
+def send_mass_whatsapp(request):
+    try:
+        if request.method == "POST":
+            data = json.loads(request.body)
+            message = data['message']
+            saveAsTemplate = data['save_as_template']
+
+            # Send whatsapp to either provided phone numbers or to role_type group
+            phone_numbers_list = data['phone_numbers'].split(",")
+            receiver_group = data['group']
+
+            recipient_list = []
+
+            roles = [role[1] for role in RoleType.choices()]
+            if receiver_group in roles:
+                profiles_in_group = Profile.objects.filter(role_type=receiver_group.upper())
+
+                for profile in profiles_in_group:
+                    print(profile.phone)
+                    if profile.phone is not None:
+                        recipient_list.append(profile.phone)
+            else:
+                if phone_numbers_list and len(phone_numbers_list) > 0:
+                    recipient_list = phone_numbers_list
+            
+            if not recipient_list:
+                return HttpResponse('{"Response": "No phone numbers specified/found!"}', status=200, content_type="application/json")
+            
+            for phone in recipient_list:
+                send_whatsapp(phone, message)
+            response = {'Response': f'WhatsApp reminders sent to {len(recipient_list)} users!'}
+
+            if saveAsTemplate == 1:
+                whatsappTemplate = WhatsappTemplate()
+                whatsappTemplate.message = message
+                whatsappTemplate.recipient_list = json.dumps(recipient_list)
+                if receiver_group in roles:
+                    whatsappTemplate.receiver_group = receiver_group
+                whatsappTemplate.save()
+                print("Saved whatsapp template!")
+
+            return HttpResponse(str(response), status=200, content_type="application/json")
+    except Exception as e:
+        return HttpResponse(f'Error: {str(e)}', status=500)
+
 def send_email(subject, message, recipient_list):
     email_from = settings.EMAIL_HOST_USER
     send_mail(subject, message, email_from, recipient_list)
 
+# THIS ONLY WORKS WITH A FEW MESSAGE TEMPLATES CURRENTLY (WITH TWILIO)
 def send_whatsapp(phone='+85252633364', message=''):
+    print(phone, message)
     client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
 
     message = client.messages.create(
@@ -497,3 +636,4 @@ def send_whatsapp(phone='+85252633364', message=''):
         to=f"whatsapp:{phone}",
         body=message
     )
+    print(message.status)
