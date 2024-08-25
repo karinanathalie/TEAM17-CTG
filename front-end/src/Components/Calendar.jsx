@@ -7,7 +7,7 @@ const Calendarr = () => {
   const [date, setDate] = useState(new Date());
   return (
     <div>
-      <div className="flex justify-center w-[30%] bg-yellow  flex-col items-center ">
+      <div className="font-poppins flex justify-center w-[30%] flex-col items-center ">
         <Calendar
           onChange={setDate}
           value={date}
