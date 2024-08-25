@@ -1,8 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core import serializers
-from django.contrib.auth import login
-from passlib.hash import django_pbkdf2_sha256 as handler
+from django.contrib.auth import login, authenticate
 from .constants import RoleType
 from .models import Application, Event, Profile, ProfileBadge, EmailTemplate
 from django.views.decorators.csrf import csrf_exempt
@@ -12,7 +11,7 @@ from django.contrib.auth.models import User
 from django.conf import settings
 from django.core.mail import send_mail
 from api.drive.script import DriveAPI
-#need to import user
+from twilio.rest import Client
 
 
 # Create your views here.
@@ -25,8 +24,7 @@ def register_user(request):
     try:
         if request.method == "POST":
             data = json.loads(request.body)
-            password = handler.hash(data['password'], rounds=170000, salt_size=11)
-            user = User.objects.create_user(username=data['username'], email=data['email'], password=password)
+            user = User.objects.create_user(username=data['username'], email=data['email'], password=data['password'])
 
             userProfile = Profile()
             userProfile.phone = data['phone']
@@ -64,8 +62,8 @@ def login_user(request):
             password = data.get('password')
 
             # Authenticate the user
-            user = User.objects.get(username=username)
-            if handler.verify(password, user.password):
+            user = authenticate(username=username, password=password)
+            if user is not None:
                 login(request, user)
                 return HttpResponse('{"message": "Login successful"}', status=200, content_type="application/json")
             else:
@@ -394,3 +392,12 @@ def send_mass_email(request):
 def send_email(subject, message, recipient_list):
     email_from = settings.EMAIL_HOST_USER
     send_mail(subject, message, email_from, recipient_list)
+
+def send_whatsapp(phone='+85252633364', message=''):
+    client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+
+    message = client.messages.create(
+        from_="whatsapp:+14155238886",
+        to=f"whatsapp:{phone}",
+        body=message
+    )
