@@ -43,13 +43,13 @@ def register_user(request):
 def create_badge(request):
     try:
         if request.method == "POST":
-            # Parse the request body as JSON
-            data = json.loads(request.body)
+            # Parse JSON fields from request.POST
+            badge_name = request.POST.get('badge_name')
+            pre_requisites = request.POST.get('pre_requisites', '')
 
-            # Create a new Badge instance and populate it with the data from the request
             badge = Badge(
-                badge_name=data['badge_name'],
-                pre_requisites=data.get('pre_requisites', '')  # Use .get() to handle optional field
+                badge_name=badge_name,
+                pre_requisites=pre_requisites
             )
 
             # Handle file upload for badge_image if provided
@@ -59,12 +59,12 @@ def create_badge(request):
             # Save the new Badge instance to the database
             badge.save()
 
-            return HttpResponse(status=200)
+            return HttpResponse(f"Badge '{badge_name}' has been successfully posted.", status=200)
         else:
-            return HttpResponse('Invalid request method.', status=405)
-    
+            return HttpResponse("Invalid request method.", status=405)
+
     except Exception as e:
-        return HttpResponse(f'Error: {str(e)}', status=500)
+        return HttpResponse(f"Error: {str(e)}", status=500)
 
 @csrf_exempt
 def create_staffuser(request):
