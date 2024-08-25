@@ -6,8 +6,6 @@ import os
 
 
 class Badges:
-    global SCOPES
-    SCOPES = ["https://www.googleapis.com/auth/drive"]
     def __init__(self):
         print('enter drive')
         self.creds = None

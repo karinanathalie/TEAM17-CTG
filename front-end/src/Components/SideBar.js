@@ -92,7 +92,7 @@ export default function SideBar({ children }) {
                         set_active_link("about");
                       }}
                     >
-                      About
+                      My Registration
                     </Link>
                   </div>
                 </div>
@@ -114,7 +114,7 @@ export default function SideBar({ children }) {
                         set_active_link("user");
                       }}
                     >
-                      Volunteering
+                      Account
                     </Link>
                   </div>
                 </div>

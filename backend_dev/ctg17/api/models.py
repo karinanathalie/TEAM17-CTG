@@ -1,7 +1,7 @@
 import uuid
 from django.db import models
 from django.contrib.auth.models import User
-from api.constants import Gender, RoleType
+from api.constants import Gender, RoleType, Status
 from django.core import serializers
 from django.utils import timezone
 from datetime import datetime
@@ -86,6 +86,9 @@ class Application(models.Model):
         null=True, 
         blank=True,
     )
+    status = models.TextField(
+        choices=Status.choices(),
+    )
 
     def __str__(self):
         return f"{self.user_profile.name} applied as {self.role_type} for {self.event.event_name}"
@@ -142,3 +145,15 @@ class EmailTemplate(models.Model):
 
     def __str__(self):
         return self.subject
+    
+class WhatsappTemplate(models.Model):
+    message = models.TextField()
+    receiver_group = models.TextField(
+        choices=RoleType.choices(),
+        blank=True,
+        null=True
+    )
+    recipient_list = models.TextField()
+
+    def __str__(self):
+        return self.message

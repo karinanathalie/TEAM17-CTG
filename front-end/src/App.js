@@ -27,27 +27,27 @@ const Container = styled.div``;
 function App() {
   return (
     <Container className="w-screen h-screen flex">
-      {/* <div className="w-[400px]">
+      <div className="w-[400px]">
         <Router>
           <SideBar>
             <Switch>
               <Route exact path="/" component={HomeView} />
-              <Route path="/about" component={HomeView} />
+              <Route path="/about" component={EventDetails} />
               <Route path="/profile" component={HomeView} />
               <Route path="/training" component={HomeView} />
-              <Route path="/volunteering" component={HomeView} />
             </Switch>
           </SideBar>
         </Router>
-      </div> */}
+      </div>
       {/* <VolunteerParticipantToggle /> */}
       {/* <RegistrationCard /> */}
       {/* <Upcoming> </Upcoming> */}
       {/* <Calendarr></Calendarr> */}
+      {/* <Calendarr></Calendarr> */}
       {/* <EventDetails /> */}
       {/* <EventCard date="12-07-2003" location="Hong Kong" eventPicture="" eventName="Hello World" eventSummary="Hello World Lorem Ipsum" role="Participant" /> */}
       {/* <IndividualEventDetail /> */}
-      <Distance></Distance>
+      <HomeView />
       {/* <SwipingCard /> */}
     </Container>
   );

@@ -9,7 +9,7 @@ const Calendarr = () => {
     <div>
       <div className="font-poppins flex justify-center w-[100%] flex-col items-center ">
         <Calendar onChange={setDate} value={date}></Calendar>
-        <p className="text-center font-poppins">
+        <p className="font-poppins text-center font-semibold">
           <span className=" font-bold text-xs font-poppins">
             {date.toDateString()}
           </span>
