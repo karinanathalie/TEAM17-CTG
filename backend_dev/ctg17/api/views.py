@@ -1,3 +1,4 @@
+import collections
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core import serializers
@@ -12,6 +13,8 @@ from django.conf import settings
 from django.core.mail import send_mail
 from api.drive.script import DriveAPI
 from twilio.rest import Client
+from django.core.serializers.json import DjangoJSONEncoder
+
 
 
 # Create your views here.
@@ -448,11 +451,24 @@ def create_staff(request):
 # APPLICATION
 def get_all_participant_application(request):
     try:
-        application = Application.objects.all()
-        application_json = serializers.serialize('json', application)
+        applications = Application.objects.select_related('user_profile', 'event').all()
+        
+        application_data = []
+        for application in applications:
+            data = {
+                'id': application.id,
+                'user_profile_name': application.user_profile.name if application.user_profile else None,
+                'event_name': application.event.event_name if application.event else None,
+                'status_code': application.status
+            }
+            application_data.append(data)
+        
+        application_json = json.dumps(application_data, cls=DjangoJSONEncoder)
         return HttpResponse(application_json, content_type="application/json")
+        
     except Exception as e:
-        return HttpResponse(f'Error: {str(e)}', status=500)
+        error_message = json.dumps({'error': str(e)})
+        return HttpResponse(error_message, content_type="application/json", status=500)
     
 def get_volunteer_application(request):
     try:
@@ -464,12 +480,32 @@ def get_volunteer_application(request):
 
 def get_all_volunteer_application(request):
     try:
-        volunteer = VolunteerApplication.objects.all()
-        volunteer_json = serializers.serialize('json', volunteer)
+        volunteer_applications = VolunteerApplication.objects.select_related('user_profile', 'event').all()
+        
+        volunteer_data = []
+        for application in volunteer_applications:
+            data = {
+                "model": "api.volunteerapplication",  # Adjust the model name according to your app structure
+                "pk": str(application.id),
+                "fields": {
+                    "user_profile_name": application.user_profile.name if application.user_profile else None,
+                    "event_name": application.event.event_name if application.event else None,
+                    "status": application.get_status_display(),
+                    "reason_joining": application.reason_joining,
+                    "cv_file": application.cv_file.url if application.cv_file else None,
+                }
+            }
+            volunteer_data.append(data)
+        
+        volunteer_json = json.dumps(volunteer_data, cls=DjangoJSONEncoder)
         return HttpResponse(volunteer_json, content_type="application/json")
+        
+    except VolunteerApplication.DoesNotExist:
+        error_message = json.dumps({'error': 'No volunteer applications found.'})
+        return HttpResponse(error_message, content_type="application/json", status=404)
     except Exception as e:
-        return HttpResponse(f'Error: {str(e)}', status=500)
-
+        error_message = json.dumps({'error': str(e)})
+        return HttpResponse(error_message, content_type="application/json", status=500)
 @csrf_exempt    
 def create_volunteer_application(request):
     if request.method == 'POST':
@@ -705,4 +741,42 @@ def analytics_participants_ratio(response):
             content_type="application/json",
             status=500
         )
+
+def get_demographic_analytics(request):
+    events = Event.objects.all()
+    response = []
+
+    for event in events:
+        event_analytics = calculate_demographic_analytics(event.id)
+        if isinstance(event_analytics, dict):
+            response.append(event_analytics)
     
+    return HttpResponse(str(response), status=200, content_type="application/json")
+
+def calculate_demographic_analytics(event_id):
+    try:
+        event = Event.objects.get(id=event_id)
+
+        ethnicityCount = collections.defaultdict(int)
+        avgAge, count = 0, 0
+
+        for user in event.registered_participants.all():
+            profile = Profile.objects.get(user=user)
+            ethnicityCount[profile.ethnicity] += 1
+            avgAge += profile.age
+            count += 1
+        if count != 0:
+            avgAge = avgAge / count
+
+        response = {
+            'event_id': event.id,
+            'event_name': event.event_name,
+            'average_age': avgAge,
+            'xLabels': list(ethnicityCount.keys()),
+            'yData': list(ethnicityCount.values())
+        }
+
+        return response
+    except Exception as e:
+        print(e)
+        return f"Error: {e}"

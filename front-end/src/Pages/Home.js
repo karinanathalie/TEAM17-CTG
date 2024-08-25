@@ -44,7 +44,6 @@ export default function HomeView() {
                         </Wrapper>
                     </Wrapper>
                     <Wrapper className="border border-black h-[240px] rounded-[8px] w-[670px]">
-
                     </Wrapper>
                 </Wrapper>
             </Wrapper> 
