@@ -775,8 +775,8 @@ def get_attendance_analytics(request):
         event_analytics = analytics_participants_ratio(event.id)
         if isinstance(event_analytics, dict):
             response.append(event_analytics)
-    
-    return HttpResponse(str(response), status=200, content_type="application/json")
+    responseBody = { "data": response }
+    return HttpResponse(json.dumps(responseBody), status=200, content_type="application/json")
 
 def analytics_participants_ratio(event_id):
     try:
@@ -868,8 +868,8 @@ def get_demographic_analytics(request):
         event_analytics = calculate_demographic_analytics(event.id)
         if isinstance(event_analytics, dict):
             response.append(event_analytics)
-    
-    return HttpResponse(str(response), status=200, content_type="application/json")
+    responseBody = { "data": response }
+    return HttpResponse(json.dumps(responseBody), status=200, content_type="application/json")
 
 def calculate_demographic_analytics(event_id):
     try:

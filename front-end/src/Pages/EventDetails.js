@@ -69,7 +69,7 @@ export default function EventDetails(){
                 <EventListWrapper className="w-full flex flex-col">
                     {list_of_events.map((event) => {
                         return(
-                            <EventCard date={event.event_date} location={event.event_location} eventPicture={event.event_picture} eventName={event.event_name} eventSummary={event.event_summary} role={current_role}/>
+                            <EventCard date={event.event_date} location={event.event_location} eventPicture={event.event_image} eventName={event.event_name} eventSummary={event.event_summary} role={current_role}/>
                         )
                     })}
                 </EventListWrapper>
