@@ -14,6 +14,9 @@ from django.core.mail import send_mail
 from api.drive.script import DriveAPI
 from twilio.rest import Client
 from django.core.serializers.json import DjangoJSONEncoder
+import mimetypes
+from PIL import Image
+
 
 
 
@@ -773,6 +776,22 @@ def analytics_participants_ratio(response):
             content_type="application/json",
             status=500
         )
+
+def pic_show(request, path):
+    try:
+        # Determine the content type based on the file extension
+        content_type, _ = mimetypes.guess_type(path)
+        
+        # Open and return the image
+        with open(path, "rb") as f:
+            return HttpResponse(f.read(), content_type=content_type or "image/jpeg")
+    
+    except IOError:
+        # Create a 1x1 red image
+        red = Image.new('RGB', (1, 1), (255, 0, 0))
+        response = HttpResponse(content_type="image/jpeg")
+        red.save(response, "JPEG")
+        return response
 
 def get_demographic_analytics(request):
     events = Event.objects.all()
