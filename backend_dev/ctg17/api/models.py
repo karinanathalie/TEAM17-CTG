@@ -5,6 +5,8 @@ from api.constants import Gender, RoleType
 from django.core import serializers
 from django.utils import timezone
 from datetime import datetime
+import random
+import string
 
 
 class Badge(models.Model):
@@ -24,11 +26,15 @@ class Training(models.Model):
     def __str__(self):
         return self.training_name
 
-    
+
+def generate_random_id():
+    return ''.join(random.choices(string.ascii_letters + string.digits, k=10))
+
 class Profile(models.Model):
-    id = models.UUIDField(
+    id = models.CharField(
         primary_key=True,
-        default=uuid.uuid4,
+        default=generate_random_id,
+        max_length=10,
         editable=False,
     )
     name = models.CharField(max_length=225)
