@@ -34,3 +34,5 @@ export const FeedBackForm = (event_id) => {
         </form>
     );
 };
+
+export default FeedBackForm;

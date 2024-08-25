@@ -11,7 +11,7 @@ const Profile = ({onClick}) => {
         <img src={im1} className="rounded-full    w-[209px] h-[209px]"></img>
       </div>
       <h1 className="text-white mt-[13%] text-center font-poppins text-[30px] font-semibold">
-        Vanessa Laurel
+        Shannon Santosa
       </h1>
       <h1 className="text-white text-center font-poppins text-[16px] font-medium">
         +852 XXXX-XXXX

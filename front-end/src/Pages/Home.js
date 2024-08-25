@@ -12,7 +12,7 @@ import axios from "axios";
 import { ScheduleCard, CarousellCard, EventCard } from "../Components/Cards.js";
 import { ButtonAccount, ButtonFull } from "../Components/Button.js";
 import SideBar from "../Components/SideBar.js";
-// import Feedbackform from "../Components/Feedbackform.js";
+import {FeedBackForm} from "../Components/Feedbackform.js";
 import Calendarr from "../Components/Calendar.jsx";
 import Achievements from "../Components/Achievements.js";
 import { SwipingCard } from "../Components/SwipingCard.js";
@@ -128,7 +128,15 @@ export default function HomeView() {
               <Wrapper className="space-y-2">
                 <Wrapper className="text-[28px] font-medium">Schedule</Wrapper>
                 <ScheduleCard
-                  date="12-07-2003"
+                  date="17-08-2024"
+                  location="Hong Kong"
+                  eventPicture=""
+                  eventName="Mental Health Day"
+                  eventSummary="Hello World Lorem Ipsum"
+                  role="Participant"
+                />
+                <ScheduleCard
+                  date="03-03-2023"
                   location="Hong Kong"
                   eventPicture=""
                   eventName="Hello World"
@@ -136,15 +144,7 @@ export default function HomeView() {
                   role="Participant"
                 />
                 <ScheduleCard
-                  date="12-07-2003"
-                  location="Hong Kong"
-                  eventPicture=""
-                  eventName="Hello World"
-                  eventSummary="Hello World Lorem Ipsum"
-                  role="Participant"
-                />
-                <ScheduleCard
-                  date="12-07-2003"
+                  date="22-11-2003"
                   location="Hong Kong"
                   eventPicture=""
                   eventName="Hello World"
@@ -154,9 +154,9 @@ export default function HomeView() {
               </Wrapper>
             </Wrapper>
           </Wrapper>
-          {/* <Wrapper className="border border-black h-[240px] rounded-[8px] w-[670px]">
-            <Feedbackform />
-          </Wrapper> */}
+          <Wrapper className="mt-[16px] border border-black h-[240px] rounded-[8px] w-[670px]">
+            <FeedBackForm />
+          </Wrapper>
         </Wrapper>
       </Wrapper>
       <Wrapper>

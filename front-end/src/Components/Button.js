@@ -140,7 +140,7 @@ export const ButtonAccount = ({ onClick, location, name, image }) => {
             IMG
           </div>
           <div className="text-left ml-[20px]">
-            <div> Vanessa Laurel </div>
+            <div> Shannon Santosa </div>
 
             <div className="flex justify-start mt-[-5px] text-[12px] w-[250px] h-[30px] overflow-hidden font-medium text-darkgray">
               <div className="flex flex-col justify-end">

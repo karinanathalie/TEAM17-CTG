@@ -71,14 +71,14 @@ export const CarousellCard = ({onClickOther, onClickRegis, date, location, dista
     <div className="flex flex-col w-[342px] h-[469px] rounded-[16px] p-[24px] bg-white">
       <div className="flex w-[302px]] h-[249px] rounded-[16px] bg-lightgray">
         <img
-          src={eventPicture}
+          src={`http://localhost:8000/api/pic/${eventPicture}`}
           alt="event"
           className="w-full h-full object-cover rounded-t-[16px]"
         />
       </div>
-      <div className="py-[30px]">
-        <div className="font-semibold text-[16px]">{eventName}</div>
-        <div className="flex space-x-[12px] font-medium text-[15px] text-mediumgray">
+      <div className="py-[20px]">
+        <div className="font-semibold text-[16px] text-darkgray">{eventName}</div>
+        <div className="flex space-x-[12px] font-medium text-[14px] text-mediumgray">
           <div className="flex flex-col justify-center">
             <CiCalendarDate />
           </div>
@@ -86,13 +86,13 @@ export const CarousellCard = ({onClickOther, onClickRegis, date, location, dista
             {dayname}, {day} {month} {year}
           </div>
         </div>
-        <div className="flex space-x-[12px] font-medium text-[15px] text-mediumgray">
+        <div className="flex space-x-[12px] font-medium text-[14px] text-mediumgray">
           <div className="flex flex-col justify-center">
             <CiLocationOn />
           </div>
           <div>{location}</div>
         </div>
-        <div className="flex space-x-[12px] font-medium text-[15px] text-mediumgray">
+        <div className="flex space-x-[12px] font-medium text-[14px] text-mediumgray">
           <div className="flex flex-col justify-center">
             <GiPathDistance />
           </div>
