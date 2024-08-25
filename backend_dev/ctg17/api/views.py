@@ -478,19 +478,25 @@ def get_volunteer_application(request):
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
 
-
 def get_all_volunteer_application(request):
     try:
         volunteer_applications = VolunteerApplication.objects.select_related('user_profile', 'event').all()
         
-        volunteer_data = list(volunteer_applications.values(
-            'id',
-            'user_profile__name',
-            'event__event_name',
-            'status',
-            'reason_joining',
-            'cv_file'
-        ))
+        volunteer_data = []
+        for application in volunteer_applications:
+            data = {
+                "model": "api.volunteerapplication",  # Adjust the model name according to your app structure
+                "pk": str(application.id),
+                "fields": {
+                    "user_profile_name": application.user_profile.name if application.user_profile else None,
+                    "event_name": application.event.event_name if application.event else None,
+                    "status": application.get_status_display(),
+                    "reason_joining": application.reason_joining,
+                    "cv_file": application.cv_file.url if application.cv_file else None,
+                }
+            }
+            volunteer_data.append(data)
+        
         volunteer_json = json.dumps(volunteer_data, cls=DjangoJSONEncoder)
         return HttpResponse(volunteer_json, content_type="application/json")
         
@@ -500,7 +506,6 @@ def get_all_volunteer_application(request):
     except Exception as e:
         error_message = json.dumps({'error': str(e)})
         return HttpResponse(error_message, content_type="application/json", status=500)
-
 @csrf_exempt    
 def create_volunteer_application(request):
     if request.method == 'POST':
