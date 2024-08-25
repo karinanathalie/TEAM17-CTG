@@ -463,13 +463,33 @@ def get_volunteer_application(request):
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
 
+def serialize_volunteer_application(volunteer_application):
+    return {
+        "id": str(volunteer_application.id),
+        "reason_joining": volunteer_application.reason_joining,
+        "cv_file": volunteer_application.cv_file.url if volunteer_application.cv_file else None,
+        "user_profile": {
+            "id": str(volunteer_application.user_profile.id),
+            "name": volunteer_application.user_profile.name,
+            "email": volunteer_application.user_profile.email,
+            # Add other fields from the Profile model as needed
+        },
+        "event": {
+            "id": str(volunteer_application.event.id),
+            "event_name": volunteer_application.event.event_name,
+            "event_date": volunteer_application.event.event_date,
+            # Add other fields from the Event model as needed
+        }
+    }
+
 def get_all_volunteer_application(request):
     try:
-        volunteer = VolunteerApplication.objects.all()
-        volunteer_json = serializers.serialize('json', volunteer)
-        return HttpResponse(volunteer_json, content_type="application/json")
+        volunteer_applications = VolunteerApplication.objects.select_related('user_profile', 'event').all()
+        volunteer_json = [serialize_volunteer_application(vol) for vol in volunteer_applications]
+        return HttpResponse(json.dumps(volunteer_json), content_type="application/json")
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
+
 
 @csrf_exempt    
 def create_volunteer_application(request):
