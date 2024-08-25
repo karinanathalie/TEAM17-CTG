@@ -29,7 +29,7 @@ urlpatterns = [
 
     path('application/participants', views.get_all_participant_application, name="application-participants-list"),
     path('application/volunteers', views.get_all_volunteer_application, name="application-volunteer-list"),
-    # path('application/update', views.update_application, name="application-update"),
+    path('application/update', views.update_application, name="application-update"),
 
     path('application/create/participants', views.create_application, name="create-application"),
     path('application/create/volunteers', views.create_volunteer_application, name="create-volunteer-application"),

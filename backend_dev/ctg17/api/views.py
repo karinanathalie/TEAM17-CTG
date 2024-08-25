@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.core import serializers
 from django.contrib.auth import login, authenticate, logout
-from .constants import RoleType
+from .constants import RoleType, Status
 from .models import Badge, Application, Event, Profile, ProfileBadge, EmailTemplate, VolunteerApplication, WhatsappTemplate
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
@@ -744,7 +744,8 @@ def get_attendance_analytics(request):
         if isinstance(event_analytics, dict):
             response.append(event_analytics)
     
-    return HttpResponse(str(response), status=200, content_type="application/json")
+    responseBody = { "data": response }
+    return HttpResponse(json.dumps(responseBody), status=200, content_type="application/json")
 
 def analytics_participants_ratio(event_id):
     try:
@@ -830,7 +831,8 @@ def get_demographic_analytics(request):
         if isinstance(event_analytics, dict):
             response.append(event_analytics)
     
-    return HttpResponse(str(response), status=200, content_type="application/json")
+    responseBody = { "data": response }
+    return HttpResponse(json.dumps(responseBody), status=200, content_type="application/json")
 
 def calculate_demographic_analytics(event_id):
     try:
@@ -869,6 +871,36 @@ def calculate_demographic_analytics(event_id):
         print(e)
         return f"Error: {e}"
     
+@csrf_exempt  
+def update_application(request):
+    if request.method == 'POST':
+        try:
+            body = json.loads(request.body)
+            # Parse the body of the PATCH request
+            application_id = body['application_id']
+            new_status = body['status']
+
+            # Validate that the status is one of the enum values
+            valid_status_values = [status.value for status in Status]
+            print(valid_status_values, new_status)
+            if new_status not in valid_status_values:
+                return HttpResponse('Invalid status value', status=400)
+
+            # Fetch the application by ID
+            application = get_object_or_404(Application, id=application_id)
+
+            # Update the status
+            application.status = new_status
+            application.save()
+
+            return HttpResponse(status=200)
+        except json.JSONDecodeError:
+            return HttpResponse('Invalid JSON format', status=400)
+        except Exception as e:
+            return HttpResponse(f'Error: {str(e)}', status=500)
+
+    return HttpResponse("Invalid request method", status=400)
+
 def get_quota_analytics(request):
     events = Event.objects.all()
     response = []
@@ -877,7 +909,7 @@ def get_quota_analytics(request):
         event_analytics = calculate_quota_analytics(event.id)
         if isinstance(event_analytics, dict):
             response.append(event_analytics)
-    
+
     return HttpResponse(str(response), status=200, content_type="application/json")
 
 def calculate_quota_analytics(event_id):
