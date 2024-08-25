@@ -25,7 +25,7 @@ export const eventColumns: GridColDef[] = [
     width: 180, 
     type: 'dateTime',
     valueGetter: (params) => {
-      new Date(params);
+      return new Date(params);
     }
   },
   {

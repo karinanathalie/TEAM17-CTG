@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
@@ -16,6 +16,7 @@ const validationSchema = Yup.object({
     participantQuota: Yup.number().required('Participant quota is required').min(1, 'Minimum 1 participant'),
     volunteerQuota: Yup.number().required('Volunteer quota is required').min(1, 'Minimum 1 volunteer'),
     deadline: Yup.date().required('Registration deadline is required'),
+    eventImage: Yup.mixed().required('Event image is required')
 });
 
 interface EventFormProps {
@@ -37,7 +38,7 @@ const EventForm: React.FC<EventFormProps> = ({ initialValues, onSubmit, isUpdate
             validationSchema={validationSchema}
             onSubmit={onSubmit}
         >
-            {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
+            {({ values, errors, touched, handleChange, handleBlur, handleSubmit,  setFieldValue  }) => (
                 <Box component={Form} onSubmit={handleSubmit} sx={{ padding: '16px', margin: 3 }}>
                     <Typography variant="h5" color='primary' gutterBottom>
                         {isUpdate ? "Update Event" : "Create Event"}
@@ -162,6 +163,43 @@ const EventForm: React.FC<EventFormProps> = ({ initialValues, onSubmit, isUpdate
                         error={touched.deadline && Boolean(errors.deadline)}
                         helperText={touched.deadline && errors.deadline}
                         required />
+                    
+                    <Box mt={2}>
+                        <Typography variant="body1">Event Image</Typography>
+                            {values.eventImage && typeof values.eventImage === 'string' && (
+                            <Box
+                            mt={2}
+                            sx={{
+                                border: '1px solid rgba(0, 0, 0, 0.23)', 
+                                borderRadius: '8px',  
+                                padding: '16px',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                width: '100%',
+                                maxWidth: '400px',
+                                height: 'auto',
+                                boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', 
+                            }}
+                        >
+                            <img
+                                src={`http://localhost:3000/static/media/zubin.e2a534741a9c3d582cc6.png`}
+                                alt="Event"
+                                style={{ width: '100%', height: 'auto', borderRadius: '8px' }} 
+                            />
+                        </Box>
+                            )}
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(event) => setFieldValue('eventImage', event.currentTarget.files?.[0])}
+                            style={{
+                                fontFamily: 'Roboto',
+                                fontSize: 14,
+                                marginTop: 15,
+                            }}
+                        />
+                    </Box>
 
                     <Box display='flex' columnGap={2} width='50%' height='20'>
                         <Button variant='outlined' fullWidth sx={{ mt: 2 }} onClick={handleCancel}>
