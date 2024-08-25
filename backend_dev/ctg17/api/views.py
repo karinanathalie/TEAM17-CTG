@@ -546,9 +546,13 @@ def get_all_volunteer_application(request):
 def create_volunteer_application(request):
     if request.method == 'POST':
         try:
-            user_profile_id = request.POST.get('user_profile_id')
-            event_id = request.POST.get('event_id')
-            reason_joining = request.POST.get('reason_joining')
+            body = json.loads(request.body)
+            if request.user.is_authenticated:
+                user_profile_id = request.user.id
+            else:
+                user_profile_id = body['user_profile_id']
+            event_id = body['event_id']
+            reason_joining = body['reason_joining']
             cv_file = request.FILES.get('cv_file')
             print(user_profile_id, event_id)
 
@@ -565,7 +569,7 @@ def create_volunteer_application(request):
             )
             # Save the application to the database
             volunteer_application.save()
-            return HttpResponse(status=201)
+            return HttpResponse("{'Message': 'Registered for event'}", status=201, content_type="application/json")
         except Exception as e:
             return HttpResponse(f'Error: {str(e)}', status=500)
 

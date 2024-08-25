@@ -6,7 +6,7 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import "../index.css";
 import { InputPasswordlogin, Inputlogin } from "./Input.js";
 
-const Login = () => {
+const LoginComponent = () => {
   const [openFirst, setOpenFirst] = useState(false);
   const [openSecond, setOpenSecond] = useState(false);
   const [passwordShown, setPasswordShown] = useState(false);
@@ -21,7 +21,7 @@ const Login = () => {
 
     e.preventDefault();
     // making a request to the endpoint
-    fetch('some/api/endpoint', {
+    fetch('http://localhost:8000/api/user/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -46,12 +46,12 @@ const Login = () => {
 
     e.preventDefault();
     // making a request to the endpoint
-    fetch('some/api/endpoint', {
+    fetch('http://localhost:8000/api/user/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         // enabling change in the cookies
-        'credentials': 'include'
+        // 'credentials': 'include'
       },
       body: JSON.stringify(data)
     }).then(async (res) => {
@@ -84,27 +84,21 @@ const Login = () => {
           onClose={() => setOpenFirst(false)}
           center
           classNames={{
-            modal: "w-[400px] h-[420px] rounded-3xl bg-black ",
+            modal: "w-[400px] h-[370px] rounded-3xl bg-black ",
             closeButton: "fill-white",
           }}
         >
           <form className="h-full w-full relative" onSubmit={handleLogin}>
             <div>
               <h1 className=" font-bold text-xl text-center">Log In</h1>
-              <h1 className="font-bold mt-[10%]">Email</h1>
-              <Inputlogin type={"text"} name={"Email"}></Inputlogin>
+              <h1 className="font-bold mt-[10%]">Username</h1>
+              <Inputlogin type={"text"} name={"username"}></Inputlogin>
               <h1 className="font-bold mt-[4%]">Password</h1>
               <InputPasswordlogin name={"password"}></InputPasswordlogin>
               <button className="w-full mt-[3%] bg-black text-white rounded-2xl">
                 Log In
               </button>
-              <h1 className=" text-center font-semibold mt-[3%] text-sm">Or</h1>
-              <button type='button' className="border mt-[2%] w-full" onClick={handleGoogleLogin}>
-                <span>Log in with Google</span>
-              </button>
-              <button type='button' className="border mt-[1%] w-full" onClick={handleFacebookLogin}>
-                Log in with Facebook
-              </button>
+
               <div className="flex justify-center gap-2 mt-[10%]">
                 <h1 className="text-center">don't have any account? </h1>
                 <h1
@@ -122,7 +116,7 @@ const Login = () => {
           onClose={() => setOpenSecond(false)}
           center
           classNames={{
-            modal: "w-[400px] h-[420px] rounded-3xl fill-black ",
+            modal: "w-[400px] h-[550px] rounded-3xl fill-black ",
             closeButton: "fill-black",
           }}
         >
@@ -135,10 +129,13 @@ const Login = () => {
               <Inputlogin type={"text"} name={"nationality"}></Inputlogin>
               <h1 className="font-bold mt-[2%]">Gender</h1>
               <Inputlogin type={"text"} name={"gender"}></Inputlogin>
+                <h1 className="font-bold mt-[2%]">Phone</h1>
+              <Inputlogin type={"text"} name={"phone"}></Inputlogin>
               <h1 className="font-bold mt-[2%]">Email</h1>
               <Inputlogin type={"text"} name={"email"}></Inputlogin>
               <h1 className="font-bold mt-[5%]">Password</h1>
               <InputPasswordlogin name={"password"}></InputPasswordlogin>
+        
               <button className="w-[100%] mt-[3%] bg-black text-white rounded-2xl" >
                 Sign Up
               </button>
@@ -150,4 +147,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginComponent;

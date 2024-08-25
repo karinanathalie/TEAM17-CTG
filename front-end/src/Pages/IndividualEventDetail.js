@@ -3,14 +3,21 @@ import { BackButton, VolunteerParticipantToggle } from '../Components/Button';
 import { RegistrationCard, RegistrationCardPar } from '../Components/RegistrationCard';
 import { IoCalendarOutline, IoLocationOutline, IoPeopleOutline } from 'react-icons/io5';
 import { TrainingCard } from '../Components/Cards';
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
 
 
-export default function IndividualEventDetail() {
+export default function IndividualEventDetail(location) {
     const [eventDetails, setEventDetails] = useState({});
+    let event_id = location.location.state;
+    
+    const history = useHistory();
+
+    const goBack = () => {
+        history.goBack();
+    };
 
     useEffect(() => {
         // fetching the event details from the backend
-        let event_id = '2';
         let backend_base = 'http://localhost:8000/'
         fetch(backend_base + 'api/events/' + event_id, {
             method: 'GET',
@@ -35,9 +42,9 @@ export default function IndividualEventDetail() {
 
     const CheckRoleRegistration = () => {
         if (current_role === 'Participant') {
-            return <RegistrationCardPar />;
+            return <RegistrationCardPar event_id={event_id} />;
         } else {
-            return <RegistrationCard />;
+            return <RegistrationCard event_id={event_id} />;
         }
     }
 
@@ -53,7 +60,7 @@ export default function IndividualEventDetail() {
         <div className="flex w-full h-screen">
             <div className="w-full m-[28px] font-poppins">
                 <div className="flex justify-between mb-8">
-                <BackButton />
+                <BackButton onClick={goBack}/>
                 <VolunteerParticipantToggle onClick={handleRoleToggle}/>
                 </div>
                 <div className="">
