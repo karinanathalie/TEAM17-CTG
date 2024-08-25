@@ -11,7 +11,7 @@ import string
 
 class Badge(models.Model):
     badge_name = models.CharField(max_length=255)
-    badge_image = models.ImageField(null=True, blank=True)
+    badge_image = models.ImageField(upload_to='static/badges/',null=True, blank=True)
     pre_requisites = models.TextField(null=True, blank=True)  # New field added
 
     def __str__(self):
