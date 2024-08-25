@@ -12,10 +12,11 @@ import axios from "axios";
 import { ScheduleCard, CarousellCard, EventCard } from "../Components/Cards.js";
 import { ButtonAccount, ButtonFull } from "../Components/Button.js";
 import SideBar from "../Components/SideBar.js";
-import Feedbackform from "../Components/Feedbackform.js";
+import {FeedBackForm} from "../Components/Feedbackform.js";
 import Calendarr from "../Components/Calendar.jsx";
 import Achievements from "../Components/Achievements.js";
 import { SwipingCard } from "../Components/SwipingCard.js";
+import Profile from "../Components/Profile.js";
 import Events from "../Components/Events.js";
 import DistanceCalculator from "../Components/kilo.js";
 
@@ -143,12 +144,10 @@ export default function HomeView() {
                   role="Participant"
                 />
               </Wrapper>
-              {/* <EventCard date="12-07-2003" location="Hong Kong" eventPicture="" eventName="Hello World" eventSummary="Hello World Lorem Ipsum" role="Participant" /> */}
-              {/* <Calendarr /> */}
             </Wrapper>
           </Wrapper>
-          <Wrapper className="border border-black h-[240px] rounded-[8px] w-[670px]">
-            <Feedbackform />
+          <Wrapper className="mt-[20px] h-[190px] rounded-[8px] w-[670px]">
+            <FeedBackForm />
           </Wrapper>
         </Wrapper>
       </Wrapper>
