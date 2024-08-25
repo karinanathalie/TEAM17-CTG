@@ -48,8 +48,7 @@ function App() {
 
       {/* <IndividualEventDetail /> */}
 
-      {/* <SwipingCard /> */}
-      {/* <Profile></Profile> */}
+      <SwipingCard />
     </Container>
   );
 }

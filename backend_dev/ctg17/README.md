@@ -17,7 +17,7 @@ cd content
 ```
 4. install all the dependencies
 ```
-pip install django Pillow passlib django-cors-headers requests pandas google-auth google-auth-oauthlib google-api-python-client
+pip install django Pillow passlib django-cors-headers requests pandas google-auth google-auth-oauthlib google-api-python-client twilio
 ```
 5. start the script
 ```

@@ -1,13 +1,24 @@
-import CardInfo from "./CardInfo"
+import React from "react";
+import { useState, useEffect } from "react";
+import {
+    motion,
+    useMotionValue,
+    useTransform,
+    useAnimation,
+  } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+
+import { CarousellCard } from "./Cards";
+
 
 export const SwipingCard = () => {
     return(
-        <div className="font-poppins bg-darkgray w-1/3 rounded-[16px] mt-32 m-8 text-white align-items-center">
-            <div className="text-[32px] font-regular text-center m-16">
+        <div className="p-[34px] flex flex-col w-[399px] h-[671px] rounded-[16px] justify-center font-poppins bg-darkgray text-gray">
+            <div className="text-[28px] font-regular text-center mb-[33px]">
                 Find the most suitable events <span className="text-pastelyellow"> near you! </span>
             </div>
-            <div>
-                <CardInfo />
+            <div className="flex justify-center">
+                <CarousellCard date="12-07-2003" location="Hong Kong" eventPicture="" eventName="Hello World" />
             </div>
         </div>
     )
