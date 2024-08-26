@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { PieChart } from '@mui/x-charts/PieChart';
 import EventDropdown from '../../helpers/EventDropdown';
 import { Typography, Box, Paper } from '@mui/material';
-import { BarPlot, ChartContainer } from '@mui/x-charts';
+import { BarChart, BarPlot, ChartContainer } from '@mui/x-charts';
 
 const AttendanceRate: React.FC = () => {
     const [attendanceData, setAttendanceData] = useState<any[]>([]);
@@ -77,14 +77,16 @@ const AttendanceRate: React.FC = () => {
                     <Typography variant="h5" gutterBottom>
                         Demographic Analysis
                     </Typography>
-                    <ChartContainer
+                    <BarChart
                         width={500}
                         height={300}
-                        series={[{ data: yData, label: 'Demographics', type: 'bar' }]}
-                        xAxis={[{ scaleType: 'band', data: xLabels }]}
+                        series={[
+                          { data: yData, label: 'Ethnicity', id: 'pvId' }
+                        ]}
+                        xAxis={[{ data: xLabels, scaleType: 'band' }]}
                     >
                         <BarPlot />
-                    </ChartContainer>
+                    </BarChart>
                 </Paper>
                 )
             );
