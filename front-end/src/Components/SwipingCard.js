@@ -7,6 +7,7 @@ import {
 } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { CarousellCard } from "./Cards";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
 
 export const SwipingCard = ({ distance }) => {
   const [list_of_events, set_list_of_events] = useState([]);
@@ -27,7 +28,10 @@ export const SwipingCard = ({ distance }) => {
 
   const [curr_index, setIndex] = useState(0);
 
+  const history = useHistory();
+
   const RoutetoIndividualEvent = () => {
+    history.push("/myregistration");
     console.log("RoutetoIndividualEvent");
   };
 
