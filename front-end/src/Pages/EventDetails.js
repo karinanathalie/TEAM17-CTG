@@ -53,7 +53,9 @@ export default function EventDetails() {
       if (res.status == 200) {
         // if the fetch is successful update the eventDetails json object
         set_list_of_events(
-          await res.json().then((data) => data.map((event) => event.fields))
+          await res.json().then((data) => data.map((event) => {
+            return { id: event.pk, ...event.fields };
+        }))
         );
       } else {
         // if the fetch is unsuccessful, display an error message
@@ -80,6 +82,12 @@ export default function EventDetails() {
                 eventDescription={event.event_description}
                 eventSummary={event.event_summary}
                 role={current_role}
+                onClick={() => {
+                  history.push({
+                    pathname: "/event-detail",
+                    state: event.id,
+                  });
+                }}
               />
             );
           })}

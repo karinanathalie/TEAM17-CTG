@@ -125,6 +125,7 @@ export const EventCard = ({
   eventDescription,
   eventSummary,
   role,
+  onClick,
 }) => {
   const SplittedDate = date.split("-");
   const months = [
@@ -174,7 +175,7 @@ export const EventCard = ({
           </div>
         </div>
         <div className="flex justify-end pt-[10px]">
-          <ButtonFullRoleBased role={role}>Details</ButtonFullRoleBased>
+          <ButtonFullRoleBased role={role} onClick={onClick}>Details</ButtonFullRoleBased>
         </div>
       </div>
     </div>
