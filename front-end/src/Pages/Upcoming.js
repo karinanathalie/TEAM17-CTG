@@ -88,7 +88,7 @@ const Upcoming = () => {
     setDatas(filteredGroup);
   };
   return (
-    <div className="font-poppins w-full m-[64px]">
+    <div className="font-poppins w-full m-[64px] overflow-y-scroll">
       <div class="flex justify-end">
         <div class="flex-1">
           <input

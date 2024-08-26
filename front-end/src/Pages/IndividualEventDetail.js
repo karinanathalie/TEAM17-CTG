@@ -4,6 +4,7 @@ import { RegistrationCard, RegistrationCardPar } from '../Components/Registratio
 import { IoCalendarOutline, IoLocationOutline, IoPeopleOutline } from 'react-icons/io5';
 import { TrainingCard } from '../Components/Cards';
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import Banner from "../img/banner.jpg";
 
 
 export default function IndividualEventDetail(location) {
@@ -65,9 +66,9 @@ export default function IndividualEventDetail(location) {
                 </div>
                 <div className="">
                     <img
-                        src={`http://localhost:8000/api/pic/${eventDetails.event_image}`}
+                        src={Banner}
                         alt={eventDetails.event_name}
-                        className="w-full h-[197px] rounded-t-3xl"
+                        className="w-full h-[300px] rounded-[16px]"
                     /> 
                     <div className="flex mt-[16px] justify-between space-x-8 ">
                         <div className="text-[32px] font-semibold w-[800px]">

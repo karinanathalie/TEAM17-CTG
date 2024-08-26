@@ -430,7 +430,7 @@ def get_all_volunteer(request):
     
 def get_all_staff(request):
     try:
-        profiles = Profile.objects.filter(role_type=RoleType.STAFF.value.upper)
+        profiles = Profile.objects.filter(role_type=RoleType.STAFF.value.upper())
         profile_json = serializers.serialize('json', profiles)
         return HttpResponse(profile_json, content_type="application/json")
     except Exception as e:
@@ -897,6 +897,7 @@ def calculate_demographic_analytics(event_id):
 
         return response
     except Exception as e:
+        print('hahahahah')
         print(e)
         return f"Error: {e}"
     
@@ -920,6 +921,12 @@ def update_application(request):
 
             # Update the status
             application.status = new_status
+            if new_status == Status.APPROVED.value:
+                if application.role_type == RoleType.PARTICIPANT.value:
+                    application.event.registered_participants.add(application.user_profile.user)
+                elif application.role_type == RoleType.VOLUNTEER.value:
+                    application.event.registered_volunteers.add(application.user_profile.user)
+
             application.save()
 
             return HttpResponse(status=200)
