@@ -912,16 +912,15 @@ def update_application(request):
 
             # Validate that the status is one of the enum values
             valid_status_values = [status.value for status in Status]
-            print(valid_status_values, new_status)
             if new_status not in valid_status_values:
                 return HttpResponse('Invalid status value', status=400)
 
             # Fetch the application by ID
             application = get_object_or_404(Application, id=application_id)
-
+    
             # Update the status
-            application.status = new_status
-            if new_status == Status.APPROVED.value:
+            application.status = new_status.upper()
+            if new_status == Status.SUCCESSFUL.value.upper():
                 if application.role_type == RoleType.PARTICIPANT.value:
                     application.event.registered_participants.add(application.user_profile.user)
                 elif application.role_type == RoleType.VOLUNTEER.value:
