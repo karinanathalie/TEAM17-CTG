@@ -174,8 +174,18 @@ export const EventCard = ({
 export const TrainingCard = ({}) => {
   return (
     <div className="mt-8">
-      <div className="text-[30px] font-semibold">Training Progress</div>
-      <img src="http://placehold.it/700x300"></img>
+      <div className="text-[30px] mb-[16px] font-semibold">Training Progress <span className="text-blue"> - 60% </span>
+    </div>
+      {/* <img src="http://placehold.it/700x300"></img> */}
+      <div>
+        <iframe
+        className="w-[700px] h-[300px]"
+        src="https://www.youtube.com/embed/SlDJUL7lMCk"
+        title="YouTube video player"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+      ></iframe>
+      </div>
     </div>
   );
 };

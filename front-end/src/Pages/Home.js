@@ -154,7 +154,7 @@ export default function HomeView() {
               </Wrapper>
             </Wrapper>
           </Wrapper>
-          <Wrapper className="mt-[16px] border border-black h-[240px] rounded-[8px] w-[670px]">
+          <Wrapper className="mt-[32px] h-[240px] rounded-[8px] w-[670px]">
             <FeedBackForm />
           </Wrapper>
         </Wrapper>

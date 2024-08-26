@@ -63,7 +63,7 @@ export default function EventDetails() {
   }, []);
 
   return (
-    <Container className="flex w-full h-screen">
+    <Container className="flex w-full h-screen overflow-y-scroll">
       <ContentWrapper className="w-full flex flex-col px-[53px]">
         <ContentWrapper className="w-full flex justify-between mt-[58px] mb-8">
           <BackButton onClick={goBack} />

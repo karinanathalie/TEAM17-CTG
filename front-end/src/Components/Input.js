@@ -13,6 +13,7 @@ export const InputForm = ({ children, type, name, onChange }) => {
       <input
         type={type}
         placeholder={name}
+        name = {name}
         className="p-2 bg-grayinput text-white h-[48px] text-[14px] placeholder-lightgray rounded-[8px] w-[320px]"
         onChange={onChange}
       ></input>

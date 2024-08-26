@@ -61,6 +61,7 @@ module.exports = {
       darkgray: "#1E201E",
       grayinput: "#25221B",
       pink: "#F9CECE",
+      green: "#DCFFC0"
     },
   },
   plugins: [],
