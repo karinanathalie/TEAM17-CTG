@@ -24,7 +24,7 @@ const Events = ({ item }) => {
 
   return (
     <div className="font-poppins" onClick={handleButtonClick}>
-      <div className="rounded-3xl shadow-md h-[350px] w-[340px]  items-center">
+      <div className="rounded-3xl shadow-md h-[350px] w-[340px]  items-center hover:cursor-pointer">
        <img
         src={`http://localhost:8000/api/pic/${item.event_image}`}
         alt={item.event_name}
