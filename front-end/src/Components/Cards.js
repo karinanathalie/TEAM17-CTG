@@ -45,7 +45,15 @@ export const ScheduleCard = ({ date, eventName, eventSummary }) => {
   );
 };
 
-export const CarousellCard = ({onClickOther, onClickRegis, date, location, distance, eventPicture, eventName }) => {
+export const CarousellCard = ({
+  onClickOther,
+  onClickRegis,
+  date,
+  location,
+  distance,
+  eventPicture,
+  eventName,
+}) => {
   const SplittedDate = date.split("-");
   const months = [
     "Jan",
@@ -77,7 +85,9 @@ export const CarousellCard = ({onClickOther, onClickRegis, date, location, dista
         />
       </div>
       <div className="py-[20px]">
-        <div className="font-semibold text-[16px] text-darkgray">{eventName}</div>
+        <div className="font-semibold text-[16px] text-darkgray">
+          {eventName}
+        </div>
         <div className="flex space-x-[12px] font-medium text-[14px] text-mediumgray">
           <div className="flex flex-col justify-center">
             <CiCalendarDate />
@@ -139,10 +149,10 @@ export const EventCard = ({
     <div className="m-3 flex space-x- w-[1040px] h-[231px] rounded-[8px] px-[24px] py-[16px] bg-[#F2F2F2]">
       <div className="flex flex-col justify-center w-[344px] h-[197px] rounded-[8px] bg-gray">
         <img
-        src={`http://localhost:8000/api/pic/${eventPicture}`}
-        alt={eventName}
-        className="w-full h-[197px] rounded-[8px]"
-      /> 
+          src={`http://localhost:8000/api/pic/${eventPicture}`}
+          alt={eventName}
+          className="w-full h-[197px] rounded-[8px]"
+        />
       </div>
       <div className="flex flex-col pl-[41px] m-[8px]">
         <div className="h-[150px] w-[600px] ">
@@ -163,7 +173,7 @@ export const EventCard = ({
             <div className="pl-[12px] font-medium">{date}</div>
           </div>
         </div>
-        <div className="flex justify-end pt-[37px]">
+        <div className="flex justify-end pt-[10px]">
           <ButtonFullRoleBased role={role}>Details</ButtonFullRoleBased>
         </div>
       </div>
@@ -174,17 +184,18 @@ export const EventCard = ({
 export const TrainingCard = ({}) => {
   return (
     <div className="mt-8">
-      <div className="text-[30px] mb-[16px] font-semibold">Training Progress <span className="text-blue"> - 60% </span>
-    </div>
+      <div className="text-[30px] mb-[16px] font-semibold">
+        Training Progress <span className="text-blue"> - 60% </span>
+      </div>
       {/* <img src="http://placehold.it/700x300"></img> */}
       <div>
         <iframe
-        className="w-[700px] h-[300px]"
-        src="https://www.youtube.com/embed/SlDJUL7lMCk"
-        title="YouTube video player"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-      ></iframe>
+          className="w-[700px] h-[300px]"
+          src="https://www.youtube.com/embed/SlDJUL7lMCk"
+          title="YouTube video player"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
       </div>
     </div>
   );
