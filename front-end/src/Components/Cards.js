@@ -163,7 +163,7 @@ export const EventCard = ({
             <div className="pl-[12px] font-medium">{date}</div>
           </div>
         </div>
-        <div className="flex justify-end pt-[37px]">
+        <div className="flex justify-end pt-[10px]">
           <ButtonFullRoleBased role={role}>Details</ButtonFullRoleBased>
         </div>
       </div>
